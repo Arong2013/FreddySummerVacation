@@ -1,0 +1,73 @@
+{
+  "dialogues": [
+    {
+      "id": "greeting",
+      "text": "Hello, traveler!",
+      "responses": [
+        { "text": "Hi!", "nextId": "response1" },
+        { "text": "Who are you?", "nextId": "response2" }
+      ]
+    },
+    {
+      "id": "response1",
+      "text": "How can I help you?",
+      "responses": [
+        { "text": "I need some information.", "nextId": "info" },
+        { "text": "Nothing, just passing by.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "response2",
+      "text": "I'm a humble merchant.",
+      "responses": [
+        { "text": "What do you sell?", "nextId": "sell" },
+        { "text": "Goodbye.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "info",
+      "text": "What kind of information are you looking for?",
+      "responses": [
+        { "text": "About this place.", "nextId": "placeInfo" },
+        { "text": "Nevermind.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "sell",
+      "text": "I sell various goods and supplies.",
+      "responses": [
+        { "text": "Show me your goods.", "nextId": "goods" },
+        { "text": "Not interested.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "placeInfo",
+      "text": "This place is known for its rich history and beautiful landscapes.",
+      "responses": [
+        { "text": "Thanks for the info.", "nextId": "bye" },
+        { "text": "Tell me more.", "nextId": "moreInfo" }
+      ]
+    },
+    {
+      "id": "moreInfo",
+      "text": "You can visit the ancient ruins nearby or explore the lush forests.",
+      "responses": [
+        { "text": "Sounds interesting.", "nextId": "bye" },
+        { "text": "Thank you.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "goods",
+      "text": "Here are the items I have for sale.",
+      "responses": [
+        { "text": "I'll take a look.", "nextId": "bye" },
+        { "text": "Maybe next time.", "nextId": "bye" }
+      ]
+    },
+    {
+      "id": "bye",
+      "text": "Safe travels, adventurer.",
+      "responses": []
+    }
+  ]
+}

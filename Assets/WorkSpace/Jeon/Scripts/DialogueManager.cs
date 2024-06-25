@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (i < responses.Length)
             {
-                responseButtons[i].GetComponentInChildren<Text>().text = responses[i].text;
+                responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = responses[i].text;
                 responseButtons[i].gameObject.SetActive(true);
                 int index = i; // Capture the index for the closure
                 responseButtons[i].onClick.RemoveAllListeners(); // Clear previous listeners

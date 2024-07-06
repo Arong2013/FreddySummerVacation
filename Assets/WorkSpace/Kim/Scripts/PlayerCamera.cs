@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    bool lockRotate = true;
+    bool lockRotate = true;//true일때 움직임, false일때 제한
     public float mouseSensitivity = 100.0f; // 마우스 감도
     private float xRotation = 0.0f; // x축 회전 값
     private float yRotation = 0.0f; // y축 회전 값
@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
     public bool Lock { set {lockRotate = value;} }
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서를 화면 중앙에 고정
+        Cursor.visible = false;
     }
 
     void Update()

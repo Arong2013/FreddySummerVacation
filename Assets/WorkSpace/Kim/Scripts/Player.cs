@@ -6,14 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float interactionDistance = 30.0f;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] PlayerInput input;
-
-    void Start()
-    {
-        input.SwitchCurrentActionMap("Control");
-        input.actions["Interact"].performed += interact;
-    }
-    private void interact(InputAction.CallbackContext callbackContext)
+    public void interact(InputAction.CallbackContext callbackContext)
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance, layerMask))

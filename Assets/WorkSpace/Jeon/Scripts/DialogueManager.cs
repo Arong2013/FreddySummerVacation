@@ -4,11 +4,11 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private Text dialogueText; // 대화 텍스트 UI 요소
     [SerializeField] private Button[] responseButtons; // 응답 버튼 UI 요소
+    [SerializeField] private Image characterIcon; // 캐릭터 아이콘 UI 요소 추가
     [SerializeField] private string googleSheetUrl; // Google Sheets에서 제공한 웹 앱 URL
     private Dictionary<string, Dialogue> dialogues;
     private Dialogue currentDialogue;
@@ -17,11 +17,11 @@ public class DialogueManager : MonoBehaviour
     {
         StartCoroutine(LoadDialoguesFromGoogleSheet());
     }
+
     IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
         yield return www.SendWebRequest();
-
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Failed to load dialogues: " + www.error);
@@ -36,12 +36,10 @@ public class DialogueManager : MonoBehaviour
             {
                 dialogues[dialogue.id] = dialogue;
             }
-
             // 초기 대화 시작 (예: "greeting")
             StartDialogue("greeting");
         }
     }
-
 
     public void StartDialogue(string dialogueId)
     {
@@ -50,8 +48,25 @@ public class DialogueManager : MonoBehaviour
             // 대화 텍스트를 업데이트합니다.
             dialogueText.text = currentDialogue.text;
 
+            // 캐릭터 아이콘을 업데이트합니다.
+            UpdateCharacterIcon(currentDialogue.characterIconPath);
+
             // 응답 버튼을 업데이트합니다.
             UpdateResponseButtons(currentDialogue.responses);
+        }
+    }
+
+    void UpdateCharacterIcon(string iconPath)
+    {
+        // 캐릭터 아이콘을 로드하여 UI에 설정합니다.
+        Sprite newIcon = Resources.Load<Sprite>(iconPath);
+        if (newIcon != null)
+        {
+            characterIcon.sprite = newIcon;
+        }
+        else
+        {
+            Debug.LogError("Failed to load character icon: " + iconPath);
         }
     }
 

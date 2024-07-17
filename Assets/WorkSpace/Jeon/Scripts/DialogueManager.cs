@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using TMPro;
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private Text dialogueText; // 대화 텍스트 UI 요소
+    [SerializeField] private TextMeshProUGUI dialogueText; // 대화 텍스트 UI 요소
     [SerializeField] private Button[] responseButtons; // 응답 버튼 UI 요소
-    [SerializeField] private Image characterIcon; // 캐릭터 아이콘 UI 요소 추가
+    [SerializeField] private Image characterIcon,NpcIcon; // 캐릭터 아이콘 UI 요소 추가
     [SerializeField] private string googleSheetUrl; // Google Sheets에서 제공한 웹 앱 URL
     private Dictionary<string, Dialogue> dialogues;
     private Dialogue currentDialogue;
@@ -62,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         Sprite newIcon = Resources.Load<Sprite>(iconPath);
         if (newIcon != null)
         {
-            characterIcon.sprite = newIcon;
+            NpcIcon.sprite = newIcon;
         }
         else
         {

@@ -4,21 +4,26 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueText; // 대화 텍스트 UI 요소
     [SerializeField] private Button[] responseButtons; // 응답 버튼 UI 요소
-    [SerializeField] private Image characterIcon,NpcIcon; // 캐릭터 아이콘 UI 요소 추가
+    [SerializeField] private Image characterIcon, NpcIcon, VillainIcon; // 캐릭터 아이콘 UI 요소 추가
     [SerializeField] private string googleSheetUrl; // Google Sheets에서 제공한 웹 앱 URL
     private Dictionary<string, Dialogue> dialogues;
-    private Dialogue currentDialogue;
+    [SerializeField] private Dialogue currentDialogue;
+    private bool isResponseButtonsVisible = false; // 응답 버튼의 가시성 상태
 
-    void Start()
+    void Update()
     {
-        StartCoroutine(LoadDialoguesFromGoogleSheet());
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ToggleResponseButtons();
+        }
     }
 
-    IEnumerator LoadDialoguesFromGoogleSheet()
+    public IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
         yield return www.SendWebRequest();
@@ -36,20 +41,25 @@ public class DialogueManager : MonoBehaviour
             {
                 dialogues[dialogue.id] = dialogue;
             }
-            // 초기 대화 시작 (예: "greeting")
-            StartDialogue("greeting");
         }
+
+        Debug.Log("끝");
     }
 
     public void StartDialogue(string dialogueId)
     {
+        gameObject.SetActive(true);
         if (dialogues.TryGetValue(dialogueId, out currentDialogue))
         {
+            dialogueText.gameObject.SetActive(true);
             // 대화 텍스트를 업데이트합니다.
             dialogueText.text = currentDialogue.text;
 
             // 캐릭터 아이콘을 업데이트합니다.
             UpdateCharacterIcon(currentDialogue.characterIconPath);
+
+            // 빌런 아이콘을 업데이트합니다.
+            UpdateVillainIcon(currentDialogue.villainIconPath);
 
             // 응답 버튼을 업데이트합니다.
             UpdateResponseButtons(currentDialogue.responses);
@@ -67,6 +77,20 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.LogError("Failed to load character icon: " + iconPath);
+        }
+    }
+
+    void UpdateVillainIcon(string iconPath)
+    {
+        // 빌런 아이콘을 로드하여 UI에 설정합니다.
+        Sprite newIcon = Resources.Load<Sprite>(iconPath);
+        if (newIcon != null)
+        {
+            VillainIcon.sprite = newIcon;
+        }
+        else
+        {
+            Debug.LogError("Failed to load villain icon: " + iconPath);
         }
     }
 
@@ -89,6 +113,25 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    void ToggleResponseButtons()
+    {
+        isResponseButtonsVisible = !isResponseButtonsVisible;
+        dialogueText.gameObject.SetActive(false);
+        foreach (var button in responseButtons)
+        {
+            button.gameObject.SetActive(isResponseButtonsVisible);
+        }
+    }
+
+    void HideResponseButtons()
+    {
+        isResponseButtonsVisible = false;
+        foreach (var button in responseButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+    }
+
     public void OnResponseSelected(int responseIndex)
     {
         if (responseIndex < currentDialogue.responses.Length)
@@ -96,5 +139,6 @@ public class DialogueManager : MonoBehaviour
             string nextId = currentDialogue.responses[responseIndex].nextId;
             StartDialogue(nextId);
         }
+        HideResponseButtons(); // 응답 버튼을 숨깁니다.
     }
 }

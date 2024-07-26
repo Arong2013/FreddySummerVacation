@@ -7,7 +7,9 @@ public class Dialogue
     public string text;
     public Response[] responses;
     public string characterIconPath; // 캐릭터 아이콘 경로 추가
+    public string villainIconPath; // 빌런 아이콘 경로 추가
 }
+
 [Serializable]
 public class Response
 {

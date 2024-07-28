@@ -16,11 +16,4 @@ public static class DialogueLoader
 
         return dialogues;
     }
-
-
-}
-[System.Serializable]
-public class DialogueArray
-{
-    public Dialogue[] dialogues;
 }

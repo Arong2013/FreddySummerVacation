@@ -12,6 +12,6 @@ public class Door : MonoBehaviour
     public void OpenDoor()
     {
         AN.SetTrigger("Open");
-        UiUtils.GetUI<DialogueManager>().StartDialogue("greeting");
+        UiUtils.GetUI<DialogueManager>().StartDialogue("Day1_P_B1_0");
     }  
 }

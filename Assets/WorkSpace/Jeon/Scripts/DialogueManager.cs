@@ -211,7 +211,7 @@ public class DialogueManager : MonoBehaviour
             var response = currentDialogue.responses[responseIndex];
             if (response.affinityChange != 0)
             {
-                affinityManager.AdjustAffinity(currentDialogue.characterId, response.affinityChange);
+               // affinityManager.AdjustAffinity(currentDialogue.characterId, response.affinityChange);
             }
 
             StartDialogue(response.nextId);

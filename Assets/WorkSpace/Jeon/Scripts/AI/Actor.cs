@@ -44,10 +44,10 @@ public class Actor : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.TryGetComponent<Door>(out Door component))
-        {
-            keyActions.Add(KeyCode.Space, component.OpenDoor);
-        }
+        // if (other.gameObject.TryGetComponent<Door>(out Door component))
+        // {
+        //     keyActions.Add(KeyCode.Space, component.OpenDoor);
+        // }
     }
     private void OnCollisionExit2D(Collision2D other)
     {

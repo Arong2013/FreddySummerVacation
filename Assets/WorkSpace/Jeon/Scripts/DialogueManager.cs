@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Dialogue currentDialogue;
     private bool isResponseButtonsVisible = false; // 응답 버튼의 가시성 상태
     private int currentDialogueIndex = -1; // 현재 대화 인덱스
+    [SerializeField] private AffinityManager affinityManager; // 호감도 관리 매니저 추가
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
@@ -30,7 +32,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
@@ -51,10 +52,8 @@ public class DialogueManager : MonoBehaviour
                 dialogueDictionary[dialogue.id] = dialogue;
             }
         }
-
         Debug.Log("끝");
     }
-
     public void StartDialogue(string dialogueId)
     {
         if (string.IsNullOrEmpty(dialogueId))
@@ -62,7 +61,6 @@ public class DialogueManager : MonoBehaviour
             ShowNextDialogue();
             return;
         }
-
         gameObject.SetActive(true);
         if (dialogueDictionary.TryGetValue(dialogueId, out currentDialogue))
         {
@@ -72,13 +70,12 @@ public class DialogueManager : MonoBehaviour
             ApplyTextStyles(currentDialogue.text, currentDialogue.textStyles);
 
             // 캐릭터 아이콘을 업데이트합니다.
-          //  UpdateCharacterIcon(currentDialogue.characterIconPath);
+            //  UpdateCharacterIcon(currentDialogue.characterIconPath);
 
             // 빌런 아이콘을 업데이트합니다.
-         //   UpdateVillainIcon(currentDialogue.villainIconPath);
+            //   UpdateVillainIcon(currentDialogue.villainIconPath);
 
             // 응답 버튼을 업데이트합니다.
-            print(currentDialogue.responses.Length);
             UpdateResponseButtons(currentDialogue.responses);
         }
     }
@@ -160,26 +157,34 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("Failed to load villain icon: " + iconPath);
         }
     }
+
     void UpdateResponseButtons(Response[] responses)
     {
-        
-        for (int i = 0; i < responseButtons.Length; i++)
+        if (responses.Length == 0)
         {
-            if (i < responses.Length)
+            HideResponseButtons();
+        }
+        else
+        {
+            for (int i = 0; i < responseButtons.Length; i++)
             {
-                // 응답 버튼 텍스트를 올바르게 설정합니다.
-                responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = responses[i].text;
-                responseButtons[i].gameObject.SetActive(true);
-                int index = i; // Capture the index for the closure
-                responseButtons[i].onClick.RemoveAllListeners(); // Clear previous listeners
-                responseButtons[i].onClick.AddListener(() => OnResponseSelected(index));
-            }
-            else
-            {
-               // responseButtons[i].gameObject.SetActive(false);
+                if (i < responses.Length)
+                {
+                    // 응답 버튼 텍스트를 올바르게 설정합니다.
+                    responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = responses[i].text;
+                    responseButtons[i].gameObject.SetActive(true);
+                    int index = i; // Capture the index for the closure
+                    responseButtons[i].onClick.RemoveAllListeners(); // Clear previous listeners
+                    responseButtons[i].onClick.AddListener(() => OnResponseSelected(index));
+                }
+                else
+                {
+                    responseButtons[i].gameObject.SetActive(false);
+                }
             }
         }
     }
+
     void ToggleResponseButtons()
     {
         isResponseButtonsVisible = !isResponseButtonsVisible;
@@ -203,8 +208,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (responseIndex < currentDialogue.responses.Length)
         {
-            string nextId = currentDialogue.responses[responseIndex].nextId;
-            StartDialogue(nextId);
+            var response = currentDialogue.responses[responseIndex];
+            if (response.affinityChange != 0)
+            {
+                affinityManager.AdjustAffinity(currentDialogue.characterId, response.affinityChange);
+            }
+
+            StartDialogue(response.nextId);
         }
         else
         {

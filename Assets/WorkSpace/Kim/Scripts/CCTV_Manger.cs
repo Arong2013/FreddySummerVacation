@@ -43,10 +43,10 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     [SerializeField] List<Camera> list_cctv;
     [SerializeField] RawImage cctv_view; //cctv화면
     [SerializeField] GameObject CCTV_Select;//cctv선택화면
-    [SerializeField] CCTV_Camera cctv_camera;//cctv모니터
+    [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
-    Camera cur_cam = null;
+    [SerializeField] Camera cur_cam;
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
         Cursor.visible = false;
@@ -61,7 +61,8 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     {
         cur_cam.gameObject.SetActive(false);
         cctv_view.gameObject.SetActive(false);
-        cctv_camera.OnOff = false;
+        CCTV_Select.gameObject.SetActive(false);
+        cctv_Monitor.OnOff = false;
         playercam.Lock = true;
     }
 }

@@ -56,6 +56,7 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
         cur_cam.gameObject.SetActive(true);
         cctv_view.texture = cur_cam.targetTexture;
         cctv_view.gameObject.SetActive(true);
+        
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)
     {

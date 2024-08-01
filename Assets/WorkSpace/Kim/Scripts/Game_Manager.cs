@@ -30,6 +30,7 @@ public class Game_Manager : MonoBehaviour
     }
     [SerializeField] Player player;
     [SerializeField] PlayerInput input;
+    [SerializeField] Door door;
     void Start()
     {
         Cursor.visible = false;
@@ -37,5 +38,6 @@ public class Game_Manager : MonoBehaviour
         input.SwitchCurrentActionMap("Control");
         input.actions["Interact"].performed += player.interact;
         input.actions["ESC"].performed += CCTV_Manger.Instance.Turn_Off_CCTV;
+        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E);
     }
 }

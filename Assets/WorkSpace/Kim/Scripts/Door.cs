@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
 
     private bool isClosing = false; // 문이 닫히는 중인지 여부
 
+    public void OpenDoor() {isClosing = false;}
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -24,12 +25,14 @@ public class Door : MonoBehaviour
                 if (hit.transform == doorTransform)
                 {
                     isClosing = true; // 문 닫기
+                    Villain_Manager.Instance.SetTimer_Villain_E(true);
                 }
             }
         }
         else if (Input.GetKeyUp(KeyCode.F))
         {
             isClosing = false; // 문 열기
+            Villain_Manager.Instance.SetTimer_Villain_E(false);
         }
 
         // 문 회전

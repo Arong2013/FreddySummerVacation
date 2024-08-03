@@ -13,12 +13,14 @@ public class Actor : MonoBehaviour
     SpriteRenderer SR;
     Dictionary<KeyCode, Action> keyActions = new Dictionary<KeyCode, Action>();
 
+    private Vector2 lastMovement = Vector2.down; // 기본 방향을 아래로 설정
+    private bool isMoving = false;
+
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
-
     }
 
     private void Update()
@@ -27,12 +29,21 @@ public class Actor : MonoBehaviour
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
+
+        if (movement != Vector2.zero)
+        {
+            lastMovement = movement;
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
         RB.velocity = movement * 4;
-        SR.flipX = moveHorizontal == -1;
 
-        AN.SetFloat("WalkX", moveHorizontal);
-        AN.SetFloat("WalkY", moveVertical);
-
+        // 애니메이션 및 스프라이트 방향 설정
+        UpdateAnimationAndDirection();
 
         foreach (var keyAction in keyActions)
         {
@@ -42,6 +53,30 @@ public class Actor : MonoBehaviour
             }
         }
     }
+
+    private void UpdateAnimationAndDirection()
+    {
+        // 움직임 방향 설정
+        AN.SetFloat("WalkX", lastMovement.x);
+        AN.SetFloat("WalkY", lastMovement.y);
+
+        // 스프라이트 방향 설정
+        if (lastMovement.x != 0)
+        {
+            SR.flipX = lastMovement.x < 0;
+        }
+
+        // 애니메이션 재생 여부 설정
+        if (isMoving)
+        {
+            AN.speed = 1; // 애니메이션 재생
+        }
+        else
+        {
+            AN.speed = 0; // 애니메이션 정지
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.TryGetComponent<DayDoor>(out DayDoor component))
@@ -49,6 +84,7 @@ public class Actor : MonoBehaviour
             keyActions.Add(KeyCode.Space, component.OpenDoor);
         }
     }
+
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.TryGetComponent<Door>(out Door component))

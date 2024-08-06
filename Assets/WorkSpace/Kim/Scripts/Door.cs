@@ -63,18 +63,21 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // 초기 위치와 회전 값을 저장합니다.
-            prevPosition = player.position;
-            prevRotation = player.rotation;
+            if(!isClosing)
+            {
+                // 초기 위치와 회전 값을 저장합니다.
+                prevPosition = player.position;
+                prevRotation = player.rotation;
 
-            // 목표 위치와 회전 값을 계산합니다.
-            targetPosition = player.position + player.TransformDirection(lookPositionOffset);
-            targetRotation = player.rotation * Quaternion.Euler(lookRotation);
+                // 목표 위치와 회전 값을 계산합니다.
+                targetPosition = player.position + player.TransformDirection(lookPositionOffset);
+                targetRotation = player.rotation * Quaternion.Euler(lookRotation);
 
-            Game_Manager.Instance.GetPlayer.IsStop = true;
-            isLookOut = true;
-            // 전환 시작
-            StartCoroutine(TransitionToLookOutside());
+                Game_Manager.Instance.GetPlayer.IsStop = true;
+                isLookOut = true;
+                // 전환 시작
+                StartCoroutine(TransitionToLookOutside());
+            }
             
         }
     }

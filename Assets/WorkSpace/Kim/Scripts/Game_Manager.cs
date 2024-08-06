@@ -31,13 +31,17 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] PlayerInput input;
     [SerializeField] Door door;
+    public Player GetPlayer => player;
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         input.SwitchCurrentActionMap("Control");
-        input.actions["Interact"].performed += player.interact;
-        input.actions["ESC"].performed += CCTV_Manger.Instance.Turn_Off_CCTV;
+        input.actions["Interact"].started += player.interact;
+        input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
+        input.actions["ESC"].started += door.MoveBackInside;
+        input.actions["Move"].performed += player.Move;
+        input.actions["Move"].canceled += player.Move;
         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E);
     }
 }

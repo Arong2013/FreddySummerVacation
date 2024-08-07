@@ -7,31 +7,45 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI dialogueText; // 대화 텍스트 UI 요소
-    [SerializeField] private Button[] responseButtons; // 응답 버튼 UI 요소
-    [SerializeField] private Image characterIcon, NpcIcon, VillainIcon; // 캐릭터 아이콘 UI 요소 추가
-    [SerializeField] private string googleSheetUrl; // Google Sheets에서 제공한 웹 앱 URL
-    [SerializeField] private List<Dialogue> dialogues; // 대화 리스트
-    private Dictionary<string, Dialogue> dialogueDictionary; // 대화 사전
-    [SerializeField] private Dialogue currentDialogue;
-    private bool isResponseButtonsVisible = false; // 응답 버튼의 가시성 상태
-    private int currentDialogueIndex = -1; // 현재 대화 인덱스
-    [SerializeField] private AffinityManager affinityManager; // 호감도 관리 매니저 추가
-    
+    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private Button[] responseButtons;
+    [SerializeField] private Image CharacterIcon,VillainIcon;
+    [SerializeField] private string googleSheetUrl;
+    [SerializeField] private List<Dialogue> dialogues;
+    private Dictionary<string, Dialogue> dialogueDictionary;
+    private Dialogue currentDialogue;
+    private int currentDialogueIndex = -1;
+    private bool isTyping = false;
+    private bool isTextDisplayed = false;
+
+    private void OnDisable() => Time.timeScale = 1f;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            if (!isResponseButtonsVisible)
+            if (isTyping)
             {
-                ShowNextDialogue();
+                StopAllCoroutines();
+                dialogueText.text = currentDialogue.text;
+                ApplyTextStyles(currentDialogue.textStyles);
+                isTyping = false;
+                isTextDisplayed = true;
             }
-            else
+            else if (isTextDisplayed)
             {
-                ToggleResponseButtons();
+                if (currentDialogue.responses.Length < 1)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    ToggleResponseButtons(true);
+                }
             }
         }
     }
+
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
@@ -42,18 +56,15 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            string json = www.downloadHandler.text;
-            DialogueArray dialogueArray = JsonUtility.FromJson<DialogueArray>(json);
+            DialogueArray dialogueArray = JsonUtility.FromJson<DialogueArray>(www.downloadHandler.text);
             dialogues = new List<Dialogue>(dialogueArray.dialogues);
             dialogueDictionary = new Dictionary<string, Dialogue>();
-
-            foreach (var dialogue in dialogueArray.dialogues)
-            {
+            foreach (var dialogue in dialogues)
                 dialogueDictionary[dialogue.id] = dialogue;
-            }
         }
-        Debug.Log("끝");
+        print("끝");
     }
+
     public void StartDialogue(string dialogueId)
     {
         if (string.IsNullOrEmpty(dialogueId))
@@ -66,63 +77,47 @@ public class DialogueManager : MonoBehaviour
         {
             currentDialogueIndex = dialogues.IndexOf(currentDialogue);
             dialogueText.gameObject.SetActive(true);
-            // 대화 텍스트를 업데이트합니다.
-            ApplyTextStyles(currentDialogue.text, currentDialogue.textStyles);
-
-            // 캐릭터 아이콘을 업데이트합니다.
-            //  UpdateCharacterIcon(currentDialogue.characterIconPath);
-
-            // 빌런 아이콘을 업데이트합니다.
-            //   UpdateVillainIcon(currentDialogue.villainIconPath);
-
-            // 응답 버튼을 업데이트합니다.
-            UpdateResponseButtons(currentDialogue.responses);
+            UpdateIcons(currentDialogue.characterIconPath, currentDialogue.villainIconPath);
+            StartCoroutine(TypeText(currentDialogue.text, currentDialogue.textStyles));
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
-    private void ApplyTextStyles(string text, TextStyle[] styles)
+    private IEnumerator TypeText(string text, TextStyle[] styles)
     {
-        dialogueText.text = text;
-        StartCoroutine(ApplyTextStylesNextFrame(styles));
+        dialogueText.text = "";
+        isTyping = true;
+        isTextDisplayed = false;
+        foreach (char letter in text)
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+        ApplyTextStyles(styles);
+        isTyping = false;
+        isTextDisplayed = true;
     }
 
-    private IEnumerator ApplyTextStylesNextFrame(TextStyle[] styles)
+    private void ApplyTextStyles(TextStyle[] styles)
     {
-        yield return null; // 다음 프레임까지 대기
-
         dialogueText.ForceMeshUpdate();
         TMP_TextInfo textInfo = dialogueText.textInfo;
-
         foreach (var style in styles)
         {
             for (int i = style.startIndex; i < style.endIndex; i++)
             {
-                int meshIndex = textInfo.characterInfo[i].materialReferenceIndex;
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-                Color32[] vertexColors = textInfo.meshInfo[meshIndex].colors32;
+                var charInfo = textInfo.characterInfo[i];
+                var vertices = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
                 Color32 newColor = ParseColor(style.textColor);
-                vertexColors[vertexIndex + 0] = newColor;
-                vertexColors[vertexIndex + 1] = newColor;
-                vertexColors[vertexIndex + 2] = newColor;
-                vertexColors[vertexIndex + 3] = newColor;
+                for (int j = 0; j < 4; j++)
+                    vertices[charInfo.vertexIndex + j] = newColor;
 
-                // 스타일 적용
-                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-
-                if (style.isBold)
-                {
-                    charInfo.style |= FontStyles.Bold;
-                }
-                if (style.isItalic)
-                {
-                    charInfo.style |= FontStyles.Italic;
-                }
-
-                // 폰트 크기 적용
-                if (style.fontSize > 0)
-                {
-                    charInfo.scale = style.fontSize / dialogueText.fontSize;
-                }
+                if (style.isBold) charInfo.style |= FontStyles.Bold;
+                if (style.isItalic) charInfo.style |= FontStyles.Italic;
+                if (style.fontSize > 0) charInfo.scale = style.fontSize / dialogueText.fontSize;
 
                 textInfo.characterInfo[i] = charInfo;
             }
@@ -130,96 +125,45 @@ public class DialogueManager : MonoBehaviour
         dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
     }
 
-    void UpdateCharacterIcon(string iconPath)
+    private void ToggleResponseButtons(bool show)
     {
-        // 캐릭터 아이콘을 로드하여 UI에 설정합니다.
-        Sprite newIcon = Resources.Load<Sprite>(iconPath);
-        if (newIcon != null)
-        {
-            NpcIcon.sprite = newIcon;
-        }
-        else
-        {
-            Debug.LogError("Failed to load character icon: " + iconPath);
-        }
-    }
-
-    void UpdateVillainIcon(string iconPath)
-    {
-        // 빌런 아이콘을 로드하여 UI에 설정합니다.
-        Sprite newIcon = Resources.Load<Sprite>(iconPath);
-        if (newIcon != null)
-        {
-            VillainIcon.sprite = newIcon;
-        }
-        else
-        {
-            Debug.LogError("Failed to load villain icon: " + iconPath);
-        }
-    }
-
-    void UpdateResponseButtons(Response[] responses)
-    {
-        if (responses.Length == 0)
-        {
-            HideResponseButtons();
-        }
-        else
-        {
-            for (int i = 0; i < responseButtons.Length; i++)
-            {
-                if (i < responses.Length)
-                {
-                    // 응답 버튼 텍스트를 올바르게 설정합니다.
-                    responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = responses[i].text;
-                    responseButtons[i].gameObject.SetActive(true);
-                    int index = i; // Capture the index for the closure
-                    responseButtons[i].onClick.RemoveAllListeners(); // Clear previous listeners
-                    responseButtons[i].onClick.AddListener(() => OnResponseSelected(index));
-                }
-                else
-                {
-                    responseButtons[i].gameObject.SetActive(false);
-                }
-            }
-        }
-    }
-
-    void ToggleResponseButtons()
-    {
-        isResponseButtonsVisible = !isResponseButtonsVisible;
-        dialogueText.gameObject.SetActive(false);
-        foreach (var button in responseButtons)
-        {
-            button.gameObject.SetActive(isResponseButtonsVisible);
-        }
-    }
-
-    void HideResponseButtons()
-    {
-        isResponseButtonsVisible = false;
+        dialogueText.gameObject.SetActive(!show);
         foreach (var button in responseButtons)
         {
             button.gameObject.SetActive(false);
+        }
+
+        if (show)
+        {
+            for (int i = 0; i < responseButtons.Length; i++)
+            {
+                if (i < currentDialogue.responses.Length)
+                {
+                    responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = currentDialogue.responses[i].text;
+                    responseButtons[i].gameObject.SetActive(true);
+                    int index = i;
+                    responseButtons[i].onClick.RemoveAllListeners();
+                    responseButtons[i].onClick.AddListener(() => OnResponseSelected(index));
+                }
+            }
         }
     }
 
     public void OnResponseSelected(int responseIndex)
     {
-        if (responseIndex < currentDialogue.responses.Length)
+        foreach (var button in responseButtons)
         {
-            var response = currentDialogue.responses[responseIndex];
-            if (response.affinityChange != 0)
-            {
-               // affinityManager.AdjustAffinity(currentDialogue.characterId, response.affinityChange);
-            }
+            button.gameObject.SetActive(false);
+        }
 
+        var response = currentDialogue.responses[responseIndex];
+        if (!string.IsNullOrEmpty(response.nextId))
+        {
             StartDialogue(response.nextId);
         }
         else
         {
-            ShowNextDialogue(); // 응답이 없는 경우 다음 대화로 넘어갑니다.
-            HideResponseButtons(); // 응답 버튼을 숨깁니다.
+            gameObject.SetActive(false);
         }
     }
 
@@ -232,13 +176,38 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No more dialogues available.");
+            gameObject.SetActive(false);
         }
     }
 
-    Color ParseColor(string color)
+    private void UpdateIcons(string characterIconPath, string villainIconPath)
     {
-        ColorUtility.TryParseHtmlString(color, out Color newCol);
-        return newCol;
+        if (!string.IsNullOrEmpty(characterIconPath))
+        {
+            Sprite newCharacterIcon = Resources.Load<Sprite>(characterIconPath);
+            if (newCharacterIcon != null)
+            {
+                CharacterIcon.sprite = newCharacterIcon;
+            }
+            else
+            {
+                Debug.LogError("Failed to load character icon: " + characterIconPath);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(villainIconPath))
+        {
+            Sprite newVillainIcon = Resources.Load<Sprite>(villainIconPath);
+            if (newVillainIcon != null)
+            {
+                VillainIcon.sprite = newVillainIcon;
+            }
+            else
+            {
+                Debug.LogError("Failed to load villain icon: " + villainIconPath);
+            }
+        }
     }
+
+    private Color32 ParseColor(string color) => ColorUtility.TryParseHtmlString(color, out Color newCol) ? newCol : Color.white;
 }

@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using System;
-using UnityEngine.Events;
+using Sirenix.Serialization;
+using Sirenix.OdinInspector;  // Odin Inspector 네임스페이스 추가
 
-public class Actor : MonoBehaviour
+public class Actor : SerializedMonoBehaviour
 {
     Rigidbody2D RB;
     Animator AN;
@@ -15,6 +13,10 @@ public class Actor : MonoBehaviour
 
     private Vector2 lastMovement = Vector2.down; // 기본 방향을 아래로 설정
     private bool isMoving = false;
+
+    // 인스펙터에서 설정할 방향과 스프라이트 딕셔너리
+    [SerializeField, OdinSerialize]
+    private Dictionary<Vector2, Sprite> directionSprites = new Dictionary<Vector2, Sprite>();
 
     private void Awake()
     {
@@ -67,6 +69,8 @@ public class Actor : MonoBehaviour
         }
 
         // 애니메이션 재생 여부 설정
+        AN.SetBool("IsWalk", isMoving);
+
         if (isMoving)
         {
             AN.speed = 1; // 애니메이션 재생
@@ -74,6 +78,17 @@ public class Actor : MonoBehaviour
         else
         {
             AN.speed = 0; // 애니메이션 정지
+
+            // 걷지 않을 때 스프라이트 변경
+            UpdateSpriteDirection();
+        }
+    }
+
+    private void UpdateSpriteDirection()
+    {
+        if (directionSprites.ContainsKey(lastMovement))
+        {
+            SR.sprite = directionSprites[lastMovement];
         }
     }
 

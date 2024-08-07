@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Analytics;
 
 public enum CCTV_POS
 {
@@ -49,6 +50,7 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     [SerializeField] Camera cur_cam;
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
+        Game_Manager.Instance.GetPlayer.IsStop = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         CCTV_Select.SetActive(false);
@@ -60,10 +62,14 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)
     {
-        cur_cam.gameObject.SetActive(false);
-        cctv_view.gameObject.SetActive(false);
-        CCTV_Select.gameObject.SetActive(false);
-        cctv_Monitor.OnOff = false;
-        playercam.Lock = true;
+        if(Game_Manager.Instance.GetPlayer.IsStop)//플레이어가 멈춰있을때/게임이 정지된 상태일 때만
+        {
+            cur_cam.gameObject.SetActive(false);
+            cctv_view.gameObject.SetActive(false);
+            CCTV_Select.gameObject.SetActive(false);
+            cctv_Monitor.OnOff = false;
+            playercam.Lock = true;
+            Game_Manager.Instance.GetPlayer.IsStop = false;
+        }
     }
 }

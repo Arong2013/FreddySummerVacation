@@ -55,7 +55,8 @@ public class Villain_Manager : MonoBehaviour
         }
         else
         {
-            StopCoroutine(coroutine);
+            if(coroutine != null)
+                StopCoroutine(coroutine);
         }
     }
     public void SetVillainDifficulty(VILLAIN_INDEX index, VILLAIN_DIFFICULTY difficulty)

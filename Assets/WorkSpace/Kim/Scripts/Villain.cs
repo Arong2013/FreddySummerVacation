@@ -22,7 +22,8 @@ public class Villain : MonoBehaviour
         pos_index = 0;
         isAttack = false;
         //SetDifficulty(VILLAIN_DIFFICULTY.NORMAL);
-        move_coroutine = StartCoroutine(Move());
+        if(gameObject.activeSelf)
+            move_coroutine = StartCoroutine(Move());
     }
     public void SetDifficulty(VILLAIN_DIFFICULTY difficulty)
     {
@@ -54,6 +55,7 @@ public class Villain : MonoBehaviour
     }
     public IEnumerator CheckTime()
     {
+        if(!gameObject.activeSelf) yield break;
         // 시작 시간을 기록
         float startTime = Time.time;
 

@@ -63,7 +63,8 @@ public class CCTV_Move : MonoBehaviour
         }
         else
         {
-            StopCoroutine(coroutine);
+            if(coroutine != null)
+                StopCoroutine(coroutine);
         }
     }
 }

@@ -43,22 +43,34 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     }
     [SerializeField] List<Camera> list_cctv;
     [SerializeField] RawImage cctv_view; //cctv화면
+    [SerializeField] Texture broken_cctv_view; //끊긴 cctv화면
     [SerializeField] GameObject CCTV_Select;//cctv선택화면
     [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
     [SerializeField] Camera cur_cam;
+    bool isBroken = false;
+    public bool IsBroken { set{ isBroken = value; } get { return isBroken; } }
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Game_Manager.Instance.GetPlayer.IsStop = true;
         playercam.Lock = true;
         CCTV_Select.SetActive(false);
-        cur_cam = list_cctv[(int)room_name];//볼 CCTV바꾸고 켜기
-        cur_cam.gameObject.SetActive(true);
-        cctv_view.texture = cur_cam.targetTexture;
-        cctv_view.gameObject.SetActive(true);
+        if(isBroken)
+        {
+            cctv_view.texture = broken_cctv_view;
+            cctv_view.gameObject.SetActive(true);
+        }
+        else
+        {
+            cur_cam = list_cctv[(int)room_name];//볼 CCTV바꾸고 켜기
+            cur_cam.gameObject.SetActive(true);
+            cctv_view.texture = cur_cam.targetTexture;
+            cctv_view.gameObject.SetActive(true);
+        }
         
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)

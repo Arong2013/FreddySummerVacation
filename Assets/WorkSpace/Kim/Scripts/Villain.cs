@@ -19,6 +19,7 @@ public class Villain : MonoBehaviour
     protected Transform[] cur_move_pos_list;
     protected int cur_return_index;
     public bool IsAttack {  set {isAttack = value;} get {return isAttack;}    }
+    //문을 닫았는지 확인할거 필요함
     public void Initialize(VILLAIN_DIFFICULTY difficulty)
     {
         pos_index = 0;

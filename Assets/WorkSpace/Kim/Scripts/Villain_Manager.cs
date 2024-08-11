@@ -10,6 +10,10 @@ public enum VILLAIN_DIFFICULTY
 }
 public enum VILLAIN_INDEX
 {
+    A,
+    B,
+    C,
+    D,
     E
 }
 public class Villain_Manager : MonoBehaviour
@@ -43,9 +47,9 @@ public class Villain_Manager : MonoBehaviour
     {
         return villains[(int)index];
     }
-    public void StartMove(VILLAIN_INDEX index)
+    public void StartMove(VILLAIN_INDEX index, VILLAIN_DIFFICULTY dIFFICULTY)
     {
-        villains[(int)index].Initialize();
+        villains[(int)index].Initialize(dIFFICULTY);
     }
     public void SetTimer_Villain_E(bool StartOrStop)
     {

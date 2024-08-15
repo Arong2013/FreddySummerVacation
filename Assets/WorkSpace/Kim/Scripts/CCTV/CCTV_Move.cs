@@ -9,7 +9,7 @@ public class CCTV_Move : MonoBehaviour
     private float rotationY;
     */
     bool lockRotate = true;//직접 움직임
-    [SerializeField] float mouseSensitivity = 100.0f; // 마우스 감도
+    [SerializeField] float mouseSensitivity; // 마우스 감도
     private float xRotation = 0.0f; // x축 회전 값
     private float yRotation = 0.0f; // y축 회전 값
     public bool Lock { set {lockRotate = value;} }
@@ -29,13 +29,6 @@ public class CCTV_Move : MonoBehaviour
         {
             isEnemyDetected = false;
         }
-    }
-
-    void EndGame()
-    {
-        // 게임 종료 처리
-        Debug.Log("Enemy detected for 5 seconds. Game Over!");
-        // 예: 게임 오버 화면 표시, 게임 멈추기 등
     }
     void Update()
     {

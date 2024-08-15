@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     Vector3 dir = Vector3.zero;
     bool isStop = false;//true일때 멈춤
     public bool IsStop { get { return isStop;} set {isStop = value; playerCamera.Lock = value;} }
+    public void Initialize()
+    {
+        isStop = false;
+    }
     public void interact(InputAction.CallbackContext callbackContext)
     {
         RaycastHit hit;

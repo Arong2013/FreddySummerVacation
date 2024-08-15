@@ -44,13 +44,18 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
     [SerializeField] List<Camera> list_cctv;
     [SerializeField] RawImage cctv_view; //cctv화면
     [SerializeField] Texture broken_cctv_view; //끊긴 cctv화면
+    [SerializeField] Image noise_image; //cctv선택창에 노이즈이미지
     [SerializeField] GameObject CCTV_Select;//cctv선택화면
     [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
     [SerializeField] Camera cur_cam;
     bool isBroken = false;
-    public bool IsBroken { set{ isBroken = value; } get { return isBroken; } }
+    public bool IsBroken { set{ isBroken = value; noise_image.gameObject.SetActive(value); } get { return isBroken; } }
+    public void Initialize()
+    {
+        isBroken = false;
+    }
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
 

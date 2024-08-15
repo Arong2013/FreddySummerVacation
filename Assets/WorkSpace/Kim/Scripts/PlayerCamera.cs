@@ -4,7 +4,7 @@ public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
     bool lockRotate = false;//false일때 움직임, true일때 제한
-    public float mouseSensitivity = 100.0f; // 마우스 감도
+    public float mouseSensitivity; // 마우스 감도
     private float xRotation = 0.0f; // x축 회전 값
     private float yRotation = 0.0f; // y축 회전 값
 

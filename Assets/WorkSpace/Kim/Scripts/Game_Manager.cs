@@ -42,6 +42,8 @@ public class Game_Manager : MonoBehaviour
         input.actions["ESC"].started += door.MoveBackInside;
         input.actions["Move"].performed += player.Move;
         input.actions["Move"].canceled += player.Move;
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL);
+        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.D, VILLAIN_DIFFICULTY.NORMAL);
+        player.Initialize();
+        CCTV_Manger.Instance.Initialize();
     }
 }

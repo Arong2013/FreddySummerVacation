@@ -51,6 +51,21 @@ public class Villain_Manager : MonoBehaviour
     {
         villains[(int)index].Initialize(dIFFICULTY);
     }
+    public void Stop_All_Villain()
+    {
+        foreach(var v in villains)
+            v.Stop();
+    }
+    public void Door_Closing()
+    {
+        foreach(var v in villains)
+            v.IsClosing = true;
+    }
+    public void Warning()
+    {
+        foreach(var v in villains)
+            v.IsWaring = true;
+    }
     public void SetTimer_Villain_E(bool StartOrStop)
     {
         if(StartOrStop)

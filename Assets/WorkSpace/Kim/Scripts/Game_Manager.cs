@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-public class Game_Manager : MonoBehaviour
+public class Game_Manager : Singleton<Game_Manager>
 {
-    private static Game_Manager instance;
+/*     private static Game_Manager instance;
 
     // Game_Manager 인스턴스에 접근할 수 있는 프로퍼티
     public static Game_Manager Instance
@@ -27,7 +27,7 @@ public class Game_Manager : MonoBehaviour
             }
             return instance;
         }
-    }
+    } */
     [SerializeField] Player player;
     [SerializeField] PlayerInput input;
     [SerializeField] Door door;

@@ -5,9 +5,9 @@ public enum SOUND_INDEX
     WARNING_SOUND,
     NEIGHBOR_NOISE
 }
-public class SoundManager : MonoBehaviour
+public class Sound_Manager : Singleton<Sound_Manager>
 {
-    private static SoundManager instance;
+/*     private static SoundManager instance;
 
     // SoundManager 인스턴스에 접근할 수 있는 프로퍼티
     public static SoundManager Instance
@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
             }
             return instance;
         }
-    }
+    } */
     public AudioSource audioSource;  // 오디오 소스 컴포넌트
     public AudioClip []soundEffect;    // 재생할 사운드 클립
 

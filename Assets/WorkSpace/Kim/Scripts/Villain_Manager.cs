@@ -16,9 +16,9 @@ public enum VILLAIN_INDEX
     D,
     E
 }
-public class Villain_Manager : MonoBehaviour
+public class Villain_Manager : Singleton<Villain_Manager>
 {
-    private static Villain_Manager instance;
+/*     private static Villain_Manager instance;
 
     // Villain_Manager 인스턴스에 접근할 수 있는 프로퍼티
     public static Villain_Manager Instance
@@ -39,7 +39,7 @@ public class Villain_Manager : MonoBehaviour
             }
             return instance;
         }
-    }
+    } */
     [SerializeField] Villain[] villains;
     Coroutine coroutine;
 

@@ -17,9 +17,9 @@ public enum CCTV_POS
     LOBBY,//로비
     BREAK_ROOM,//탕비실
 }
-public class CCTV_Manger : MonoBehaviour//싱글톤
+public class CCTV_Manger : Singleton<CCTV_Manger>
 {
-    private static CCTV_Manger instance;
+/*     private static CCTV_Manger instance;
 
     // CCTV_Manger 인스턴스에 접근할 수 있는 프로퍼티
     public static CCTV_Manger Instance
@@ -40,7 +40,7 @@ public class CCTV_Manger : MonoBehaviour//싱글톤
             }
             return instance;
         }
-    }
+    } */
     [SerializeField] List<Camera> list_cctv;
     [SerializeField] RawImage cctv_view; //cctv화면
     [SerializeField] Texture broken_cctv_view; //끊긴 cctv화면

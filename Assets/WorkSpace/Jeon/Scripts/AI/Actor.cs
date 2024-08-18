@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Sirenix.Serialization;
-using Sirenix.OdinInspector;  // Odin Inspector 네임스페이스 추가
+using Sirenix.OdinInspector;
+using System.Runtime.Serialization;  // Odin Inspector 네임스페이스 추가
 
 public class Actor : SerializedMonoBehaviour
 {
@@ -27,33 +28,29 @@ public class Actor : SerializedMonoBehaviour
 
     private void Update()
     {
-        // 이동
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
-
-        if (movement != Vector2.zero)
+        // 이
+        if (!UiUtils.GetUI<DialogueManager>().gameObject.activeSelf)
         {
-            lastMovement = movement;
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
+            float moveVertical = Input.GetAxisRaw("Vertical");
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
 
-        RB.velocity = movement * 4;
-
-        // 애니메이션 및 스프라이트 방향 설정
-        UpdateAnimationAndDirection();
-
-        foreach (var keyAction in keyActions)
-        {
-            if (Input.GetKeyDown(keyAction.Key))
+            if (movement != Vector2.zero)
             {
-                keyAction.Value.Invoke();
+                lastMovement = movement;
+                isMoving = true;
             }
+            else
+            {
+                isMoving = false;
+            }
+
+            RB.velocity = movement * 4;
+
+            // 애니메이션 및 스프라이트 방향 설정
+            
         }
+UpdateAnimationAndDirection();
     }
 
     private void UpdateAnimationAndDirection()
@@ -89,22 +86,6 @@ public class Actor : SerializedMonoBehaviour
         if (directionSprites.ContainsKey(lastMovement))
         {
             SR.sprite = directionSprites[lastMovement];
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.TryGetComponent<DayDoor>(out DayDoor component))
-        {
-            keyActions.Add(KeyCode.Space, component.OpenDoor);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.TryGetComponent<Door>(out Door component))
-        {
-            keyActions.Remove(KeyCode.Space);
         }
     }
 }

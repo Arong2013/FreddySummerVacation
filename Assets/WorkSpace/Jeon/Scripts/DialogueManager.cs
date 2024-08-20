@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Button[] responseButtons;
-    [SerializeField] private Image CharacterIcon,VillainIcon;
+    [SerializeField] private Image CharacterIcon, VillainIcon;
     [SerializeField] private string googleSheetUrl;
     [SerializeField] private List<Dialogue> dialogues;
     private Dictionary<string, Dialogue> dialogueDictionary;
@@ -34,18 +34,28 @@ public class DialogueManager : MonoBehaviour
             }
             else if (isTextDisplayed)
             {
-                if (currentDialogue.responses.Length < 1)
+                // 시퀀스 ID가 같은 경우에만 다음 대화로 이동
+                if (currentDialogueIndex + 1 < dialogues.Count)
                 {
-                    gameObject.SetActive(false);
+                    var nextDialogue = dialogues[currentDialogueIndex + 1];
+                    if (currentDialogue.sequence == nextDialogue.sequence)
+                    {
+                        currentDialogueIndex++;
+                        StartDialogue(nextDialogue.id);
+                    }
+                    else
+                    {
+                        print("끝");
+                        gameObject.SetActive(false);
+                    }
                 }
                 else
                 {
-                    ToggleResponseButtons(true);
+                    gameObject.SetActive(false);
                 }
             }
         }
     }
-
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
@@ -60,24 +70,52 @@ public class DialogueManager : MonoBehaviour
             dialogues = new List<Dialogue>(dialogueArray.dialogues);
             dialogueDictionary = new Dictionary<string, Dialogue>();
             foreach (var dialogue in dialogues)
+            {
                 dialogueDictionary[dialogue.id] = dialogue;
+            }
         }
-        print("끝");
+        Debug.Log("끝");
     }
 
     public void StartDialogue(string dialogueId)
     {
+        gameObject.SetActive(true);
+
         if (string.IsNullOrEmpty(dialogueId))
         {
-            ShowNextDialogue();
+            // 아이디가 없을 경우 대화 텍스트만 표시
+            if (currentDialogue != null)
+            {
+                dialogueText.gameObject.SetActive(true);
+                StartCoroutine(TypeText(currentDialogue.text, currentDialogue.textStyles));
+            }
+            else
+            {
+                Debug.LogError("No dialogue available to display.");
+            }
             return;
         }
-        gameObject.SetActive(true);
+
         if (dialogueDictionary.TryGetValue(dialogueId, out currentDialogue))
         {
             currentDialogueIndex = dialogues.IndexOf(currentDialogue);
             dialogueText.gameObject.SetActive(true);
             UpdateIcons(currentDialogue.characterIconPath, currentDialogue.villainIconPath);
+
+            // ID에 따라 텍스트 정렬 설정
+            if (dialogueId == "P")
+            {
+                dialogueText.alignment = TextAlignmentOptions.Left;
+            }
+            else if (dialogueId == "M")
+            {
+                dialogueText.alignment = TextAlignmentOptions.Center;
+            }
+            else
+            {
+                dialogueText.alignment = TextAlignmentOptions.Right;
+            }
+
             StartCoroutine(TypeText(currentDialogue.text, currentDialogue.textStyles));
         }
         else
@@ -128,12 +166,9 @@ public class DialogueManager : MonoBehaviour
     private void ToggleResponseButtons(bool show)
     {
         dialogueText.gameObject.SetActive(!show);
-        foreach (var button in responseButtons)
-        {
-            button.gameObject.SetActive(false);
-        }
 
-        if (show)
+        // 응답이 있을 경우에만 버튼을 표시
+        if (show && currentDialogue.responses.Length > 0)
         {
             for (int i = 0; i < responseButtons.Length; i++)
             {
@@ -145,25 +180,39 @@ public class DialogueManager : MonoBehaviour
                     responseButtons[i].onClick.RemoveAllListeners();
                     responseButtons[i].onClick.AddListener(() => OnResponseSelected(index));
                 }
+                else
+                {
+                    responseButtons[i].gameObject.SetActive(false);
+                }
             }
-        }
-    }
-
-    public void OnResponseSelected(int responseIndex)
-    {
-        foreach (var button in responseButtons)
-        {
-            button.gameObject.SetActive(false);
-        }
-
-        var response = currentDialogue.responses[responseIndex];
-        if (!string.IsNullOrEmpty(response.nextId))
-        {
-            StartDialogue(response.nextId);
         }
         else
         {
-            gameObject.SetActive(false);
+            // 응답이 없을 경우 모든 버튼을 숨김
+            foreach (var button in responseButtons)
+            {
+                button.gameObject.SetActive(false);
+            }
+        }
+    }
+    public void OnResponseSelected(int responseIndex)
+    {
+        var response = currentDialogue.responses[responseIndex];
+        if (!string.IsNullOrEmpty(response.nextId))
+        {
+            // 다음 대화의 시퀀스 ID와 상관없이 대화를 진행
+            if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
+            {
+                StartDialogue(nextDialogue.id);
+            }
+            else
+            {
+                gameObject.SetActive(false); // 다음 대화를 찾지 못한 경우 대화 종료
+            }
+        }
+        else
+        {
+            gameObject.SetActive(false); // 다음 ID가 없으면 대화 종료
         }
     }
 
@@ -171,8 +220,17 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogueIndex + 1 < dialogues.Count)
         {
+            var nextDialogue = dialogues[currentDialogueIndex + 1];
+
+            // 다음 대화의 시퀀스 ID가 다를 경우
+            if (currentDialogue.sequence != nextDialogue.sequence)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
             currentDialogueIndex++;
-            StartDialogue(dialogues[currentDialogueIndex].id);
+            StartDialogue(nextDialogue.id);
         }
         else
         {

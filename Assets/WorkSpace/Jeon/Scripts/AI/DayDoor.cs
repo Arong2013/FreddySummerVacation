@@ -15,7 +15,7 @@ public class DayDoor : MonoBehaviour
     [SerializeField] GameObject Vies;
 
 
-    [SerializeField] string StartDialogueID;
+    public string StartDialogueID;
     private void Awake()
     {
         SP = GetComponent<SpriteRenderer>();
@@ -23,9 +23,10 @@ public class DayDoor : MonoBehaviour
     }
     public void OpenDoor()
     {
-        UiUtils.GetUI<DialogueManager>().StartDialogue(StartDialogueID);
+        DialogueManager dialogueManager = UiUtils.GetUI<DialogueManager>();
+        dialogueManager.StartDialogue(StartDialogueID);
+        dialogueManager.dayDoor = this;
     }
-
     private void Update()
     {
         if (isOpen && Input.GetKeyDown(KeyCode.Space) && !UiUtils.GetUI<DialogueManager>().gameObject.activeSelf)

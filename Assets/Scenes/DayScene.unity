@@ -1645,6 +1645,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5612600374207637380, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5612600374207637380, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6117046880226723855, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1735,7 +1743,7 @@ PrefabInstance:
       objectReference: {fileID: 713231262}
     - target: {fileID: 9103889430154613147, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
       propertyPath: googleSheetUrl
-      value: https://script.google.com/macros/s/AKfycbzhxKirXOzj8ZMiM7OzM6GOAFmo2EnvPWFIEmtixIw_tVQLV8m8VbIOznaiX898G9bT/exec
+      value: https://script.google.com/macros/s/AKfycbz-YOwJTZyMLi6VvTkR1Is-Cneu65PUnKqOKT-7PM7TILc1XZ107lKmnhxlCPP52zBM/exec
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3197,7 +3205,7 @@ MonoBehaviour:
   OpenDoorSP: {fileID: 21300000, guid: 6223e4e8af885c647881da4dc4066b76, type: 3}
   CloseDoorSP: {fileID: 21300000, guid: fad477d72c23ff34b941aa1441d14632, type: 3}
   Vies: {fileID: 252901664}
-  StartDialogueID: D1_Ba1
+  StartDialogueID: D1_Pa_1
 --- !u!61 &1376733618
 BoxCollider2D:
   m_ObjectHideFlags: 0

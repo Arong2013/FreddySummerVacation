@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -17,12 +16,17 @@ public class DialogueManager : MonoBehaviour
     private int currentDialogueIndex = -1;
     private bool isTyping = false;
     private bool isTextDisplayed = false;
+    private bool canProceed = true; // K 키 입력을 막기 위한 변수
+    public DayDoor dayDoor;
 
-    private void OnDisable() => Time.timeScale = 1f;
-
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
+        dayDoor.StartDialogueID = currentDialogue.id;
+    } 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && canProceed)
         {
             if (isTyping)
             {
@@ -34,9 +38,18 @@ public class DialogueManager : MonoBehaviour
             }
             else if (isTextDisplayed)
             {
-                // 시퀀스 ID가 같은 경우에만 다음 대화로 이동
                 if (currentDialogueIndex + 1 < dialogues.Count)
                 {
+                    if (currentDialogue.responses != null && currentDialogue.responses.Length > 0)
+                    {
+                        ToggleResponseButtons(true); // 리스폰이 존재하면 버튼 활성화
+                        canProceed = false; // 리스폰이 존재하면 K 키 입력을 막음
+                        return;
+                    }
+                    else
+                    {
+                        ToggleResponseButtons(false); // 리스폰이 없으면 버튼 비활성화
+                    }
                     var nextDialogue = dialogues[currentDialogueIndex + 1];
                     if (currentDialogue.sequence == nextDialogue.sequence)
                     {
@@ -45,17 +58,19 @@ public class DialogueManager : MonoBehaviour
                     }
                     else
                     {
-                        print("끝");
-                        gameObject.SetActive(false);
+                        ToggleResponseButtons(false); // 리스폰 버튼 비활성화
+                        gameObject.SetActive(false);  // 대화 매니저 비활성화
                     }
                 }
                 else
                 {
+                    ToggleResponseButtons(false); // 대화 종료 시 버튼 비활성화
                     gameObject.SetActive(false);
                 }
             }
         }
     }
+
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
         UnityWebRequest www = UnityWebRequest.Get(googleSheetUrl);
@@ -79,35 +94,18 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(string dialogueId)
     {
-        gameObject.SetActive(true);
-
-        if (string.IsNullOrEmpty(dialogueId))
-        {
-            // 아이디가 없을 경우 대화 텍스트만 표시
-            if (currentDialogue != null)
-            {
-                dialogueText.gameObject.SetActive(true);
-                StartCoroutine(TypeText(currentDialogue.text, currentDialogue.textStyles));
-            }
-            else
-            {
-                Debug.LogError("No dialogue available to display.");
-            }
-            return;
-        }
-
         if (dialogueDictionary.TryGetValue(dialogueId, out currentDialogue))
         {
+            gameObject.SetActive(true);
             currentDialogueIndex = dialogues.IndexOf(currentDialogue);
             dialogueText.gameObject.SetActive(true);
             UpdateIcons(currentDialogue.characterIconPath, currentDialogue.villainIconPath);
 
-            // ID에 따라 텍스트 정렬 설정
-            if (dialogueId == "P")
+            if (currentDialogue.characterId == "P")
             {
                 dialogueText.alignment = TextAlignmentOptions.Left;
             }
-            else if (dialogueId == "M")
+            else if (currentDialogue.characterId == "M")
             {
                 dialogueText.alignment = TextAlignmentOptions.Center;
             }
@@ -120,6 +118,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            Debug.LogError("Dialogue ID not found: " + dialogueId);
             gameObject.SetActive(false);
         }
     }
@@ -167,7 +166,6 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueText.gameObject.SetActive(!show);
 
-        // 응답이 있을 경우에만 버튼을 표시
         if (show && currentDialogue.responses.Length > 0)
         {
             for (int i = 0; i < responseButtons.Length; i++)
@@ -188,33 +186,38 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            // 응답이 없을 경우 모든 버튼을 숨김
             foreach (var button in responseButtons)
             {
                 button.gameObject.SetActive(false);
             }
         }
     }
-    public void OnResponseSelected(int responseIndex)
+
+  public void OnResponseSelected(int responseIndex)
+{
+    canProceed = true; // 리스폰을 선택한 후에는 K 키 입력을 다시 허용
+    dialogueText.gameObject.SetActive(true); // 대화 텍스트 다시 활성화
+    ToggleResponseButtons(false); // 리스폰 버튼 비활성화
+
+    var response = currentDialogue.responses[responseIndex];
+    if (!string.IsNullOrEmpty(response.nextId))
     {
-        var response = currentDialogue.responses[responseIndex];
-        if (!string.IsNullOrEmpty(response.nextId))
+        if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
         {
-            // 다음 대화의 시퀀스 ID와 상관없이 대화를 진행
-            if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
-            {
-                StartDialogue(nextDialogue.id);
-            }
-            else
-            {
-                gameObject.SetActive(false); // 다음 대화를 찾지 못한 경우 대화 종료
-            }
+            StartDialogue(nextDialogue.id);
         }
         else
         {
-            gameObject.SetActive(false); // 다음 ID가 없으면 대화 종료
+            gameObject.SetActive(false);
         }
     }
+    else
+    {
+        gameObject.SetActive(false);
+    }
+}
+
+
 
     private void ShowNextDialogue()
     {
@@ -222,7 +225,6 @@ public class DialogueManager : MonoBehaviour
         {
             var nextDialogue = dialogues[currentDialogueIndex + 1];
 
-            // 다음 대화의 시퀀스 ID가 다를 경우
             if (currentDialogue.sequence != nextDialogue.sequence)
             {
                 gameObject.SetActive(false);

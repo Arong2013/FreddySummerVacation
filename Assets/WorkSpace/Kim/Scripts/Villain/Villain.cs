@@ -18,22 +18,32 @@ public class Villain : MonoBehaviour
     protected Coroutine move_coroutine;
     protected Transform[] cur_move_pos_list;
     protected int cur_return_index;
+    protected bool isWaring = false;
+    protected bool isClosing = false;
     public bool IsAttack {  set {isAttack = value;} get {return isAttack;}    }
+    public bool IsWaring {  set {isWaring = value;} get {return isWaring;}    }
+    public bool IsClosing {  set {isClosing = value;} get {return isClosing;}    }
     //문을 닫았는지 확인할거 필요함
     public void Initialize(VILLAIN_DIFFICULTY difficulty)
     {
+        gameObject.SetActive(true);
         pos_index = 0;
         isAttack = false;
+        isWaring = false;
+        isClosing = false;
         SetDifficulty(difficulty);
-        if(gameObject.activeSelf)
-            move_coroutine = StartCoroutine(Move());
+        move_coroutine = StartCoroutine(Move());
+    }
+    public void Stop()
+    {
+        StopCoroutine(move_coroutine);
     }
     public virtual void SetDifficulty(VILLAIN_DIFFICULTY difficulty)
     {
         switch(difficulty)
         {
             case VILLAIN_DIFFICULTY.EASY:
-                move_delaying = 15.0f;//나중에 난이도별로 수정
+                move_delaying = 20.0f;
                 cur_move_pos_list = move_Pos_list;
                 cur_return_index = return_index;
                 break;
@@ -43,7 +53,7 @@ public class Villain : MonoBehaviour
                 cur_return_index = return_index;
                 break;
             case VILLAIN_DIFFICULTY.HARD:
-                move_delaying = 15.0f;
+                move_delaying = 10.0f;
                 cur_move_pos_list = hard_move_Pos_list;
                 cur_return_index = hard_return_index;
                 break;
@@ -56,6 +66,8 @@ public class Villain : MonoBehaviour
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
             transform.position = cur_move_pos_list[pos_index++].position;
             yield return new WaitForSeconds(move_delaying);
+            isClosing = false;
+            isWaring = false;
         }
         //반복문 빠져나오면 플레이어 공격
     }
@@ -91,6 +103,8 @@ public class Villain : MonoBehaviour
     }
     protected void AttackPlayer()
     {
+        isAttack = true;
+        StopCoroutine(move_coroutine);
         gameObject.transform.position = door_pos.position;
         door.OpenDoor();
     }

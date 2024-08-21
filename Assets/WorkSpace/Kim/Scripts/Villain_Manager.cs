@@ -16,9 +16,9 @@ public enum VILLAIN_INDEX
     D,
     E
 }
-public class Villain_Manager : MonoBehaviour
+public class Villain_Manager : Singleton<Villain_Manager>
 {
-    private static Villain_Manager instance;
+/*     private static Villain_Manager instance;
 
     // Villain_Manager 인스턴스에 접근할 수 있는 프로퍼티
     public static Villain_Manager Instance
@@ -39,7 +39,7 @@ public class Villain_Manager : MonoBehaviour
             }
             return instance;
         }
-    }
+    } */
     [SerializeField] Villain[] villains;
     Coroutine coroutine;
 
@@ -50,6 +50,21 @@ public class Villain_Manager : MonoBehaviour
     public void StartMove(VILLAIN_INDEX index, VILLAIN_DIFFICULTY dIFFICULTY)
     {
         villains[(int)index].Initialize(dIFFICULTY);
+    }
+    public void Stop_All_Villain()
+    {
+        foreach(var v in villains)
+            v.Stop();
+    }
+    public void Door_Closing()
+    {
+        foreach(var v in villains)
+            v.IsClosing = true;
+    }
+    public void Warning()
+    {
+        foreach(var v in villains)
+            v.IsWaring = true;
     }
     public void SetTimer_Villain_E(bool StartOrStop)
     {

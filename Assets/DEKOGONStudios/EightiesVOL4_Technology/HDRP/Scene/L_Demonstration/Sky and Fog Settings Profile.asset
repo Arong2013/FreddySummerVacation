@@ -119,6 +119,34 @@ MonoBehaviour:
   fogType:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-6579781893415889865
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: 0
+  contrast:
+    m_OverrideState: 1
+    m_Value: 20
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  hueShift:
+    m_OverrideState: 1
+    m_Value: 0
+  saturation:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-6543054007781482298
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -419,15 +447,7 @@ MonoBehaviour:
   m_Name: Sky and Fog Settings Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -6887655109359630186}
-  - {fileID: -7221152502292539064}
-  - {fileID: -4213859631919875661}
-  - {fileID: -6543054007781482298}
-  - {fileID: -4117185994780665694}
-  - {fileID: 5302192179452012788}
-  - {fileID: 5723890383903451126}
-  - {fileID: 1223791594624983264}
-  - {fileID: 7250865745048926166}
+  - {fileID: -6579781893415889865}
 --- !u!114 &1223791594624983264
 MonoBehaviour:
   m_ObjectHideFlags: 3

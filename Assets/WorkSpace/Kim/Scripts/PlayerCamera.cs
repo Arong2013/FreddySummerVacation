@@ -22,11 +22,10 @@ public class PlayerCamera : MonoBehaviour
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
             yRotation += mouseX; // y축 회전 값을 증가
-            yRotation = Mathf.Clamp(yRotation, -120f, 0f); // y축 회전 제한
             xRotation -= mouseY; // x축 회전 값을 감소
             xRotation = Mathf.Clamp(xRotation, -70f, 70f); // x축 회전 제한
 
-            transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f); // 회전을 업데이트
+            transform.eulerAngles = new Vector3(0, yRotation, 0.0f); // 회전을 업데이트
             mainCamera.transform.eulerAngles = new Vector3(xRotation, transform.eulerAngles.y, 0);
         }
     }

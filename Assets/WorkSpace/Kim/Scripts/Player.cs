@@ -4,19 +4,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
-    [SerializeField] float interactionDistance;
+    [SerializeField] float interactionDistance = 30.0f;
     [SerializeField] LayerMask layerMask;
     [SerializeField] PlayerCamera playerCamera;
-    //[SerializeField] float moveSpeed = 5f; // 플레이어 이동 속도
-    //Vector3 velocity = Vector3.zero;
-    //Vector3 dir = Vector3.zero;
+    [SerializeField] float moveSpeed = 5f; // 플레이어 이동 속도
+    Vector3 velocity = Vector3.zero;
+    Vector3 dir = Vector3.zero;
     bool isStop = false;//true일때 멈춤
     public bool IsStop { get { return isStop;} set {isStop = value; playerCamera.Lock = value;} }
     public void Initialize()
     {
         isStop = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
     public void interact(InputAction.CallbackContext callbackContext)
     {
@@ -32,7 +30,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-/*     void Update()//////플레이어 이동 코드
+    void Update()
     {
         if(!IsStop)
             transform.Translate(velocity * Time.deltaTime);
@@ -42,5 +40,5 @@ public class Player : MonoBehaviour
         Vector2 v = context.ReadValue<Vector2>();
         dir = new Vector3(v.x, 0, v.y);
         velocity = dir * moveSpeed;
-    } */
+    }
 }

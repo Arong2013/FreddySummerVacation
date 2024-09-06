@@ -40,8 +40,8 @@ public class Game_Manager : Singleton<Game_Manager>
         input.actions["Interact"].started += player.interact;
         input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
         input.actions["ESC"].started += door.MoveBackInside;
-        input.actions["Move"].performed += player.Move;
-        input.actions["Move"].canceled += player.Move;
+        //input.actions["Move"].performed += player.Move;
+        //input.actions["Move"].canceled += player.Move;
         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A, VILLAIN_DIFFICULTY.NORMAL);
         player.Initialize();
         CCTV_Manger.Instance.Initialize();

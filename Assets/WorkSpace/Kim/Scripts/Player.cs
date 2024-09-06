@@ -28,24 +28,17 @@ public class Player : MonoBehaviour
                 playerCamera.Lock = true;//플레이어 화면 움직임 제한
                 isStop = true;
             }
-            else if(hit.collider.gameObject.tag == "DOOR")
-            {
-                Door door = hit.collider.gameObject.GetComponent<Door>();
-                door.LookOutSide(transform);
-                playerCamera.Lock = true;//플레이어 화면 움직임 제한
-                isStop = true;
-            }
         }
     }
     void Update()
     {
-        /* if(!IsStop)
-            transform.Translate(velocity * Time.deltaTime); */
+        if(!IsStop)
+            transform.Translate(velocity * Time.deltaTime);
     }
     public void Move(InputAction.CallbackContext context)
     {
-        /*Vector2 v = context.ReadValue<Vector2>();
+        Vector2 v = context.ReadValue<Vector2>();
         dir = new Vector3(v.x, 0, v.y);
-        velocity = dir * moveSpeed; */
+        velocity = dir * moveSpeed;
     }
 }

@@ -32,7 +32,7 @@ public class Villain : MonoBehaviour
         isWaring = false;
         isClosing = false;
         SetDifficulty(difficulty);
-        move_coroutine = StartCoroutine(Move());
+        //move_coroutine = StartCoroutine(Move());
     }
     public void Stop()
     {

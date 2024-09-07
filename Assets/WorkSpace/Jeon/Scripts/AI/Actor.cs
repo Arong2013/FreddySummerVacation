@@ -48,9 +48,13 @@ public class Actor : SerializedMonoBehaviour
             RB.velocity = movement * 4;
 
             // 애니메이션 및 스프라이트 방향 설정
-            
+
         }
-UpdateAnimationAndDirection();
+        else
+        {
+            isMoving = false;
+        }
+        UpdateAnimationAndDirection();
     }
 
     private void UpdateAnimationAndDirection()
@@ -64,19 +68,15 @@ UpdateAnimationAndDirection();
         {
             SR.flipX = lastMovement.x < 0;
         }
-
-        // 애니메이션 재생 여부 설정
         AN.SetBool("IsWalk", isMoving);
-
         if (isMoving)
         {
             AN.speed = 1; // 애니메이션 재생
         }
         else
         {
-            AN.speed = 0; // 애니메이션 정지
 
-            // 걷지 않을 때 스프라이트 변경
+            AN.speed = 0; // 애니메이션 정지
             UpdateSpriteDirection();
         }
     }

@@ -32,11 +32,12 @@ public class Villain : MonoBehaviour
         isWaring = false;
         isClosing = false;
         SetDifficulty(difficulty);
-        //move_coroutine = StartCoroutine(Move());
+        move_coroutine = StartCoroutine(Move());
     }
     public void Stop()
     {
         StopCoroutine(move_coroutine);
+        gameObject.SetActive(false);
     }
     public virtual void SetDifficulty(VILLAIN_DIFFICULTY difficulty)
     {
@@ -65,7 +66,7 @@ public class Villain : MonoBehaviour
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
             transform.position = cur_move_pos_list[pos_index++].position;
-            yield return new WaitForSeconds(move_delaying);
+            yield return new WaitForSeconds(1.0f);
             isClosing = false;
             isWaring = false;
         }

@@ -1,0 +1,349 @@
+fileFormatVersion: 2
+guid: b5b9dbf2d1d155942ba3cec262e7797d
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BinderBlock blue_
+    second: {fileID: 2100000, guid: c993b507e3b536044829b5ba6516de34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BinderBlock green_
+    second: {fileID: 2100000, guid: 854a4762d2c37fb48bc1b82d7f88eb25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Book  backs_
+    second: {fileID: 2100000, guid: e82076712c0177e45b5fe6f7422a972a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Books
+    second: {fileID: 2100000, guid: eee89c1deebd4ea4b921dfca16431945, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brass
+    second: {fileID: 2100000, guid: a3fc9c9f7dcb56a4495819f43cc8a03c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cement
+    second: {fileID: 2100000, guid: a4b046f31fb947540b82c698ef9e9fbf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CementNew
+    second: {fileID: 2100000, guid: e0b0f99e59c6eee4b9a919d8a57797cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Galvanized steel
+    second: {fileID: 2100000, guid: b1cada1e66156e34383ae67983a76cb6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Galvanized steel dark
+    second: {fileID: 2100000, guid: d55de790ef950a340b1433b470cb71c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass clear_
+    second: {fileID: 2100000, guid: 6e37ec858ae35bb4d83be4df9077b6cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gravel
+    second: {fileID: 2100000, guid: 3e7309fd888a17c428396eaf64da7925, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leafs
+    second: {fileID: 2100000, guid: 21883226b642dec47bafc3c8ce6c9ab4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light  buble
+    second: {fileID: 2100000, guid: 7e0954fc54d4f8141a23ffd17a0165d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light_
+    second: {fileID: 2100000, guid: 473dc0e97be8fbf4f961d4a4af0d3ad3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moden Fabric  white_
+    second: {fileID: 2100000, guid: 169367be8a82eee4796ad9e53c273292, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moden Fabric black
+    second: {fileID: 2100000, guid: b03e06e989ad31d4bbcd1bf5c2022608, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Old Metal
+    second: {fileID: 2100000, guid: 42a04a8118595594f9db7a69d6006658, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PC
+    second: {fileID: 2100000, guid: 2302b5c15a3b19747871686ec27ebdb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PC Light_
+    second: {fileID: 2100000, guid: cef28dfe369a70b459ea91201a214af2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Round pillow  black_
+    second: {fileID: 2100000, guid: d323b9b82fd5bc6459e1c297e0404f98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Round pillow white
+    second: {fileID: 2100000, guid: 3d0707e7b689ff347a06da7c09a31ffb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aluminium
+    second: {fileID: 2100000, guid: ad3329874b16d1445a9bbe8bfde8a946, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: art cool
+    second: {fileID: 2100000, guid: 23ca008f4bc47a44a81e19c2124b867b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: art retro
+    second: {fileID: 2100000, guid: 0593395ac9d75e04aac5625cac8a67b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: art warm_
+    second: {fileID: 2100000, guid: bf6fbf9b5b07993488bc31ab4ec545b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black carpet
+    second: {fileID: 2100000, guid: c184c9eeee1370e41a0986ba6d1c5e18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: book block green
+    second: {fileID: 2100000, guid: 5621f221b9d47134989f6cc3ba2f500b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: book block old_
+    second: {fileID: 2100000, guid: 9693e544123f83c468a89ed56408e3aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brown carpet_
+    second: {fileID: 2100000, guid: a5a9c1efa8bf0954789b037473ac21a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brown plywood
+    second: {fileID: 2100000, guid: a8391a61c469a0847bb98b277e54db96, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fany glass
+    second: {fileID: 2100000, guid: d1e32c0353ea0644b8130c834de7ad83, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass_
+    second: {fileID: 2100000, guid: 8269a64eb10839841aba81edc64ae58f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gray felt_
+    second: {fileID: 2100000, guid: dc414691e84c3e44eae8f392609828fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: marbel
+    second: {fileID: 2100000, guid: d72ef78a91fb4cc49b8f20418cb16a55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mesh holes White
+    second: {fileID: 2100000, guid: 2560cf726013fb641abfad01e0e75b67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mesh holes black_
+    second: {fileID: 2100000, guid: 37fce7c623b6bd3428bb8ea794591797, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mesh_
+    second: {fileID: 2100000, guid: ac00ac6f48da6eb4ea5e07c6a3b5f394, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: office flats
+    second: {fileID: 2100000, guid: 8d84cd6b284554443974172fdaeeb382, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plushRug  purple
+    second: {fileID: 2100000, guid: 9c86530caf1ed2d4f9436f09d7de17b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: polished wood
+    second: {fileID: 2100000, guid: 778563b890367a34790bd5f76776ef30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red plywood
+    second: {fileID: 2100000, guid: e9cb2ba34672fdd43821093426099045, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: terracotta
+    second: {fileID: 2100000, guid: 8c6b317d76ea4d84bbf5e8f2fab77a7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: water_
+    second: {fileID: 2100000, guid: 30bcb462ba64d8f4b8819ed44678355d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white  light
+    second: {fileID: 2100000, guid: 4b1bf03ebde88e041a79332e74c89555, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white felt _
+    second: {fileID: 2100000, guid: acd6f3295f2a3c545bc66799d9c8f98e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white rug_
+    second: {fileID: 2100000, guid: 698d7611dd0874248bf55fabef851452, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: whiteTiles
+    second: {fileID: 2100000, guid: ed127b47c5e211f4f90b7c15dcb7a8c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yellow plywood
+    second: {fileID: 2100000, guid: 15216b5d2424d8642a65f45e179f6b2b, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

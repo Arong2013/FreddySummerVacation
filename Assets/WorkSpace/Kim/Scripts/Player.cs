@@ -7,16 +7,14 @@ public class Player : MonoBehaviour
     [SerializeField] float interactionDistance;
     [SerializeField] LayerMask layerMask;
     [SerializeField] PlayerCamera playerCamera;
-    //[SerializeField] float moveSpeed = 5f; // 플레이어 이동 속도
-    //Vector3 velocity = Vector3.zero;
-    //Vector3 dir = Vector3.zero;
+    [SerializeField] float moveSpeed; // 플레이어 이동 속도
+    Vector3 velocity = Vector3.zero;
+    Vector3 dir = Vector3.zero;
     bool isStop = false;//true일때 멈춤
     public bool IsStop { get { return isStop;} set {isStop = value; playerCamera.Lock = value;} }
     public void Initialize()
     {
         isStop = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
     public void interact(InputAction.CallbackContext callbackContext)
     {
@@ -30,11 +28,17 @@ public class Player : MonoBehaviour
                 playerCamera.Lock = true;//플레이어 화면 움직임 제한
                 isStop = true;
             }
+            else if(hit.collider.gameObject.tag == "DOOR")
+            {
+                Door door = hit.collider.gameObject.GetComponent<Door>();
+                door.LookOut();
+                playerCamera.Lock = true;//플레이어 화면 움직임 제한
+                isStop = true;
+            }
         }
     }
-/*     void Update()//////플레이어 이동 코드
-    {
-        if(!IsStop)
+/*    void Update()
+    {         if(!IsStop)
             transform.Translate(velocity * Time.deltaTime);
     }
     public void Move(InputAction.CallbackContext context)

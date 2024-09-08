@@ -12,6 +12,11 @@ public class CCTV_Move : MonoBehaviour
     [SerializeField] float mouseSensitivity; // 마우스 감도
     private float xRotation = 0.0f; // x축 회전 값
     private float yRotation = 0.0f; // y축 회전 값
+    [SerializeField] float L_xRotation_Limit;
+    [SerializeField] float R_xRotation_Limit;
+    [SerializeField] float L_yRotation_Limit;
+    [SerializeField] float R_yRotation_Limit;
+
     public bool Lock { set {lockRotate = value;} }
     [SerializeField] Camera cctvCamera;    // CCTV 카메라
     [SerializeField] Villain enemy;     // 적 게임 오브젝트
@@ -42,8 +47,8 @@ public class CCTV_Move : MonoBehaviour
 
             yRotation += mouseX; // y축 회전 값을 증가
             xRotation -= mouseY; // x축 회전 값을 감소
-            xRotation = Mathf.Clamp(xRotation, 0f, 60f); // x축 회전 제한
-            yRotation = Mathf.Clamp(yRotation, 0f, 70f); // y축 회전 제한
+            xRotation = Mathf.Clamp(xRotation, L_xRotation_Limit, R_xRotation_Limit); // x축 회전 제한
+            yRotation = Mathf.Clamp(yRotation, L_yRotation_Limit, R_yRotation_Limit); // y축 회전 제한
 
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0.0f); // 회전을 업데이트
         }

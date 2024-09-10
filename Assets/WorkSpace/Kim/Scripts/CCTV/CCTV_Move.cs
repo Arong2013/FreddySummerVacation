@@ -10,8 +10,8 @@ public class CCTV_Move : MonoBehaviour
     */
     bool lockRotate = true;//직접 움직임
     [SerializeField] float mouseSensitivity; // 마우스 감도
-    private float xRotation = 0.0f; // x축 회전 값
-    private float yRotation = 0.0f; // y축 회전 값
+    [SerializeField] float xRotation = 0.0f; // x축 회전 값
+    [SerializeField] float yRotation = 0.0f; // y축 회전 값
     [SerializeField] float L_xRotation_Limit;
     [SerializeField] float R_xRotation_Limit;
     [SerializeField] float L_yRotation_Limit;

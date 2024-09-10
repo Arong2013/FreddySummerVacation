@@ -40,13 +40,13 @@ public class Game_Manager : Singleton<Game_Manager>
         input.actions["Interact"].started += player.interact;
         input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
         input.actions["ESC"].started += door.MoveBackInside;
-        //input.actions["Move"].performed += player.Move;
+        //input.actions["Move"].performed += player.Move;//플레이어 움직임
         //input.actions["Move"].canceled += player.Move;
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A, VILLAIN_DIFFICULTY.NORMAL);
+/*         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A, VILLAIN_DIFFICULTY.NORMAL);빌런 테스트용
         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.B, VILLAIN_DIFFICULTY.NORMAL);
         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.C, VILLAIN_DIFFICULTY.NORMAL);
         Villain_Manager.Instance.StartMove(VILLAIN_INDEX.D, VILLAIN_DIFFICULTY.NORMAL);
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL);
+        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL); */
 
         player.Initialize();
         CCTV_Manger.Instance.Initialize();

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] float interactionDistance;
     [SerializeField] LayerMask layerMask;
     [SerializeField] PlayerCamera playerCamera;
+    [SerializeField] Camera mainCam;
     [SerializeField] float moveSpeed; // 플레이어 이동 속도
     Vector3 velocity = Vector3.zero;
     Vector3 dir = Vector3.zero;
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public void interact(InputAction.CallbackContext callbackContext)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance, layerMask))
+        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, interactionDistance, layerMask))
         {
             if(hit.collider.gameObject.tag == "CCTV MONITOR")
             {

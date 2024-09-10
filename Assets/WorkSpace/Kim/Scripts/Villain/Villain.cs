@@ -5,7 +5,7 @@ using UnityEngine;
 public class Villain : MonoBehaviour
 {
     protected bool isAttack = false;
-    protected float move_delaying = 15.0f;  ///////테스트용 1초 나중에 기본값 15
+    protected float move_delaying = 15.0f;
     protected int pos_index = 0;
     protected float attackSpeed = 10f;
     [SerializeField] protected Door door;
@@ -66,7 +66,7 @@ public class Villain : MonoBehaviour
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
             transform.position = cur_move_pos_list[pos_index++].position;
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(move_delaying);
             isClosing = false;
             isWaring = false;
         }

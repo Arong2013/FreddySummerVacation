@@ -5,17 +5,17 @@ using UnityEngine.UIElements;
 
 public class Door : MonoBehaviour
 {
-    public Transform doorTransform; // 문 객체의 Transform
-    public Transform doorPivotTransform; // 문 회전축 객체의 Transform
-    public Transform playerCameraTransform; //플레이어 카메라의 Transform
-    public Vector3 openRotation = new Vector3(0, 45, 0); // 문이 열렸을 때의 회전값
-    public Vector3 closedRotation = new Vector3(0, 0, 0); // 문이 닫혔을 때의 회전값
-    public float rotationSpeed = 2.0f; // 회전 속도
-    public float interactionDistance = 30.0f; // 플레이어와 문의 상호작용 거리
-
+    [SerializeField] Transform doorTransform; // 문 객체의 Transform
+    [SerializeField] Transform doorPivotTransform; // 문 회전축 객체의 Transform
+    [SerializeField] Transform playerCameraTransform; //플레이어 카메라의 Transform
+    [SerializeField] Vector3 openRotation = new Vector3(0, 45, 0); // 문이 열렸을 때의 회전값
+    [SerializeField] Vector3 closedRotation = new Vector3(0, 0, 0); // 문이 닫혔을 때의 회전값
+    [SerializeField] float rotationSpeed = 2.0f; // 회전 속도
+    [SerializeField] float interactionDistance = 30.0f; // 플레이어와 문의 상호작용 거리
+    [SerializeField] Transform playerOriginPos; //원래 플레이어의 위치
     private bool isClosing = false; // 문이 닫히는 중인지 여부
 
-    public Transform player; // 플레이어의 Transform
+    [SerializeField] Transform player; // 플레이어의 Transform
     //public Vector3 lookRotation = new Vector3(45, 0, 0); // 플레이어가 고개를 숙이는 회전 값 (X축을 기준으로 45도)
     //public Vector3 lookPositionOffset = new Vector3(0, -1.5f, 0.5f); // 플레이어 위치 오프셋
     [SerializeField] Transform lookOutPos; //문밖을 쳐다볼때 움직일 위치
@@ -45,7 +45,7 @@ public class Door : MonoBehaviour
 /*                 }
             } */
         }
-        else if (Input.GetKeyUp(KeyCode.F) && isLookOut)
+        else if (Input.GetKeyUp(KeyCode.F) && isLookOut && isClosing)
         {
             isClosing = false; // 문 열기
             Game_Manager.Instance.GetPlayer.IsStop = false;
@@ -57,10 +57,12 @@ public class Door : MonoBehaviour
         if (isClosing)
         {
             doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(closedRotation), Time.deltaTime * rotationSpeed);
+            Debug.Log("닫음");
         }
         else
         {
             doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(openRotation), Time.deltaTime * rotationSpeed);
+            Debug.Log("열림");
         }
     }
 

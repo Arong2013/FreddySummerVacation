@@ -49,6 +49,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
+    public bool IsOn_CCTV { set{ isOn_CCTV = value; } get { return isOn_CCTV; }}
     [SerializeField] Camera cur_cam;
     bool isBroken = false;
     bool isOn_CCTV = false;
@@ -56,6 +57,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     public void Initialize()
     {
         isBroken = false;
+        isOn_CCTV = false;
     }
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {

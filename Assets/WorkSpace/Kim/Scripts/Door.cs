@@ -124,10 +124,11 @@ public class Door : MonoBehaviour
             // 다음 프레임까지 대기합니다.
             yield return null;
         }
-        isLookOut = true;
         // 전환이 완료되었으므로 목표 위치와 회전 값을 정확하게 설정합니다.
         player.position = lookOutPos.position;
         player.rotation = lookOutPos.rotation;
+
+        isLookOut = true;
     }
     public void MoveBackInside()//문을 닫으면서 뒤로 이동
     {

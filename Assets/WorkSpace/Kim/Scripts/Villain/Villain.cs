@@ -65,10 +65,12 @@ public class Villain : MonoBehaviour
         while(!isAttack)
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
-            transform.position = cur_move_pos_list[pos_index++].position;
+            transform.rotation = cur_move_pos_list[pos_index].rotation;
+            transform.position = cur_move_pos_list[pos_index].position;
             yield return new WaitForSeconds(move_delaying);
             isClosing = false;
             isWaring = false;
+            pos_index++;
         }
         //반복문 빠져나오면 플레이어 공격
     }

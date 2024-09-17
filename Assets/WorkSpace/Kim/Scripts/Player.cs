@@ -36,6 +36,13 @@ public class Player : MonoBehaviour
                 playerCamera.Lock = true;//플레이어 화면 움직임 제한
                 isStop = true;
             }
+            else if(hit.collider.gameObject.tag == "NOTE")
+            {
+                Note note = hit.collider.gameObject.GetComponent<Note>();
+                note.Interact();
+                playerCamera.Lock = true;//플레이어 화면 움직임 제한
+                isStop = true;
+            }
         }
     }
 /*    void Update()

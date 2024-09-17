@@ -9,6 +9,7 @@ public class Villain_D : Villain
         while(!isAttack)
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
+            transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
             yield return new WaitForSeconds(move_delaying);
             //문을 닫았었는지 확인

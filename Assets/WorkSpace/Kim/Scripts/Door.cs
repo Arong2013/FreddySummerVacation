@@ -57,12 +57,10 @@ public class Door : MonoBehaviour
         if (isClosing)
         {
             doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(closedRotation), Time.deltaTime * rotationSpeed);
-            Debug.Log("닫음");
         }
         else
         {
             doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(openRotation), Time.deltaTime * rotationSpeed);
-            Debug.Log("열림");
         }
     }
 

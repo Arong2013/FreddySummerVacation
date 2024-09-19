@@ -32,6 +32,7 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] PlayerInput input;
     [SerializeField] Door door;
     [SerializeField] Note note;
+    [SerializeField] bool isTesting;
     public Player GetPlayer => player;
     void Start()
     {
@@ -44,11 +45,14 @@ public class Game_Manager : Singleton<Game_Manager>
         input.actions["ESC"].started += note.Turn_Off_Note;
         //input.actions["Move"].performed += player.Move;//플레이어 움직임
         //input.actions["Move"].canceled += player.Move;
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A, VILLAIN_DIFFICULTY.NORMAL);//빌런 테스트용
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.B, VILLAIN_DIFFICULTY.NORMAL);
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.C, VILLAIN_DIFFICULTY.NORMAL);
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.D, VILLAIN_DIFFICULTY.NORMAL);
-        Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL);
+        if(isTesting)
+        {
+            Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A, VILLAIN_DIFFICULTY.NORMAL);//빌런 테스트용
+            Villain_Manager.Instance.StartMove(VILLAIN_INDEX.B, VILLAIN_DIFFICULTY.NORMAL);
+            Villain_Manager.Instance.StartMove(VILLAIN_INDEX.C, VILLAIN_DIFFICULTY.NORMAL);
+            Villain_Manager.Instance.StartMove(VILLAIN_INDEX.D, VILLAIN_DIFFICULTY.NORMAL);
+            Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL);
+        }
 
         player.Initialize();
         CCTV_Manger.Instance.Initialize();

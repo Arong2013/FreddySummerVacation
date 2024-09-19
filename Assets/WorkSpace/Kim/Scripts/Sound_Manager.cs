@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum SOUND_INDEX
+public enum AUDIO_INDEX
 {
     WARNING_SOUND,
     NEIGHBOR_NOISE
@@ -30,7 +30,12 @@ public class Sound_Manager : Singleton<Sound_Manager>
         }
     } */
     public AudioSource audioSource;  // 오디오 소스 컴포넌트
-    public AudioClip []soundEffect;    // 재생할 사운드 클립
+    public AudioClip []audioClips;    // 재생할 사운드 클립
+
+    public AudioClip GetAudioClip(AUDIO_INDEX index) 
+    {
+        return audioClips[(int)index];
+    }
 
     void Start()
     {
@@ -38,11 +43,11 @@ public class Sound_Manager : Singleton<Sound_Manager>
         //audioSource.Play();
     }
 
-    public void PlaySound(SOUND_INDEX index)
+    public void PlaySound(AUDIO_INDEX index)
     {
         // 특정 이벤트에서 효과음 재생
         //audioSource.PlayOneShot(soundEffect[(int)index]);아직 사운드 없음
-        if(index == SOUND_INDEX.WARNING_SOUND)
+        if(index == AUDIO_INDEX.WARNING_SOUND)
         {
             Debug.Log("경보 재생됨");
             Villain_Manager.Instance.Warning();

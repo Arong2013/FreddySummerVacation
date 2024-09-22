@@ -8,21 +8,20 @@ public class Door : MonoBehaviour
     [SerializeField] Transform doorTransform; // 문 객체의 Transform
     [SerializeField] Transform doorPivotTransform; // 문 회전축 객체의 Transform
     [SerializeField] Transform playerCameraTransform; //플레이어 카메라의 Transform
-    [SerializeField] Vector3 openRotation = new Vector3(0, 30, 0); // 문이 열렸을 때의 회전값
+    [SerializeField] Vector3 openRotation = new Vector3(0, 45, 0); // 문이 열렸을 때의 회전값
     [SerializeField] Vector3 closedRotation = new Vector3(0, 0, 0); // 문이 닫혔을 때의 회전값
     [SerializeField] float rotationSpeed = 2.0f; // 회전 속도
     [SerializeField] float interactionDistance = 30.0f; // 플레이어와 문의 상호작용 거리
-
+    [SerializeField] Transform playerOriginPos; //원래 플레이어의 위치
     private bool isClosing = false; // 문이 닫히는 중인지 여부
 
-    public Transform player; // 플레이어의 Transform
+    [SerializeField] Transform player; // 플레이어의 Transform
     //public Vector3 lookRotation = new Vector3(45, 0, 0); // 플레이어가 고개를 숙이는 회전 값 (X축을 기준으로 45도)
     //public Vector3 lookPositionOffset = new Vector3(0, -1.5f, 0.5f); // 플레이어 위치 오프셋
     [SerializeField] Transform lookOutPos; //문밖을 쳐다볼때 움직일 위치
-    [SerializeField] float transitionDurationToOut = 5f; // 회전 및 위치 전환 시간(밖을 보려고할때)
-    [SerializeField] float transitionDurationToInside = 0.3f; // 회전 및 위치 전환 시간(안으로 들어올때)
-    [SerializeField] float transitionDurationToOirgin = 5f; //플레이어 원래 자리로 돌아가는 시간
-    //[SerializeField] Transform originPlayerPos;
+    public float transitionDurationToOut = 3f; // 회전 및 위치 전환 시간(밖을 보려고할때)
+    public float transitionDurationToInside = 0.3f; // 회전 및 위치 전환 시간(안으로 들어올때)
+
     private Vector3 prevPosition;
     private Quaternion prevRotation;
     //private Vector3 targetPosition;
@@ -31,8 +30,6 @@ public class Door : MonoBehaviour
     public void OpenDoor() {isClosing = false;}
     void Update()
     {
-        Debug.Log("isClosing: " + isClosing);
-        Debug.Log("doorRotation: " + doorTransform.localRotation);
         if (Input.GetKeyDown(KeyCode.F) && isLookOut) //밖을 보고있을때 문을 닫을수있음
         {
 /*             Ray ray = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
@@ -48,7 +45,7 @@ public class Door : MonoBehaviour
 /*                 }
             } */
         }
-        else if (Input.GetKeyUp(KeyCode.F) && isLookOut)
+        else if (Input.GetKeyUp(KeyCode.F) && isLookOut && isClosing)
         {
             isClosing = false; // 문 열기
             Game_Manager.Instance.GetPlayer.IsStop = false;
@@ -67,7 +64,7 @@ public class Door : MonoBehaviour
         }
     }
 
-    /* private void OnTriggerEnter(Collider other)
+/*     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -89,19 +86,23 @@ public class Door : MonoBehaviour
             
         }
     } */
-    public void LookOutSide(Transform player)
+    public void LookOut()
     {
-        if(!isClosing)
         {
-            // 초기 위치와 회전 값을 저장합니다.
-            prevPosition = player.position;
-            prevRotation = player.rotation;
-            // 목표 위치와 회전 값을 계산합니다.
-            //targetPosition = player.position + player.TransformDirection(lookPositionOffset);
-            //targetRotation = player.rotation * Quaternion.Euler(lookRotation);
-            Game_Manager.Instance.GetPlayer.IsStop = true;
-            // 전환 시작
-            StartCoroutine(TransitionToLookOutside());
+            if(!isClosing)
+            {
+                // 초기 위치와 회전 값을 저장합니다.
+                prevPosition = player.position;
+                prevRotation = player.rotation;
+
+                // 목표 위치와 회전 값을 계산합니다.
+                //targetPosition = player.position + player.TransformDirection(lookPositionOffset);
+                //targetRotation = player.rotation * Quaternion.Euler(lookRotation);
+
+                Game_Manager.Instance.GetPlayer.IsStop = true;
+                // 전환 시작
+                StartCoroutine(TransitionToLookOutside());
+            }
         }
     }
 
@@ -121,17 +122,16 @@ public class Door : MonoBehaviour
             // 다음 프레임까지 대기합니다.
             yield return null;
         }
-        isLookOut = true;
         // 전환이 완료되었으므로 목표 위치와 회전 값을 정확하게 설정합니다.
         player.position = lookOutPos.position;
         player.rotation = lookOutPos.rotation;
+
+        isLookOut = true;
     }
     public void MoveBackInside()//문을 닫으면서 뒤로 이동
     {
         if(isLookOut)//플레이어가 문밖을 보고있을때만
-        {
             StartCoroutine(TransitionBackToPrevPosition());
-        }    
     }
     public void MoveBackInside(InputAction.CallbackContext callbackContext)//문이 열린채로 뒤로 이동
     {

@@ -49,16 +49,19 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
+    public bool IsOn_CCTV { set{ isOn_CCTV = value; } get { return isOn_CCTV; }}
     [SerializeField] Camera cur_cam;
     bool isBroken = false;
+    bool isOn_CCTV = false;
     public bool IsBroken { set{ isBroken = value; noise_image.gameObject.SetActive(value); } get { return isBroken; } }
     public void Initialize()
     {
         isBroken = false;
+        isOn_CCTV = false;
     }
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
-
+        isOn_CCTV = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Game_Manager.Instance.GetPlayer.IsStop = true;
@@ -80,8 +83,10 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)
     {
-        if(Game_Manager.Instance.GetPlayer.IsStop)//플레이어가 멈춰있을때/게임이 정지된 상태일 때만
+        if(Game_Manager.Instance.GetPlayer.IsStop && isOn_CCTV)//플레이어가 멈춰있을때/게임이 정지된 상태일 때만
         {
+            isOn_CCTV = false;
+            Cursor.visible = false;
             cur_cam.gameObject.SetActive(false);
             cctv_view.gameObject.SetActive(false);
             CCTV_Select.gameObject.SetActive(false);

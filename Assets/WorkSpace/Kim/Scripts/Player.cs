@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
-    [SerializeField] float interactionDistance = 30.0f;
+    [SerializeField] float interactionDistance;
     [SerializeField] LayerMask layerMask;
     [SerializeField] PlayerCamera playerCamera;
-    [SerializeField] float moveSpeed = 5f; // 플레이어 이동 속도
+    [SerializeField] Camera mainCam;
+    [SerializeField] float moveSpeed; // 플레이어 이동 속도
     Vector3 velocity = Vector3.zero;
     Vector3 dir = Vector3.zero;
     bool isStop = false;//true일때 멈춤
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public void interact(InputAction.CallbackContext callbackContext)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance, layerMask))
+        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, interactionDistance, layerMask))
         {
             if(hit.collider.gameObject.tag == "CCTV MONITOR")
             {
@@ -31,21 +32,27 @@ public class Player : MonoBehaviour
             else if(hit.collider.gameObject.tag == "DOOR")
             {
                 Door door = hit.collider.gameObject.GetComponent<Door>();
-                door.LookOutSide(transform);
+                door.LookOut();
+                playerCamera.Lock = true;//플레이어 화면 움직임 제한
+                isStop = true;
+            }
+            else if(hit.collider.gameObject.tag == "NOTE")
+            {
+                Note note = hit.collider.gameObject.GetComponent<Note>();
+                note.Interact();
                 playerCamera.Lock = true;//플레이어 화면 움직임 제한
                 isStop = true;
             }
         }
     }
-    void Update()
-    {
-        /* if(!IsStop)
-            transform.Translate(velocity * Time.deltaTime); */
+/*    void Update()
+    {         if(!IsStop)
+            transform.Translate(velocity * Time.deltaTime);
     }
     public void Move(InputAction.CallbackContext context)
     {
-        /*Vector2 v = context.ReadValue<Vector2>();
+        Vector2 v = context.ReadValue<Vector2>();
         dir = new Vector3(v.x, 0, v.y);
-        velocity = dir * moveSpeed; */
-    }
+        velocity = dir * moveSpeed;
+    } */
 }

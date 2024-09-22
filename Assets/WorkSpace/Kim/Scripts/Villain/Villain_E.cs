@@ -60,6 +60,7 @@ public class Villain_E : Villain
         while(!isAttack)
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
+            transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
             if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//문을 닫는지는 위의 CheckTime함수로 체크
                 attackable = true;

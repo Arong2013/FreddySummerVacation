@@ -12,6 +12,6 @@ public class Map_Button : MonoBehaviour
     }
     public void OnClickWarning()
     {
-        Sound_Manager.Instance.PlaySound(SOUND_INDEX.WARNING_SOUND);
+        Sound_Manager.Instance.PlaySound(AUDIO_INDEX.WARNING_SOUND);
     }
 }

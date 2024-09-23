@@ -50,6 +50,10 @@ public class Villain_B : Villain
                 Debug.Log("플레이어 공격");
                 AttackPlayer();
             }
+            else if(cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//문앞으로 올때 발소리
+            {
+                Sound_Manager.Instance.PlaySound(AUDIO_INDEX.WALKING);
+            }
             pos_index++;
             isClosing = false;
             isWaring = false;

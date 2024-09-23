@@ -2,8 +2,10 @@ using UnityEngine;
 
 public enum AUDIO_INDEX
 {
-    WARNING_SOUND,
-    NEIGHBOR_NOISE
+    NEIGHBOR_NOISE, //전용 오디오 소스
+    WALKING,//전용 오디오 소스
+    BGM, //기본 오디오 소스
+    WARNING_SOUND,//기본 오디오 소스
 }
 public class Sound_Manager : Singleton<Sound_Manager>
 {
@@ -29,7 +31,7 @@ public class Sound_Manager : Singleton<Sound_Manager>
             return instance;
         }
     } */
-    public AudioSource audioSource;  // 오디오 소스 컴포넌트
+    public AudioSource []audioSource;  // 오디오 소스 컴포넌트
     public AudioClip []audioClips;    // 재생할 사운드 클립
 
     public AudioClip GetAudioClip(AUDIO_INDEX index) 
@@ -39,14 +41,12 @@ public class Sound_Manager : Singleton<Sound_Manager>
 
     void Start()
     {
-        // 게임 시작 시 배경음악 재생
         //audioSource.Play();
     }
 
     public void PlaySound(AUDIO_INDEX index)
     {
-        // 특정 이벤트에서 효과음 재생
-        //audioSource.PlayOneShot(soundEffect[(int)index]);아직 사운드 없음
+        audioSource[(int)index].PlayOneShot(audioClips[(int)index]);
         if(index == AUDIO_INDEX.WARNING_SOUND)
         {
             Debug.Log("경보 재생됨");

@@ -6,12 +6,14 @@ public class Villain_B : Villain
 {
     [SerializeField] int second_return_index;
     [SerializeField] int second_hard_return_index;
-    [SerializeField] GameObject knife_in_Hand;
     [SerializeField] GameObject knife_on_table;
+    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] Material normal;
+    [SerializeField] Material getKnife;
     int second_cur_return_index;
     public override void Initialize(VILLAIN_DIFFICULTY difficulty)
     {
-        knife_in_Hand.gameObject.SetActive(false);
+        meshRenderer.material = normal;
         knife_on_table.gameObject.SetActive(true);
         gameObject.SetActive(true);
         pos_index = 0;
@@ -57,8 +59,8 @@ public class Villain_B : Villain
             if(isWaring && cur_move_pos_list[pos_index].gameObject.name == "BreakRoom")//탕비실에서 다음위치로 이동할때까지 경보음을 울렸으면 식칼챙김
             {
                 Debug.Log("식칼 챙김");
+                meshRenderer.material = getKnife;
                 knife_on_table.gameObject.SetActive(false);
-                knife_in_Hand.gameObject.SetActive(true);
                 cur_return_index = second_cur_return_index;
             }
             else if(!isClosing &&cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//철문앞에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격

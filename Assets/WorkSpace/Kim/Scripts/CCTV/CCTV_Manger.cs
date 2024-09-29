@@ -51,13 +51,16 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
     public bool IsOn_CCTV { set{ isOn_CCTV = value; } get { return isOn_CCTV; }}
     [SerializeField] Camera cur_cam;
+    [SerializeField] int cctv_battery; 
     bool isBroken = false;
     bool isOn_CCTV = false;
+    Coroutine cctv_battery_down;
     public bool IsBroken { set{ isBroken = value; noise_image.gameObject.SetActive(value); } get { return isBroken; } }
     public void Initialize()
     {
         isBroken = false;
         isOn_CCTV = false;
+        cctv_battery = 100;
     }
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
@@ -79,6 +82,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
             cctv_view.texture = cur_cam.targetTexture;
             cctv_view.gameObject.SetActive(true);
         }
+        cctv_battery_down = StartCoroutine(CCTV_Battery_Down());
         
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)
@@ -94,5 +98,18 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
             playercam.Lock = false;
             Game_Manager.Instance.GetPlayer.IsStop = false;
         }
+    }
+    IEnumerator CCTV_Battery_Down()
+    {
+        yield return new WaitForSeconds(1f);
+        cctv_battery--;
+        if(cctv_battery <= 0)
+        {
+            CCTV_Down();
+        }
+    }
+    void CCTV_Down()
+    {
+        //cctv배터리 다 됬을때
     }
 }

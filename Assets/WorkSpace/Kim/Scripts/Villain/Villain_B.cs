@@ -70,7 +70,7 @@ public class Villain_B : Villain
             }
             else if(cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//문앞으로 올때 발소리
             {
-                Sound_Manager.Instance.PlaySound(AUDIO_INDEX.WALKING);
+               // Sound_Manager.Instance.PlaySound(AUDIO_INDEX.WALKING);
             }
             pos_index++;
             isClosing = false;

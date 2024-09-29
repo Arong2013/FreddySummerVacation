@@ -23,10 +23,10 @@ public class DialogueManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         dayDoor.StartDialogueID = currentDialogue.id;
-    } 
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K) && canProceed)
+        if (Input.GetKeyDown(KeyCode.Space) && canProceed)
         {
             if (isTyping)
             {
@@ -50,26 +50,31 @@ public class DialogueManager : MonoBehaviour
                     {
                         ToggleResponseButtons(false); // 리스폰이 없으면 버튼 비활성화
                     }
+
                     var nextDialogue = dialogues[currentDialogueIndex + 1];
-                    if (currentDialogue.sequence == nextDialogue.sequence)
+
+                    // 시퀀스가 다르면 게임 오브젝트를 비활성화하고 위치를 (0, 0, 0)으로 변경
+                    if (currentDialogue.sequence != nextDialogue.sequence)
                     {
-                        currentDialogueIndex++;
-                        StartDialogue(nextDialogue.id);
+                        print("아아");
+                        gameObject.SetActive(false);
+                        //transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+                        return;
                     }
-                    else
-                    {
-                        ToggleResponseButtons(false); // 리스폰 버튼 비활성화
-                        gameObject.SetActive(false);  // 대화 매니저 비활성화
-                    }
+
+                    currentDialogueIndex++;
+                    StartDialogue(nextDialogue.id);
                 }
                 else
                 {
                     ToggleResponseButtons(false); // 대화 종료 시 버튼 비활성화
                     gameObject.SetActive(false);
+                    transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
                 }
             }
         }
     }
+
 
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
@@ -105,7 +110,7 @@ public class DialogueManager : MonoBehaviour
             {
                 dialogueText.alignment = TextAlignmentOptions.Left;
             }
-            else if (currentDialogue.characterId == "M")
+            else if (currentDialogue.characterId == "VA")
             {
                 dialogueText.alignment = TextAlignmentOptions.Center;
             }
@@ -193,29 +198,29 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-  public void OnResponseSelected(int responseIndex)
-{
-    canProceed = true; // 리스폰을 선택한 후에는 K 키 입력을 다시 허용
-    dialogueText.gameObject.SetActive(true); // 대화 텍스트 다시 활성화
-    ToggleResponseButtons(false); // 리스폰 버튼 비활성화
-
-    var response = currentDialogue.responses[responseIndex];
-    if (!string.IsNullOrEmpty(response.nextId))
+    public void OnResponseSelected(int responseIndex)
     {
-        if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
+        canProceed = true; // 리스폰을 선택한 후에는 K 키 입력을 다시 허용
+        dialogueText.gameObject.SetActive(true); // 대화 텍스트 다시 활성화
+        ToggleResponseButtons(false); // 리스폰 버튼 비활성화
+
+        var response = currentDialogue.responses[responseIndex];
+        if (!string.IsNullOrEmpty(response.nextId))
         {
-            StartDialogue(nextDialogue.id);
+            if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
+            {
+                StartDialogue(nextDialogue.id);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
         else
         {
             gameObject.SetActive(false);
         }
     }
-    else
-    {
-        gameObject.SetActive(false);
-    }
-}
 
 
 
@@ -225,9 +230,11 @@ public class DialogueManager : MonoBehaviour
         {
             var nextDialogue = dialogues[currentDialogueIndex + 1];
 
+            // 시퀀스가 다르면 게임 오브젝트를 비활성화하고 위치를 (0, 0, 0)으로 변경
             if (currentDialogue.sequence != nextDialogue.sequence)
             {
                 gameObject.SetActive(false);
+                transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
                 return;
             }
 
@@ -237,8 +244,10 @@ public class DialogueManager : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
         }
     }
+
 
     private void UpdateIcons(string characterIconPath, string villainIconPath)
     {

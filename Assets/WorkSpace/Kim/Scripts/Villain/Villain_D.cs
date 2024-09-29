@@ -20,7 +20,7 @@ public class Villain_D : Villain
             }
             else if(cur_move_pos_list[pos_index].gameObject.name == "None")
             {
-                Sound_Manager.Instance.PlaySound(AUDIO_INDEX.NEIGHBOR_NOISE);//사라져서 층간소음내기 시작하고 다음위치로 갔을때 소음멈추기
+               // Sound_Manager.Instance.PlaySound(AUDIO_INDEX.NEIGHBOR_NOISE);//사라져서 층간소음내기 시작하고 다음위치로 갔을때 소음멈추기
             }
             pos_index++;
             isClosing = false;

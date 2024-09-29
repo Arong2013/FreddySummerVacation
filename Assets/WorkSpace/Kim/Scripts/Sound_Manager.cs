@@ -1,61 +1,69 @@
 using UnityEngine;
 
-public enum AUDIO_INDEX
-{
-    NEIGHBOR_NOISE, //전용 오디오 소스
-    WALKING,//전용 오디오 소스
-    BGM, //기본 오디오 소스
-    WARNING_SOUND,//기본 오디오 소스
-}
 public class Sound_Manager : Singleton<Sound_Manager>
 {
-/*     private static SoundManager instance;
+    public AudioSource[] sfxSources;  // SFX 오디오 소스 컴포넌트 배열
+    public AudioSource bgmSource;     // BGM 오디오 소스 (배경 음악은 하나의 소스 사용)
+    public float bgmVolume = 1.0f;    // BGM 소리 크기
+    public float sfxVolume = 1.0f;    // SFX 소리 크기
 
-    // SoundManager 인스턴스에 접근할 수 있는 프로퍼티
-    public static SoundManager Instance
+    // BGM 재생 메소드
+    public void PlayBGM(AudioClip bgmClip)
     {
-        get
+        if (bgmClip != null)
         {
-            if (instance == null)
-            {
-                // Scene에서 SoundManager 찾아서 인스턴스화한다.
-                instance = FindObjectOfType<SoundManager>();
-
-                // Scene에 SoundManager 없으면 새로 생성한다.
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("SoundManager");
-                    instance = obj.AddComponent<SoundManager>();
-                }
-            }
-            return instance;
-        }
-    } */
-    public AudioSource []audioSource;  // 오디오 소스 컴포넌트
-    public AudioClip []audioClips;    // 재생할 사운드 클립
-
-    public AudioClip GetAudioClip(AUDIO_INDEX index) 
-    {
-        return audioClips[(int)index];
-    }
-
-    void Start()
-    {
-        //audioSource.Play();
-    }
-
-    public void PlaySound(AUDIO_INDEX index)
-    {
-        audioSource[(int)index].PlayOneShot(audioClips[(int)index]);
-        if(index == AUDIO_INDEX.WARNING_SOUND)
-        {
-            Debug.Log("경보 재생됨");
-            Villain_Manager.Instance.Warning();
+            bgmSource.clip = bgmClip;  // BGM 클립 설정
+            bgmSource.loop = true;     // 배경음악은 루프되도록 설정
+            bgmSource.volume = bgmVolume;  // BGM 소리 크기 설정
+            bgmSource.Play();
+            Debug.Log("BGM 재생됨: " + bgmClip.name);
         }
         else
         {
-            Debug.Log("층간소음 재생됨");
+            Debug.LogError("BGM 클립이 유효하지 않습니다.");
         }
-        
+    }
+
+    // SFX 재생 메소드
+    public void PlaySFX(AudioClip sfxClip, int sourceIndex = 0)
+    {
+        if (sfxClip != null && sourceIndex < sfxSources.Length)
+        {
+            sfxSources[sourceIndex].volume = sfxVolume;  // SFX 소리 크기 설정
+            sfxSources[sourceIndex].PlayOneShot(sfxClip);
+            Debug.Log("SFX 재생됨: " + sfxClip.name);
+        }
+        else
+        {
+            Debug.LogError("SFX 소스나 클립이 유효하지 않습니다.");
+        }
+    }
+
+    // BGM 정지 메소드
+    public void StopBGM()
+    {
+        if (bgmSource.isPlaying)
+        {
+            bgmSource.Stop();
+            Debug.Log("BGM 중지됨");
+        }
+    }
+
+    // BGM 소리 크기 조절 메소드 (슬라이더 연동)
+    public void SetBGMVolume(float volume)
+    {
+        bgmVolume = volume;
+        if (bgmSource != null && bgmSource.isPlaying)
+        {
+            bgmSource.volume = bgmVolume;  // 재생 중인 BGM 소리 크기 업데이트
+        }
+        Debug.Log("BGM 소리 크기 설정됨: " + bgmVolume);
+    }
+
+    // SFX 소리 크기 조절 메소드 (슬라이더 연동)
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = volume;
+        Debug.Log("SFX 소리 크기 설정됨: " + sfxVolume);
     }
 }

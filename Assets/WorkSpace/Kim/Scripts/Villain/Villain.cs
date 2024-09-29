@@ -24,7 +24,7 @@ public class Villain : MonoBehaviour
     public bool IsWaring {  set {isWaring = value;} get {return isWaring;}    }
     public bool IsClosing {  set {isClosing = value;} get {return isClosing;}    }
     //문을 닫았는지 확인할거 필요함
-    public void Initialize(VILLAIN_DIFFICULTY difficulty)
+    public virtual void Initialize(VILLAIN_DIFFICULTY difficulty)
     {
         gameObject.SetActive(true);
         pos_index = 0;

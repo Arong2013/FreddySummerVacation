@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -633,6 +633,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  audioClip: {fileID: 8300000, guid: 8821e34e1ea6ff445aaad9d36bf36ecd, type: 3}
+  walk: {fileID: 8300000, guid: 00d5f451610493b4880e32683289b555, type: 3}
 --- !u!1 &89637739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,6 +1371,8 @@ MonoBehaviour:
   CloseDoorSP: {fileID: 21300000, guid: fad477d72c23ff34b941aa1441d14632, type: 3}
   Vies: {fileID: 1102042069}
   StartDialogueID: D1_Pa_1
+  openClip: {fileID: 8300000, guid: b244fbbb19cf61542af4c97b8a67e4e6, type: 3}
+  closeClip: {fileID: 8300000, guid: 2d115dae3b7cec84589292d5c84502fb, type: 3}
 --- !u!212 &366340305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1797,6 +1801,8 @@ MonoBehaviour:
   CloseDoorSP: {fileID: 21300000, guid: fad477d72c23ff34b941aa1441d14632, type: 3}
   Vies: {fileID: 2001117608}
   StartDialogueID: D1_Pa_1
+  openClip: {fileID: 8300000, guid: b244fbbb19cf61542af4c97b8a67e4e6, type: 3}
+  closeClip: {fileID: 8300000, guid: 2d115dae3b7cec84589292d5c84502fb, type: 3}
 --- !u!212 &564727316
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3824,6 +3830,8 @@ MonoBehaviour:
   CloseDoorSP: {fileID: 21300000, guid: fad477d72c23ff34b941aa1441d14632, type: 3}
   Vies: {fileID: 252901664}
   StartDialogueID: D1_Pa_1
+  openClip: {fileID: 8300000, guid: b244fbbb19cf61542af4c97b8a67e4e6, type: 3}
+  closeClip: {fileID: 8300000, guid: 2d115dae3b7cec84589292d5c84502fb, type: 3}
 --- !u!61 &1376733618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4106,6 +4114,8 @@ MonoBehaviour:
   CloseDoorSP: {fileID: 21300000, guid: fad477d72c23ff34b941aa1441d14632, type: 3}
   Vies: {fileID: 746286135}
   StartDialogueID: D1_Pa_1
+  openClip: {fileID: 8300000, guid: b244fbbb19cf61542af4c97b8a67e4e6, type: 3}
+  closeClip: {fileID: 8300000, guid: 2d115dae3b7cec84589292d5c84502fb, type: 3}
 --- !u!212 &1500910243
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5160,7 +5170,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1978449302}
   - component: {fileID: 1978449301}
-  - component: {fileID: 1978449300}
   - component: {fileID: 1978449303}
   - component: {fileID: 1978449304}
   m_Layer: 0
@@ -5170,14 +5179,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1978449300
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978449299}
-  m_Enabled: 1
 --- !u!20 &1978449301
 Camera:
   m_ObjectHideFlags: 0

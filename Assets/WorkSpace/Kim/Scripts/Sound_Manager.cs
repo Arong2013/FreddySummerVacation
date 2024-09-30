@@ -7,7 +7,10 @@ public class Sound_Manager : Singleton<Sound_Manager>
     public float bgmVolume = 1.0f;    // BGM 소리 크기
     public float sfxVolume = 1.0f;    // SFX 소리 크기
 
-    // BGM 재생 메소드
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     public void PlayBGM(AudioClip bgmClip)
     {
         if (bgmClip != null)

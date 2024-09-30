@@ -10,11 +10,12 @@ public class TitleController : MonoBehaviour
     public Image fadeOutImage; // 투명해지는 이미지
     public Image fadeInImage; // 서서히 보이는 이미지
     public float fadeDuration = 1f; // 페이드 지속 시간
+    [SerializeField] AudioClip audioClip;
 
     // Start is called before the first frame update
     void Start()
     {
-        // 버튼 클릭 이벤트에 메서드 연결
+       Sound_Manager.Instance.PlayBGM(audioClip);
         daySceneButton.onClick.AddListener(OnDaySceneButtonClick);
     }
 

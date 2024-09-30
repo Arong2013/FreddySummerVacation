@@ -14034,7 +14034,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &324122330
 Transform:
@@ -14045,7 +14045,7 @@ Transform:
   m_GameObject: {fileID: 324122329}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.5001602, z: -0, w: 0.8659329}
-  m_LocalPosition: {x: 3.94, y: 6.79, z: 153.83}
+  m_LocalPosition: {x: 3.03, y: 6.79, z: 153.3}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28976,7 +28976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 0
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0
@@ -29003,7 +29003,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -29045,7 +29045,7 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
+  m_ShadowRadius: 8.3
   m_ShadowAngle: 0
 --- !u!1001 &718099953
 PrefabInstance:
@@ -55208,7 +55208,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7970917525975245684, guid: ca1f4a0ae1caa01418841bcad12e49a4, type: 3}
       propertyPath: m_StaticShadowCaster
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970917525975245684, guid: ca1f4a0ae1caa01418841bcad12e49a4, type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74031,7 +74035,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

@@ -169,6 +169,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 29480240}
   enemy: {fileID: 487891016}
 --- !u!20 &29480240
@@ -1447,6 +1453,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 137121119}
   enemy: {fileID: 487891016}
 --- !u!1001 &138676337
@@ -1734,6 +1746,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 156135900}
   enemy: {fileID: 487891016}
 --- !u!20 &156135900
@@ -1865,6 +1883,12 @@ MonoBehaviour:
   player: {fileID: 540471534}
   input: {fileID: 540471536}
   door: {fileID: 1434400806}
+  note: {fileID: 0}
+  villainTest_A: 0
+  villainTest_B: 0
+  villainTest_C: 0
+  villainTest_D: 0
+  villainTest_E: 0
 --- !u!1 &181183350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3044,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 287476865}
   enemy: {fileID: 487891016}
 --- !u!20 &287476865
@@ -5511,6 +5541,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 481765221}
   enemy: {fileID: 487891016}
 --- !u!20 &481765221
@@ -6796,6 +6832,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerCamera: {fileID: 540471537}
+  mainCam: {fileID: 0}
   moveSpeed: 10
 --- !u!4 &540471535
 Transform:
@@ -8417,6 +8454,10 @@ MonoBehaviour:
   player: {fileID: 540471534}
   second_return_index: 4
   second_hard_return_index: 3
+  knife_on_table: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  normal: {fileID: 0}
+  getKnife: {fileID: 0}
 --- !u!1001 &695147718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10285,6 +10326,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 838965348}
   enemy: {fileID: 487891016}
 --- !u!20 &838965348
@@ -13383,10 +13430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b7870e0b84e3c48b130612b2f7702a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1070601048}
-  soundEffect:
-  - {fileID: 0}
-  - {fileID: 0}
+  sfxSources: []
+  bgmSource: {fileID: 0}
+  bgmVolume: 1
+  sfxVolume: 1
 --- !u!4 &1070601050
 Transform:
   m_ObjectHideFlags: 0
@@ -14464,6 +14511,7 @@ MonoBehaviour:
   cctv_Monitor: {fileID: 253632495}
   playercam: {fileID: 540471537}
   cur_cam: {fileID: 137121119}
+  cctv_battery: 0
 --- !u!4 &1173001785
 Transform:
   m_ObjectHideFlags: 0
@@ -14866,6 +14914,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 1225200497}
   enemy: {fileID: 487891016}
 --- !u!20 &1225200497
@@ -17305,6 +17359,7 @@ MonoBehaviour:
   closedRotation: {x: 0, y: 0, z: 0}
   rotationSpeed: 2
   interactionDistance: 30
+  playerOriginPos: {fileID: 0}
   player: {fileID: 540471535}
   lookOutPos: {fileID: 1620060065}
   transitionDurationToOut: 1
@@ -19700,6 +19755,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 1665756250}
   enemy: {fileID: 487891016}
 --- !u!20 &1665756250
@@ -19868,6 +19929,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 1712147863}
   enemy: {fileID: 487891016}
 --- !u!20 &1712147863
@@ -21155,6 +21222,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  xRotation: 0
+  yRotation: 0
+  L_xRotation_Limit: 0
+  R_xRotation_Limit: 0
+  L_yRotation_Limit: 0
+  R_yRotation_Limit: 0
   cctvCamera: {fileID: 1823385009}
   enemy: {fileID: 487891016}
 --- !u!20 &1823385009

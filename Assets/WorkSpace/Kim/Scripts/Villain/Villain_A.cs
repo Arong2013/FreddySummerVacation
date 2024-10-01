@@ -20,6 +20,11 @@ public class Villain_A : Villain
             isClosing = false;
             isWaring = false;
         }
-        //반복문 빠져나오면 플레이어 공격
+    }
+    IEnumerator break_CCTV()
+    {
+        CCTV_Manger.Instance.IsBroken = true;
+        yield return new WaitForSeconds(move_delaying);
+        CCTV_Manger.Instance.IsBroken = false;
     }
 }

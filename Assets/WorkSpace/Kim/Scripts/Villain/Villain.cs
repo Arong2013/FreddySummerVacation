@@ -23,15 +23,20 @@ public class Villain : MonoBehaviour
     public bool IsAttack {  set {isAttack = value;} get {return isAttack;}    }
     public bool IsWaring {  set {isWaring = value;} get {return isWaring;}    }
     public bool IsClosing {  set {isClosing = value;} get {return isClosing;}    }
+    public float GetMoveDelay => move_delaying;
     //문을 닫았는지 확인할거 필요함
-    public virtual void Initialize(VILLAIN_DIFFICULTY difficulty)
+    public virtual void Initialize(VILLAIN_DIFFICULTY difficulty = VILLAIN_DIFFICULTY.NORMAL)
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
         pos_index = 0;
         isAttack = false;
         isWaring = false;
         isClosing = false;
         SetDifficulty(difficulty);
+    }
+    public void StartMove()
+    {
+        gameObject.SetActive(true);
         move_coroutine = StartCoroutine(Move());
     }
     public void Stop()
@@ -104,11 +109,13 @@ public class Villain : MonoBehaviour
         } */
         yield break;
     }
-    protected void AttackPlayer()
+    protected virtual IEnumerator AttackPlayer()
     {
         isAttack = true;
         StopCoroutine(move_coroutine);
         gameObject.transform.position = door_pos.position;
         door.OpenDoor();
+        yield return new WaitForSeconds(3f);////문앞에서 플레이어 공격하기까지의 딜레이
+        //직접적인 공격
     }
 }

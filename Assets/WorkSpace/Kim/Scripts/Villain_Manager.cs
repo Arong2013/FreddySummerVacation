@@ -42,6 +42,7 @@ public class Villain_Manager : Singleton<Villain_Manager>
     } */
     [SerializeField] Villain[] villains;
     Coroutine coroutine;
+    Coroutine cycle_Coroutine;
 
     public Villain GetVillain(VILLAIN_INDEX index)
     {
@@ -81,5 +82,24 @@ public class Villain_Manager : Singleton<Villain_Manager>
     public void SetVillainDifficulty(VILLAIN_INDEX index, VILLAIN_DIFFICULTY difficulty)
     {
         villains[(int)index].SetDifficulty(difficulty);
+    }
+    public void villain_Cycle(int day)
+    {
+        if(day == 1)
+        {
+            cycle_Coroutine = StartCoroutine(villain_Cycle_Timer(new VILLAIN_INDEX[] {VILLAIN_INDEX.A, VILLAIN_INDEX.B, VILLAIN_INDEX.C, VILLAIN_INDEX.E}));
+        }
+        else if(day == 2)
+        {
+            cycle_Coroutine = StartCoroutine(villain_Cycle_Timer(new VILLAIN_INDEX[] {VILLAIN_INDEX.A, VILLAIN_INDEX.C, VILLAIN_INDEX.B, VILLAIN_INDEX.D, VILLAIN_INDEX.E}));
+        }
+    }
+    IEnumerator villain_Cycle_Timer(VILLAIN_INDEX[] index_list)
+    {
+        for(int i = 0; i < index_list.Length; i++)
+        {
+            villains[(int)index_list[i]].StartMove();
+            yield return new WaitForSeconds(villains[(int)index_list[i]].GetMoveDelay);
+        }
     }
 }

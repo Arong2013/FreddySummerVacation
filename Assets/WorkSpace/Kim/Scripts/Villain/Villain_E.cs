@@ -7,6 +7,7 @@ public class Villain_E : Villain
     float defeatTime = 15.0f;
     bool attackable = false;
     bool attacking = false;
+    [SerializeField] AudioClip jumpSquare_SFX;
     public override void SetDifficulty(VILLAIN_DIFFICULTY difficulty)
     {
         switch(difficulty)
@@ -64,12 +65,22 @@ public class Villain_E : Villain
             transform.position = cur_move_pos_list[pos_index].position;
             if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//문을 닫는지는 위의 CheckTime함수로 체크
                 attackable = true;
-            yield return new WaitForSeconds(move_delaying);
+            yield return new WaitForSeconds(move_delaying - 2f);
             attackable = false;
             pos_index++;
             isClosing = false;
             isWaring = false;
         }
-        //반복문 빠져나오면 플레이어 공격
+        AttackPlayer();
+    }
+    protected override IEnumerator AttackPlayer()
+    {
+        isAttack = true;
+        StopCoroutine(move_coroutine);
+        gameObject.transform.position = door_pos.position;
+        door.OpenDoor();
+        yield return new WaitForSeconds(3f);////문앞에서 플레이어 공격하기까지의 딜레이
+        //직접적인 공격
+        Sound_Manager.Instance.PlaySFX(jumpSquare_SFX, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
     }
 }

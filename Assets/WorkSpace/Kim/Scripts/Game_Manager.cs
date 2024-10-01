@@ -37,6 +37,7 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] bool villainTest_C;
     [SerializeField] bool villainTest_D;
     [SerializeField] bool villainTest_E;
+    int day = 1;
     public Player GetPlayer => player;
     void Start()
     {
@@ -60,7 +61,10 @@ public class Game_Manager : Singleton<Game_Manager>
         if(villainTest_E)
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E, VILLAIN_DIFFICULTY.NORMAL);
 
+
+
         player.Initialize();
         CCTV_Manger.Instance.Initialize();
+        Villain_Manager.Instance.villain_Cycle(day);
     }
 }

@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum SFX_SOURCE_INDEX
+{
+    NORMAL_SFX,///위치 상관없이 들리는 소리
+    NEIGHBOR_NOISE,///위에서 들릴 소리
+    DOOR_SFX,///문쪽에서 들릴 소리
+}
 public class Sound_Manager : Singleton<Sound_Manager>
 {
     public AudioSource[] sfxSources;  // SFX 오디오 소스 컴포넌트 배열
@@ -37,6 +43,15 @@ public class Sound_Manager : Singleton<Sound_Manager>
         {
             Debug.LogError("SFX 소스나 클립이 유효하지 않습니다.");
         }
+    }
+
+    public bool IsPlayingAudioSource(AudioClip sfxClip, int sourceIndex = 0)
+    {
+        if (sfxSources[sourceIndex].isPlaying && sfxSources[sourceIndex].clip == sfxClip)
+        {
+            return true;
+        }
+        return false;
     }
 
     // BGM 정지 메소드

@@ -10,18 +10,18 @@ public class Villain_B : Villain
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] Material normal;
     [SerializeField] Material getKnife;
+    [SerializeField] AudioClip jumpSquare_SFX;
     int second_cur_return_index;
-    public override void Initialize(VILLAIN_DIFFICULTY difficulty)
+    public override void Initialize(VILLAIN_DIFFICULTY difficulty = VILLAIN_DIFFICULTY.NORMAL)
     {
         meshRenderer.material = normal;
         knife_on_table.gameObject.SetActive(true);
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
         pos_index = 0;
         isAttack = false;
         isWaring = false;
         isClosing = false;
         SetDifficulty(difficulty);
-        move_coroutine = StartCoroutine(Move());
     }
     public override void SetDifficulty(VILLAIN_DIFFICULTY difficulty)
     {
@@ -63,19 +63,28 @@ public class Villain_B : Villain
                 knife_on_table.gameObject.SetActive(false);
                 cur_return_index = second_cur_return_index;
             }
-            else if(!isClosing &&cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//철문앞에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
+            else if(!isClosing &&cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
             {
                 Debug.Log("플레이어 공격");
                 AttackPlayer();
-            }
+            }/* 
             else if(cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//문앞으로 올때 발소리
             {
                //Sound_Manager.Instance.PlaySFX(AUDIO_INDEX.WALKING);
-            }
+            } */
             pos_index++;
             isClosing = false;
             isWaring = false;
         }
-        //반복문 빠져나오면 플레이어 공격
+    }
+    protected override IEnumerator AttackPlayer()
+    {
+        isAttack = true;
+        StopCoroutine(move_coroutine);
+        gameObject.transform.position = door_pos.position;
+        door.OpenDoor();
+        yield return new WaitForSeconds(3f);////문앞에서 플레이어 공격하기까지의 딜레이
+        //직접적인 공격
+        Sound_Manager.Instance.PlaySFX(jumpSquare_SFX, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
     }
 }

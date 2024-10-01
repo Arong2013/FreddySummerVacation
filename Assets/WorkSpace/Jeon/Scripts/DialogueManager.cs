@@ -203,6 +203,13 @@ public class DialogueManager : MonoBehaviour
         ToggleResponseButtons(false); // 리스폰 버튼 비활성화
 
         var response = currentDialogue.responses[responseIndex];
+
+        // 호감도 변화를 적용
+        if (response.affinityChange != 0 && !string.IsNullOrEmpty(currentDialogue.characterId))
+        {
+            GameManager.Instance.UpdateAffinity(currentDialogue.characterId, response.affinityChange);
+        }
+
         if (!string.IsNullOrEmpty(response.nextId))
         {
             if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
@@ -219,6 +226,7 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();  // 대화 종료 처리
         }
     }
+
 
     private void ShowNextDialogue()
     {

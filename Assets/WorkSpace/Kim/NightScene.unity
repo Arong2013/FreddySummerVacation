@@ -6787,6 +6787,7 @@ MonoBehaviour:
   hard_return_index: 0
   door_pos: {fileID: 1905021484}
   player: {fileID: 905192160}
+  jumpSquare_SFX: {fileID: 0}
   second_return_index: 3
   second_hard_return_index: 2
   knife_on_table: {fileID: 127738463}
@@ -14195,6 +14196,7 @@ MonoBehaviour:
   hard_return_index: 1
   door_pos: {fileID: 1255122560}
   player: {fileID: 905192160}
+  jumpSquare_SFX: {fileID: 0}
   jumpSquare_SFX: {fileID: 0}
 --- !u!1001 &327964671
 PrefabInstance:
@@ -33868,6 +33870,7 @@ MonoBehaviour:
   hard_return_index: 0
   door_pos: {fileID: 167834423}
   player: {fileID: 905192160}
+  jumpSquare_SFX: {fileID: 0}
 --- !u!1001 &826793458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42635,6 +42638,7 @@ MonoBehaviour:
   hard_return_index: 1
   door_pos: {fileID: 1610954367}
   player: {fileID: 905192160}
+  jumpSquare_SFX: {fileID: 0}
   jumpSquare_SFX: {fileID: 0}
 --- !u!1 &1036138871
 GameObject:

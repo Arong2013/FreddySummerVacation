@@ -15,6 +15,7 @@ public class Villain : MonoBehaviour
     [SerializeField] protected int hard_return_index;
     [SerializeField] protected Transform door_pos;
     [SerializeField] protected Player player;
+    [SerializeField] AudioClip jumpSquare_SFX;
     protected Coroutine move_coroutine;
     protected Transform[] cur_move_pos_list;
     protected int cur_return_index;
@@ -116,6 +117,11 @@ public class Villain : MonoBehaviour
         gameObject.transform.position = door_pos.position;
         door.OpenDoor();
         yield return new WaitForSeconds(3f);////문앞에서 플레이어 공격하기까지의 딜레이
+
+        if(jumpSquare_SFX != null)
+            Sound_Manager.Instance.PlaySFX(jumpSquare_SFX, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
+            
         //직접적인 공격
+        
     }
 }

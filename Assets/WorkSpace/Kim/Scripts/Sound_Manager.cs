@@ -44,7 +44,6 @@ public class Sound_Manager : Singleton<Sound_Manager>
             Debug.LogError("SFX 소스나 클립이 유효하지 않습니다.");
         }
     }
-
     public bool IsPlayingAudioSource(AudioClip sfxClip, int sourceIndex = 0)
     {
         if (sfxSources[sourceIndex].isPlaying && sfxSources[sourceIndex].clip == sfxClip)

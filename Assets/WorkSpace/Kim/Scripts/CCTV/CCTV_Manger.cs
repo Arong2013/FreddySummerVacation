@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Analytics;
+using UnityEngine.Audio;
 
 public enum CCTV_POS
 {
@@ -19,28 +20,6 @@ public enum CCTV_POS
 }
 public class CCTV_Manger : Singleton<CCTV_Manger>
 {
-/*     private static CCTV_Manger instance;
-
-    // CCTV_Manger 인스턴스에 접근할 수 있는 프로퍼티
-    public static CCTV_Manger Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                // Scene에서 CCTV_Manger 찾아서 인스턴스화한다.
-                instance = FindObjectOfType<CCTV_Manger>();
-
-                // Scene에 CCTV_Manger 없으면 새로 생성한다.
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("CCTV_Manager");
-                    instance = obj.AddComponent<CCTV_Manger>();
-                }
-            }
-            return instance;
-        }
-    } */
     [SerializeField] List<Camera> list_cctv;
     [SerializeField] RawImage cctv_view; //cctv화면
     [SerializeField] Texture broken_cctv_view; //끊긴 cctv화면
@@ -48,6 +27,9 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     [SerializeField] GameObject CCTV_Select;//cctv선택화면
     [SerializeField] CCTV_Camera cctv_Monitor;//cctv모니터
     [SerializeField] PlayerCamera playercam;//플레이어 화면 움직임관련
+    [SerializeField] AudioClip closeCCTV_Clip;
+    [SerializeField] AudioClip cctv_bgm;//cctv를 볼 동안 나올 bgm
+    [SerializeField] AudioClip origin_bgm;//원래 bgm
     public GameObject Get_CCTV_Select {get { return CCTV_Select;}}
     public bool IsOn_CCTV { set{ isOn_CCTV = value; } get { return isOn_CCTV; }}
     [SerializeField] Camera cur_cam;
@@ -83,7 +65,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
             cctv_view.gameObject.SetActive(true);
         }
         cctv_battery_down = StartCoroutine(CCTV_Battery_Down());
-        
+        Sound_Manager.Instance.PlayBGM(cctv_bgm);
     }
     public void Turn_Off_CCTV(InputAction.CallbackContext callbackContext)
     {
@@ -97,6 +79,8 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
             cctv_Monitor.OnOff = false;
             playercam.Lock = false;
             Game_Manager.Instance.GetPlayer.IsStop = false;
+            Sound_Manager.Instance.PlaySFX(closeCCTV_Clip, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
+            Sound_Manager.Instance.PlayBGM(origin_bgm);
         }
     }
     IEnumerator CCTV_Battery_Down()

@@ -63,8 +63,11 @@ public class Villain_E : Villain
             transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
             if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//문을 닫는지는 위의 CheckTime함수로 체크
+            {
+                Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
                 attackable = true;
-            yield return new WaitForSeconds(move_delaying - 2f);
+            }
+            yield return new WaitForSeconds(move_delaying);
             attackable = false;
             pos_index++;
             isClosing = false;

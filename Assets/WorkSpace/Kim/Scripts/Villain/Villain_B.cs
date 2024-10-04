@@ -10,7 +10,6 @@ public class Villain_B : Villain
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] Material normal;
     [SerializeField] Material getKnife;
-    [SerializeField] AudioClip jumpSquare_SFX;
     int second_cur_return_index;
     public override void Initialize(VILLAIN_DIFFICULTY difficulty = VILLAIN_DIFFICULTY.NORMAL)
     {
@@ -55,6 +54,12 @@ public class Villain_B : Villain
                 pos_index = cur_return_index;
             transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
+
+            if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//근처로 올때 발소리
+            {
+               Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+            }
+
             yield return new WaitForSeconds(move_delaying);
             if(isWaring && cur_move_pos_list[pos_index].gameObject.name == "BreakRoom")//탕비실에서 다음위치로 이동할때까지 경보음을 울렸으면 식칼챙김
             {
@@ -63,15 +68,11 @@ public class Villain_B : Villain
                 knife_on_table.gameObject.SetActive(false);
                 cur_return_index = second_cur_return_index;
             }
-            else if(!isClosing &&cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
+            else if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
             {
                 Debug.Log("플레이어 공격");
                 AttackPlayer();
-            }/* 
-            else if(cur_move_pos_list[pos_index].gameObject.name == "Door_Pos")//문앞으로 올때 발소리
-            {
-               //Sound_Manager.Instance.PlaySFX(AUDIO_INDEX.WALKING);
-            } */
+            }
             pos_index++;
             isClosing = false;
             isWaring = false;

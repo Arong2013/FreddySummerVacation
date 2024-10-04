@@ -18,28 +18,6 @@ public enum VILLAIN_INDEX
 }
 public class Villain_Manager : Singleton<Villain_Manager>
 {
-/*     private static Villain_Manager instance;
-
-    // Villain_Manager 인스턴스에 접근할 수 있는 프로퍼티
-    public static Villain_Manager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                // Scene에서 Villain_Manager 찾아서 인스턴스화한다.
-                instance = FindObjectOfType<Villain_Manager>();
-
-                // Scene에 Game_Manager 없으면 새로 생성한다.
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("Villain_Manager");
-                    instance = obj.AddComponent<Villain_Manager>();
-                }
-            }
-            return instance;
-        }
-    } */
     [SerializeField] Villain[] villains;
     Coroutine coroutine;
     Coroutine cycle_Coroutine;
@@ -48,9 +26,18 @@ public class Villain_Manager : Singleton<Villain_Manager>
     {
         return villains[(int)index];
     }
-    public void StartMove(VILLAIN_INDEX index, VILLAIN_DIFFICULTY dIFFICULTY)
+    public void Initialize_All_Villains(VILLAIN_DIFFICULTY dIFFICULTY = VILLAIN_DIFFICULTY.NORMAL)
+    {
+        foreach(var v in villains)
+            v.Initialize(dIFFICULTY);
+    }
+    public void Initialize(VILLAIN_INDEX index, VILLAIN_DIFFICULTY dIFFICULTY = VILLAIN_DIFFICULTY.NORMAL)
     {
         villains[(int)index].Initialize(dIFFICULTY);
+    }
+    public void StartMove(VILLAIN_INDEX index)
+    {
+        villains[(int)index].StartMove();
     }
     public void Stop_All_Villain()
     {
@@ -61,6 +48,11 @@ public class Villain_Manager : Singleton<Villain_Manager>
     {
         foreach(var v in villains)
             v.IsClosing = true;
+    }
+    public void Door_Open()
+    {
+        foreach(var v in villains)
+            v.IsClosing = false;
     }
     public void Warning()
     {
@@ -82,6 +74,11 @@ public class Villain_Manager : Singleton<Villain_Manager>
     public void SetVillainDifficulty(VILLAIN_INDEX index, VILLAIN_DIFFICULTY difficulty)
     {
         villains[(int)index].SetDifficulty(difficulty);
+    }
+    public void GameEnd()
+    {
+        Stop_All_Villain();
+        StopCoroutine(cycle_Coroutine);
     }
     public void villain_Cycle(int day)
     {

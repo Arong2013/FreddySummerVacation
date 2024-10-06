@@ -9,8 +9,6 @@ public class Player : MonoBehaviour
     [SerializeField] PlayerCamera playerCamera;
     [SerializeField] Camera mainCam;
     [SerializeField] float moveSpeed; // 플레이어 이동 속도
-    Vector3 velocity = Vector3.zero;
-    Vector3 dir = Vector3.zero;
     bool isStop = false;//true일때 멈춤
     public bool IsStop { get { return isStop;} set {isStop = value; playerCamera.Lock = value;} }
     public void Initialize()
@@ -29,7 +27,7 @@ public class Player : MonoBehaviour
                 playerCamera.Lock = true;//플레이어 화면 움직임 제한
                 isStop = true;
             }
-            else if(hit.collider.gameObject.tag == "DOOR")
+            else if(hit.collider.gameObject.tag == "DOOR" && !isStop)
             {
                 Door door = hit.collider.gameObject.GetComponent<Door>();
                 door.LookOut();
@@ -44,6 +42,11 @@ public class Player : MonoBehaviour
                 isStop = true;
             }
         }
+    }
+    public void GameEnd()
+    {
+        isStop = true;
+        playerCamera.Lock = true;
     }
 /*    void Update()
     {         if(!IsStop)

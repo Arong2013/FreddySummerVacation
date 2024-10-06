@@ -14,7 +14,10 @@ public class Map_Button : MonoBehaviour
     }
     public void OnClickWarning()
     {
-        Villain_Manager.Instance.Warning();
-        Sound_Manager.Instance.PlaySFX(Click_Clip, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
+        if(!CCTV_Manger.Instance.IsBroken)
+        {
+            Villain_Manager.Instance.Warning();
+            Sound_Manager.Instance.PlaySFX(Click_Clip, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
+        }
     }
 }

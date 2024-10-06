@@ -38,11 +38,11 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] int day = 1;
     [SerializeField] float time_delay;//1시간 지나는데 걸리는 시간 초단위
     [SerializeField] int cur_time = 0;
-    [SerializeField] bool villainTest_A;
-    [SerializeField] bool villainTest_B;
-    [SerializeField] bool villainTest_C;
-    [SerializeField] bool villainTest_D;
-    [SerializeField] bool villainTest_E;
+    [SerializeField] bool villainTest_A = false;
+    [SerializeField] bool villainTest_B = false;
+    [SerializeField] bool villainTest_C = false;
+    [SerializeField] bool villainTest_D = false;
+    [SerializeField] bool villainTest_E = false;
     Coroutine time_Coroutine;
     public Player GetPlayer => player;
     void Start()
@@ -71,21 +71,52 @@ public class Game_Manager : Singleton<Game_Manager>
         
         GameStart();
     }
+    public void SetInputAction(bool status)
+    {
+        if(status)
+        {
+            input.SwitchCurrentActionMap("Control");
+            input.actions["Interact"].started += player.interact;
+            input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
+            input.actions["ESC"].started += door.MoveBackInside;
+            input.actions["ESC"].started += note.Turn_Off_Note;
+        }
+        else
+        {
+            input.SwitchCurrentActionMap("Control");
+            input.actions["Interact"].started -= player.interact;
+            input.actions["ESC"].started -= CCTV_Manger.Instance.Turn_Off_CCTV;
+            input.actions["ESC"].started -= door.MoveBackInside;
+            input.actions["ESC"].started -= note.Turn_Off_Note;
+        }
+    }
     public void GameStart()
     {
+        SetInputAction(true);
         player.Initialize();
         CCTV_Manger.Instance.Initialize();
         Villain_Manager.Instance.villain_Cycle(day);
         //StartCoroutine(TextMove());
         time_Coroutine = StartCoroutine(UpdateTime());
     }
-    public IEnumerator GameEnd()
+    public IEnumerator GameEnd(bool clearStatus)
     {
         CCTV_Manger.Instance.GameEnd();
         Villain_Manager.Instance.GameEnd();
         Sound_Manager.Instance.StopBGM();
-        StopCoroutine(time_Coroutine);
+        player.GameEnd();
+        SetInputAction(false);
+        //StopCoroutine(time_Coroutine);
         yield return new WaitForSeconds(0);//밤씬 끝날때 연출 넣을 용도
+        if(clearStatus)//클리어
+        {
+
+        }
+        else//게임오버
+        {
+
+        }
+        Cursor.visible = true;
         //낮 씬으로 넘기기
     }
     IEnumerator UpdateTime()

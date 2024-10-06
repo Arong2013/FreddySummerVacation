@@ -10,6 +10,7 @@ public class Villain_B : Villain
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] Material normal;
     [SerializeField] Material getKnife;
+    bool ishaving_knife = false;
     int second_cur_return_index;
     public override void Initialize(VILLAIN_DIFFICULTY difficulty = VILLAIN_DIFFICULTY.NORMAL)
     {
@@ -33,7 +34,7 @@ public class Villain_B : Villain
                 second_cur_return_index = second_return_index;
                 break;
             case VILLAIN_DIFFICULTY.NORMAL:
-                move_delaying = 15.0f;
+                move_delaying = 10.0f;
                 cur_move_pos_list = move_Pos_list;
                 cur_return_index = return_index;
                 second_cur_return_index = second_return_index;
@@ -61,7 +62,8 @@ public class Villain_B : Villain
             }
 
             yield return new WaitForSeconds(move_delaying);
-            if(isWaring && cur_move_pos_list[pos_index].gameObject.name == "BreakRoom")//탕비실에서 다음위치로 이동할때까지 경보음을 울렸으면 식칼챙김
+            StartCoroutine(AttackPlayer());
+            if(isWaring && cur_move_pos_list[pos_index].gameObject.name == "BreakRoom" && !ishaving_knife)//탕비실에서 다음위치로 이동할때까지 경보음을 울렸으면 식칼챙김
             {
                 Debug.Log("식칼 챙김");
                 meshRenderer.material = getKnife;

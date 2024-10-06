@@ -32,6 +32,7 @@ public class Door : MonoBehaviour
     //private Quaternion targetRotation;
     bool isLookOut = false; //밖을 보고있을때
     bool forced_Open_door = false;
+    bool isDoorFullyClosed = false;
     void Update()
     {
         if(forced_Open_door)//강제로 문이 열리면 다른 행동 불가
@@ -50,21 +51,17 @@ public class Door : MonoBehaviour
             }
 
             // 문 회전
-            if (isClosing)
-            {
-                doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(closedRotation), Time.deltaTime * rotationSpeed);
-            }
-            else
+            if (!isClosing)//문 열림
             {
                 doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(openRotation), Time.deltaTime * rotationSpeed);
             }
         }
     }
-    void CloseDoor()
+    public void CloseDoor()
     {
         isClosing = true;
-        Sound_Manager.Instance.PlaySFX(closeDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
         MoveBackInside();
+        StartCoroutine(CloseDoorCoroutine());
         Villain_Manager.Instance.SetTimer_Villain_E(true);
         Villain_Manager.Instance.Door_Closing();
     }
@@ -75,10 +72,17 @@ public class Door : MonoBehaviour
         isLookOut = false;
         Villain_Manager.Instance.SetTimer_Villain_E(false);
         Villain_Manager.Instance.Door_Open();
-        Sound_Manager.Instance.PlaySFX(openDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+        if(isDoorFullyClosed)//문이 완전히 닫혔다가 열릴때만 소리나게
+            Sound_Manager.Instance.PlaySFX(openDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+        isDoorFullyClosed = false;
     }
     public void Forced_OpenDoor()
     {
+        if(isLookOut)
+            MoveBackInside();
+        isClosing = false; // 문 열기
+        Game_Manager.Instance.GetPlayer.IsStop = false;
+        isLookOut = false;
         forced_Open_door = true;
         Sound_Manager.Instance.PlaySFX(openDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
     }
@@ -163,7 +167,7 @@ public class Door : MonoBehaviour
     }
 
 
-    private IEnumerator TransitionBackToPrevPosition()
+    public IEnumerator TransitionBackToPrevPosition()
     {
         float transitionProgress = 0f;
 
@@ -179,9 +183,26 @@ public class Door : MonoBehaviour
             // 다음 프레임까지 대기합니다.
             yield return null;
         }
-
         // 전환이 완료되었으므로 초기 위치와 회전 값을 정확하게 설정합니다.
         player.position = prevPosition;
         player.rotation = prevRotation;
+    }
+
+    IEnumerator CloseDoorCoroutine()
+    {
+        while(isClosing)
+        {
+            if(doorPivotTransform.localRotation == Quaternion.Euler(closedRotation) && !isDoorFullyClosed)
+            {
+                Sound_Manager.Instance.PlaySFX(closeDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+                isDoorFullyClosed = true;
+                isLookOut = false;
+            }
+            else
+            {
+                doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(closedRotation), Time.deltaTime * rotationSpeed);
+            }
+            yield return null;
+        }
     }
 }

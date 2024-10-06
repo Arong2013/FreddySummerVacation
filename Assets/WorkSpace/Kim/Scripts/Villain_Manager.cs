@@ -78,7 +78,8 @@ public class Villain_Manager : Singleton<Villain_Manager>
     public void GameEnd()
     {
         Stop_All_Villain();
-        StopCoroutine(cycle_Coroutine);
+        if(cycle_Coroutine != null)
+            StopCoroutine(cycle_Coroutine);
     }
     public void villain_Cycle(int day)
     {

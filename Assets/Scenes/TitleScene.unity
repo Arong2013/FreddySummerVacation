@@ -1004,6 +1004,7 @@ MonoBehaviour:
   fadeOutImage: {fileID: 346721967}
   fadeInImage: {fileID: 1806106958}
   fadeDuration: 1.5
+  audioClip: {fileID: 8300000, guid: 5c696a514bb025946a7b1e7b15962b39, type: 3}
 --- !u!4 &848643561
 Transform:
   m_ObjectHideFlags: 0
@@ -1157,6 +1158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590647079}
   - component: {fileID: 1590647081}
+  - component: {fileID: 1590647082}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1188,6 +1190,27 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590647078}
   m_Enabled: 1
+--- !u!114 &1590647082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590647078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b7870e0b84e3c48b130612b2f7702a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxSources:
+  - {fileID: 2127168811}
+  - {fileID: 1144158699}
+  - {fileID: 1144158699}
+  - {fileID: 2127168808}
+  - {fileID: 1144158699}
+  bgmSource: {fileID: 1144158699}
+  bgmVolume: 1
+  sfxVolume: 1
 --- !u!1 &1806106956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,7 +1469,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2127168805}
-  - component: {fileID: 2127168806}
   - component: {fileID: 2127168811}
   - component: {fileID: 2127168810}
   - component: {fileID: 2127168809}
@@ -1475,28 +1497,6 @@ Transform:
   - {fileID: 1144158698}
   m_Father: {fileID: 1590647079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2127168806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127168804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38b7870e0b84e3c48b130612b2f7702a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sfxSources:
-  - {fileID: 2127168811}
-  - {fileID: 1144158699}
-  - {fileID: 1144158699}
-  - {fileID: 2127168808}
-  - {fileID: 1144158699}
-  bgmSource: {fileID: 1144158699}
-  bgmClips: []
-  bgmVolume: 1
-  sfxVolume: 1
 --- !u!82 &2127168807
 AudioSource:
   m_ObjectHideFlags: 0

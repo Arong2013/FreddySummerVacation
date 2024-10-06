@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -24,6 +25,7 @@ public class DialogueManager : MonoBehaviour
         Time.timeScale = 1f;
         dayDoor.StartDialogueID = currentDialogue.id;
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && canProceed)
@@ -56,9 +58,7 @@ public class DialogueManager : MonoBehaviour
                     // 시퀀스가 다르면 게임 오브젝트를 비활성화하고 위치를 (0, 0, 0)으로 변경
                     if (currentDialogue.sequence != nextDialogue.sequence)
                     {
-                        print("아아");
-                        gameObject.SetActive(false);
-                        //transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+                        EndDialogue();  // 대화 종료 처리
                         return;
                     }
 
@@ -68,13 +68,11 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     ToggleResponseButtons(false); // 대화 종료 시 버튼 비활성화
-                    gameObject.SetActive(false);
-                    transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+                    EndDialogue();  // 대화 종료 처리
                 }
             }
         }
     }
-
 
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
@@ -124,7 +122,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.LogError("Dialogue ID not found: " + dialogueId);
-            gameObject.SetActive(false);
+            EndDialogue();  // 대화 종료 처리
         }
     }
 
@@ -205,6 +203,13 @@ public class DialogueManager : MonoBehaviour
         ToggleResponseButtons(false); // 리스폰 버튼 비활성화
 
         var response = currentDialogue.responses[responseIndex];
+
+        // 호감도 변화를 적용
+        if (response.affinityChange != 0 && !string.IsNullOrEmpty(currentDialogue.characterId))
+        {
+            GameManager.Instance.UpdateAffinity(currentDialogue.characterId, response.affinityChange);
+        }
+
         if (!string.IsNullOrEmpty(response.nextId))
         {
             if (dialogueDictionary.TryGetValue(response.nextId, out var nextDialogue))
@@ -213,15 +218,14 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                gameObject.SetActive(false);
+                EndDialogue();  // 대화 종료 처리
             }
         }
         else
         {
-            gameObject.SetActive(false);
+            EndDialogue();  // 대화 종료 처리
         }
     }
-
 
 
     private void ShowNextDialogue()
@@ -233,8 +237,7 @@ public class DialogueManager : MonoBehaviour
             // 시퀀스가 다르면 게임 오브젝트를 비활성화하고 위치를 (0, 0, 0)으로 변경
             if (currentDialogue.sequence != nextDialogue.sequence)
             {
-                gameObject.SetActive(false);
-                transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+                EndDialogue();  // 대화 종료 처리
                 return;
             }
 
@@ -243,11 +246,9 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
-            transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+            EndDialogue();  // 대화 종료 처리
         }
     }
-
 
     private void UpdateIcons(string characterIconPath, string villainIconPath)
     {
@@ -279,4 +280,11 @@ public class DialogueManager : MonoBehaviour
     }
 
     private Color32 ParseColor(string color) => ColorUtility.TryParseHtmlString(color, out Color newCol) ? newCol : Color.white;
+
+    private void EndDialogue()
+    {
+        gameObject.SetActive(false);  // 대화 창을 비활성화
+        //transform.position = Vector3.zero;  // 위치를 (0, 0, 0)으로 설정
+        // 필요한 추가적인 종료 작업이 있다면 여기에 작성
+    }
 }

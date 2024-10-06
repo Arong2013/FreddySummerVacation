@@ -19,11 +19,18 @@ public class Actor : SerializedMonoBehaviour
     [SerializeField, OdinSerialize]
     private Dictionary<Vector2, Sprite> directionSprites = new Dictionary<Vector2, Sprite>();
 
-    private void Awake()
+
+
+
+    [SerializeField] AudioClip audioClip,walk;
+
+    private void Start()
     {
         RB = GetComponent<Rigidbody2D>();
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
+
+        Sound_Manager.Instance.PlayBGM(audioClip);
     }
 
     private void Update()
@@ -71,6 +78,7 @@ public class Actor : SerializedMonoBehaviour
         AN.SetBool("IsWalk", isMoving);
         if (isMoving)
         {
+            Sound_Manager.Instance.PlaySFX(walk);
             AN.speed = 1; // 애니메이션 재생
         }
         else

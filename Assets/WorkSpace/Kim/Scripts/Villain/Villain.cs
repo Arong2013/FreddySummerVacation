@@ -117,7 +117,7 @@ public class Villain : MonoBehaviour
         gameObject.transform.rotation = door_pos.rotation;
         door.Forced_OpenDoor();
         Game_Manager.Instance.SetInputAction(false);
-        yield return new WaitForSeconds(3f);////문앞에서 플레이어 공격하기까지의 딜레이
+        yield return new WaitForSeconds(1.5f);////문앞에서 플레이어 공격하기까지의 딜레이
 
         //직접적인 공격
         StartCoroutine(Attack_Motion());//애니메이션 적용안됨

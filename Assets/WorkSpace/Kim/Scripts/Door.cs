@@ -45,7 +45,7 @@ public class Door : MonoBehaviour
             {
                 CloseDoor();
             }
-            else if (Input.GetKeyUp(KeyCode.F) && isLookOut && isClosing)
+            else if (Input.GetKeyUp(KeyCode.F) && isClosing)
             {
                 OpenDoor();
             }
@@ -196,7 +196,6 @@ public class Door : MonoBehaviour
             {
                 Sound_Manager.Instance.PlaySFX(closeDoor_Clip, (int)SFX_SOURCE_INDEX.DOOR_SFX);
                 isDoorFullyClosed = true;
-                isLookOut = false;
             }
             else
             {

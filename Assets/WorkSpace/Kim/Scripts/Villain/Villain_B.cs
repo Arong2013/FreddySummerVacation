@@ -34,7 +34,7 @@ public class Villain_B : Villain
                 second_cur_return_index = second_return_index;
                 break;
             case VILLAIN_DIFFICULTY.NORMAL:
-                move_delaying = 10.0f;
+                move_delaying = 15.0f;
                 cur_move_pos_list = move_Pos_list;
                 cur_return_index = return_index;
                 second_cur_return_index = second_return_index;

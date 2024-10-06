@@ -12232,7 +12232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 9eeff144096f7984cb1e3b6fe548f62f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.38431373}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -22373,7 +22373,7 @@ Transform:
   m_GameObject: {fileID: 537216392}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07898997, y: -0.42101005, z: 0.03683362, w: 0.90285903}
-  m_LocalPosition: {x: 0.8, y: 2.64, z: 7.63}
+  m_LocalPosition: {x: 1.069, y: 2.684, z: 7.561}
   m_LocalScale: {x: 1.4663754, y: 1.7626792, z: 1.3991241}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32407,7 +32407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: 0
-  Click_Clip: {fileID: 8300000, guid: d1f2283511afe234fbe6b0864b27b6b0, type: 3}
+  Click_Clip: {fileID: 8300000, guid: 8799687e3c7d5f4488c4e385e9dd423c, type: 3}
 --- !u!114 &780390526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90345,7 +90345,7 @@ MonoBehaviour:
   rotationSpeed: 6
   interactionDistance: 30
   playerOriginPos: {fileID: 882903696}
-  closeDoor_Clip: {fileID: 8300000, guid: e499012a252f2914a9326c434f4cca1c, type: 3}
+  closeDoor_Clip: {fileID: 8300000, guid: f5b1110ab7ec2be468793516c1fe1fa2, type: 3}
   openDoor_Clip: {fileID: 8300000, guid: 80688659e30c4f844b836fd8afc497ed, type: 3}
   player: {fileID: 905192165}
   lookOutPos: {fileID: 537216393}

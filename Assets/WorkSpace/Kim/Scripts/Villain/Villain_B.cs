@@ -62,7 +62,6 @@ public class Villain_B : Villain
             }
 
             yield return new WaitForSeconds(move_delaying);
-            StartCoroutine(AttackPlayer());
             if(isWaring && cur_move_pos_list[pos_index].gameObject.name == "BreakRoom" && !ishaving_knife)//탕비실에서 다음위치로 이동할때까지 경보음을 울렸으면 식칼챙김
             {
                 Debug.Log("식칼 챙김");
@@ -73,7 +72,7 @@ public class Villain_B : Villain
             else if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
             {
                 Debug.Log("플레이어 공격");
-                AttackPlayer();
+                StartCoroutine(AttackPlayer());
             }
             pos_index++;
             isClosing = false;

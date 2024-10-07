@@ -73,6 +73,6 @@ public class Villain_E : Villain
             isClosing = false;
             isWaring = false;
         }
-        AttackPlayer();
+        StartCoroutine(AttackPlayer());
     }
 }

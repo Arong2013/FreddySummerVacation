@@ -21,7 +21,7 @@ public class Villain_C : Villain
             if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
             {
                 Debug.Log("플레이어 공격");
-                AttackPlayer();
+                StartCoroutine(AttackPlayer());
             }
             pos_index++;
             isClosing = false;

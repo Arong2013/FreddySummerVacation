@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,30 +8,9 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class Game_Manager : Singleton<Game_Manager>
 {
-/*     private static Game_Manager instance;
-
-    // Game_Manager 인스턴스에 접근할 수 있는 프로퍼티
-    public static Game_Manager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                // Scene에서 Game_Manager 찾아서 인스턴스화한다.
-                instance = FindObjectOfType<Game_Manager>();
-
-                // Scene에 Game_Manager 없으면 새로 생성한다.
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject("GameManager");
-                    instance = obj.AddComponent<Game_Manager>();
-                }
-            }
-            return instance;
-        }
-    } */
     [SerializeField] Player player;
     [SerializeField] PlayerInput input;
+    [SerializeField] SceneChange sceneChanger;
     [SerializeField] Door door;
     [SerializeField] Note note;
     [SerializeField] TextMeshProUGUI time_text;
@@ -68,7 +48,6 @@ public class Game_Manager : Singleton<Game_Manager>
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.D);
         if(villainTest_E)
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E);
-        
         GameStart();
     }
     public void SetInputAction(bool status)
@@ -95,29 +74,23 @@ public class Game_Manager : Singleton<Game_Manager>
         SetInputAction(true);
         player.Initialize();
         CCTV_Manger.Instance.Initialize();
-        Villain_Manager.Instance.villain_Cycle(day);
-        //StartCoroutine(TextMove());
+        //Villain_Manager.Instance.villain_Cycle(day);
+        sceneChanger.GameStart();
         time_Coroutine = StartCoroutine(UpdateTime());
     }
-    public IEnumerator GameEnd(bool clearStatus)
+    public void GameEnd(bool clearStatus)
     {
+        StopCoroutine(time_Coroutine);
         CCTV_Manger.Instance.GameEnd();
         Villain_Manager.Instance.GameEnd();
         Sound_Manager.Instance.StopBGM();
         player.GameEnd();
         SetInputAction(false);
-        //StopCoroutine(time_Coroutine);
-        yield return new WaitForSeconds(0);//밤씬 끝날때 연출 넣을 용도
-        if(clearStatus)//클리어
-        {
-
-        }
-        else//게임오버
-        {
-
-        }
-        Cursor.visible = true;
-        //낮 씬으로 넘기기
+        Cursor.visible = false;
+        if(clearStatus)
+            StartCoroutine(sceneChanger.ChangeScene("DayScene"));
+        else
+            StartCoroutine(sceneChanger.ChangeScene("TitleScene"));
     }
     IEnumerator UpdateTime()
     {
@@ -130,25 +103,8 @@ public class Game_Manager : Singleton<Game_Manager>
             {
                 time_text.text = $"{cur_time} : 00";
                 day++;
-                //StartCoroutine(GameEnd());
+                GameEnd(true);
             }
         }
-    }
-    IEnumerator TextMove()
-    {   
-        Vector2 targetPos = time_text.rectTransform.anchoredPosition;//텍스트가 갈 위치
-        time_text.rectTransform.anchoredPosition = new Vector2(0, 0);//텍스트를 화면 중앙으로 이동
-        float elapsedTime = 1;
-        while (elapsedTime < time_text_move_duration)
-        {
-            // 경과 시간에 비례하여 현재 위치 계산
-            float t = elapsedTime / time_text_move_duration;
-            time_text.rectTransform.anchoredPosition = Vector2.Lerp(new Vector2(0, 0), targetPos, t);
-            elapsedTime += Time.deltaTime;
-            yield return null; // 다음 프레임까지 대기
-        }
-
-        // 최종 목표 위치로 설정
-        time_text.rectTransform.anchoredPosition = targetPos;
     }
 }

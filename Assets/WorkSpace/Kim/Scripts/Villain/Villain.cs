@@ -117,16 +117,23 @@ public class Villain : MonoBehaviour
         gameObject.transform.rotation = door_pos.rotation;
         door.Forced_OpenDoor();
         Game_Manager.Instance.SetInputAction(false);
-        yield return new WaitForSeconds(1.5f);////문앞에서 플레이어 공격하기까지의 딜레이
+        yield return new WaitForSeconds(2.0f);////문앞에서 플레이어 공격하기까지의 딜레이
+        transform.rotation = cur_move_pos_list[0].rotation;
+        transform.position = cur_move_pos_list[0].position;//오브젝트를 끄면 밑의 코드가 작동이 안됨
 
         //직접적인 공격
-        StartCoroutine(Attack_Motion());//애니메이션 적용안됨
-        StartCoroutine(Game_Manager.Instance.GameEnd(false));
+        if(jumpSquare_SFX != null)
+            Sound_Manager.Instance.PlaySFX(jumpSquare_SFX, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
+        jump_square_image_RectTransform.gameObject.SetActive(true);
+        jump_square_image_RectTransform.anchoredPosition = attack_motion_move_targetPos;
+        
+        //StartCoroutine(Attack_Motion());//애니메이션 적용안됨
+        yield return new WaitForSeconds(2.0f);
+        Game_Manager.Instance.GameEnd(false);
         Debug.Log("플레이어 공격 성공");
-        gameObject.SetActive(false);
     }
 
-    protected IEnumerator Attack_Motion()
+    /* protected IEnumerator Attack_Motion()
     {
         if(jumpSquare_SFX != null)
             Sound_Manager.Instance.PlaySFX(jumpSquare_SFX, (int)SFX_SOURCE_INDEX.NORMAL_SFX);
@@ -148,5 +155,5 @@ public class Villain : MonoBehaviour
 
         // 최종 위치로 설정 (끝 위치)
         jump_square_image_RectTransform.anchoredPosition = attack_motion_move_targetPos;
-    }
+    } */
 }

@@ -14,9 +14,9 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] Door door;
     [SerializeField] Note note;
     [SerializeField] TextMeshProUGUI time_text;
-    [SerializeField] float time_text_move_duration;//시간 텍스트 이동하는데 걸리는 시간
+    [SerializeField] float time_text_move_duration; //시간 텍스트 이동하는데 걸리는 시간
     [SerializeField] int day = 1;
-    [SerializeField] float time_delay;//1시간 지나는데 걸리는 시간 초단위
+    [SerializeField] float time_delay; //1시간 지나는데 걸리는 시간 초단위
     [SerializeField] int cur_time = 0;
     [SerializeField] bool villainTest_A = false;
     [SerializeField] bool villainTest_B = false;

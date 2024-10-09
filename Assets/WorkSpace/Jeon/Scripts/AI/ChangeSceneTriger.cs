@@ -9,6 +9,7 @@ using System;
 
 public class ChangeSceneTrigger : MonoBehaviour
 {
+    [SerializeField] AudioClip audioClip,audioClip2;
     private CinemachineVirtualCamera virtualCamera;
     private Volume volume;
 
@@ -53,6 +54,7 @@ public class ChangeSceneTrigger : MonoBehaviour
 
     private IEnumerator FadeAndChangeScene(string sceneName)
     {
+        Sound_Manager.Instance.PlaySFX(audioClip);
         // CinemachineVirtualCamera와 Volume 활성화
         virtualCamera.gameObject.SetActive(true);
         volume.gameObject.SetActive(true);
@@ -90,6 +92,7 @@ public class ChangeSceneTrigger : MonoBehaviour
 
     private IEnumerator DisplayDateText(float displayDuration)
     {
+                Sound_Manager.Instance.PlaySFX(audioClip2);
         DateTime originalDate = startDate;
         DateTime nextDate = startDate.AddDays(1);
         string originalDateText = originalDate.ToString("M월 d일");

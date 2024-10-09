@@ -16,7 +16,7 @@ public class Villain_D : Villain
 
             if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//근처로 올때 발소리
             {
-               Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+               Sound_Manager.Instance.PlaySFX(walking_SFX);
             }
             else if(cur_move_pos_list[pos_index].gameObject.name == "None")
             {
@@ -43,8 +43,8 @@ public class Villain_D : Villain
     {
         while(isNoising)
         {
-            if(!Sound_Manager.Instance.IsPlayingAudioSource(neighbor_noise, (int)SFX_SOURCE_INDEX.NEIGHBOR_NOISE))
-                Sound_Manager.Instance.PlaySFX(neighbor_noise, (int)SFX_SOURCE_INDEX.NEIGHBOR_NOISE);
+            if(!Sound_Manager.Instance.IsPlayingAudioSource(neighbor_noise))
+                Sound_Manager.Instance.PlaySFX(neighbor_noise);
             yield return new WaitForSeconds(1.0f);
         }
     }

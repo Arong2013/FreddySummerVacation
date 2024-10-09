@@ -521,9 +521,9 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 21300000, guid: f54daf0429a6daf4b85be5fe6a8e0fe7, type: 3}
     - {fileID: 21300000, guid: 1f9865208a3a3d14fbce526717e45896, type: 3}
     - {fileID: 21300000, guid: dbb742ceb42aaa84dbae561dba4dbd98, type: 3}
+    - {fileID: 21300000, guid: f54daf0429a6daf4b85be5fe6a8e0fe7, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -531,33 +531,24 @@ MonoBehaviour:
     SerializationNodes:
     - Name: directionSprites
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[UnityEngine.Vector2, UnityEngine.CoreModule],[UnityEngine.Sprite,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 0|UnityEngine.Rendering.SerializedDictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], Unity.RenderPipelines.Core.Runtime
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[UnityEngine.Vector2,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 1
+      Data: Walk_Up
     - Name: $v
       Entry: 10
       Data: 0
@@ -568,38 +559,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -1
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 1
+      Data: Walk_Down
     - Name: $v
       Entry: 10
       Data: 1
@@ -610,17 +571,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: -1
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 1
+      Data: Walk_Side
     - Name: $v
       Entry: 10
       Data: 2
@@ -635,6 +587,7 @@ MonoBehaviour:
       Data: 
   audioClip: {fileID: 8300000, guid: 8821e34e1ea6ff445aaad9d36bf36ecd, type: 3}
   walk: {fileID: 8300000, guid: 00d5f451610493b4880e32683289b555, type: 3}
+  movementSpeed: 4
 --- !u!1 &89637739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,6 +1144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d6b19ff5c36fd468ec9241f483b737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 716d6dd1b53df1e4a822a92fafbab6cc, type: 3}
+  audioClip2: {fileID: 8300000, guid: 57c5870087db85f49a1d832f73f33026, type: 3}
   fadeText: {fileID: 1300662671}
 --- !u!1 &252901664
 GameObject:
@@ -1641,6 +1596,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452248787}
   m_CullTransparentMesh: 1
+--- !u!1 &527038120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 527038121}
+  - component: {fileID: 527038122}
+  m_Layer: 0
+  m_Name: URP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &527038121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527038120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -29.001522, y: 12.054012, z: 2.2609253}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &527038122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527038120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c59adee947af8f42a07fd82feaf6a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URP: {fileID: 11400000, guid: 65705252c3a439140bf18bbe1beb0eb8, type: 2}
 --- !u!1 &542929392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,6 +2247,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -162.78625
       objectReference: {fileID: 0}
+    - target: {fileID: 9103889430154613147, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d747515d58a98da4d9ea6202ff8d7513, type: 3}
     - target: {fileID: 9103889430154613147, guid: 6e055bd7506aaa24b9d220a50976c1ff, type: 3}
       propertyPath: VillainIcon
       value: 
@@ -5938,3 +5942,4 @@ SceneRoots:
   - {fileID: 1033706429}
   - {fileID: 41276110}
   - {fileID: 1087375410}
+  - {fileID: 527038121}

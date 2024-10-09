@@ -13,7 +13,6 @@ public class MapManager : SerializedMonoBehaviour
     [OdinSerialize]
     [DictionaryDrawerSettings(KeyLabel = "맵 이름", ValueLabel = "맵 오브젝트")]
     public Dictionary<string, GameObject> Maps = new Dictionary<string, GameObject>();
-
     private GameObject currentMap;
 
     private void Start()

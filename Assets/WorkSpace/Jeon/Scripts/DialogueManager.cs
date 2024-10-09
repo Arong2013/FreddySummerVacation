@@ -20,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     private bool canProceed = true; // K 키 입력을 막기 위한 변수
     public DayDoor dayDoor;
 
+    [SerializeField] AudioClip audioClip;
     private void OnDisable()
     {
         Time.timeScale = 1f;
@@ -164,7 +165,6 @@ public class DialogueManager : MonoBehaviour
         }
         dialogueText.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
     }
-
     private void ToggleResponseButtons(bool show)
     {
         dialogueText.gameObject.SetActive(!show);
@@ -195,9 +195,9 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
     public void OnResponseSelected(int responseIndex)
     {
+        Sound_Manager.Instance.PlaySFX(audioClip);
         canProceed = true; // 리스폰을 선택한 후에는 K 키 입력을 다시 허용
         dialogueText.gameObject.SetActive(true); // 대화 텍스트 다시 활성화
         ToggleResponseButtons(false); // 리스폰 버튼 비활성화

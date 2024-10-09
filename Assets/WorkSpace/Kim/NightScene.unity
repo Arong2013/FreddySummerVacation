@@ -54624,7 +54624,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1243776752}
   - component: {fileID: 1243776748}
-  - component: {fileID: 1243776751}
   - component: {fileID: 1243776750}
   m_Layer: 0
   m_Name: Main Camera
@@ -54728,14 +54727,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &1243776751
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243776747}
-  m_Enabled: 1
 --- !u!4 &1243776752
 Transform:
   m_ObjectHideFlags: 0
@@ -69794,6 +69785,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1030972381, guid: abc00000000012858244722104813776, type: 3}
   m_PrefabInstance: {fileID: 1578681912}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1585579343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1585579344}
+  - component: {fileID: 1585579345}
+  m_Layer: 0
+  m_Name: URP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1585579344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585579343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -29.001522, y: 12.054012, z: 2.2609253}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1585579345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585579343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c59adee947af8f42a07fd82feaf6a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URP: {fileID: 11400000, guid: fc21d010a3aedbc49925f13ab0ba15b0, type: 2}
 --- !u!1001 &1587419170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95829,3 +95865,4 @@ SceneRoots:
   - {fileID: 1613816952}
   - {fileID: 159550214}
   - {fileID: 1736978630}
+  - {fileID: 1585579344}

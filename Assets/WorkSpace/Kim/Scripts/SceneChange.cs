@@ -23,6 +23,7 @@ public class SceneChange : MonoBehaviour
     [SerializeField] float fadeinDuration = 1.0f;//페이드 아웃하는데 걸리는 시간
     [SerializeField] float fadeOutDuration = 1.0f;//페이드 아웃하는데 걸리는 시간
 
+    [SerializeField] AudioClip clear_Clip;
     bool  isEnterClicked = false;//엔터키 눌렸는지
 
     public void Initialize()
@@ -43,8 +44,10 @@ public class SceneChange : MonoBehaviour
         yield return StartCoroutine(FadeInOut(true, fadeinDuration, Scene_canvasGroup));
         if(sceneName == "DayScene")
         {
+
             DayScene_Change.gameObject.SetActive(true);
             yield return StartCoroutine(FadeInOut(true, fadeinDuration, DayScene_Change_canvasGroup));
+            Sound_Manager.Instance.PlaySFX(clear_Clip);
             yield return StartCoroutine(Moving_Text());
             //텍스트 페이드 아웃
             yield return new WaitForSeconds(0.5f);

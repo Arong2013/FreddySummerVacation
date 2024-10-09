@@ -17,8 +17,7 @@ public class Villain_C : Villain
                Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
             }
 
-            yield return new WaitForSeconds(3);
-            StartCoroutine(AttackPlayer());
+            yield return new WaitForSeconds(move_delaying);
             if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
             {
                 Debug.Log("플레이어 공격");

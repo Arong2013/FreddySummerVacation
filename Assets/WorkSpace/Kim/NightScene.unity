@@ -12912,7 +12912,7 @@ MonoBehaviour:
   cur_time: 0
   villainTest_A: 0
   villainTest_B: 0
-  villainTest_C: 1
+  villainTest_C: 0
   villainTest_D: 0
   villainTest_E: 0
 --- !u!1001 &288505079
@@ -29519,6 +29519,7 @@ MonoBehaviour:
   time_text_move_duration: 3
   fadeinDuration: 2
   fadeOutDuration: 1
+  clear_Clip: {fileID: 0}
 --- !u!1 &712703927
 GameObject:
   m_ObjectHideFlags: 0

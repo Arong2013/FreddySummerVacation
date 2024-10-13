@@ -24,8 +24,9 @@ public class Villain_Manager : Singleton<Villain_Manager>
 
     private GameManager gameManager;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         // GameManager 인스턴스를 가져옴
         gameManager = GameManager.Instance;
 

@@ -129,8 +129,8 @@ public class Villain : MonoBehaviour
         jump_square_image_RectTransform.anchoredPosition = attack_motion_move_targetPos;
         
         //StartCoroutine(Attack_Motion());//애니메이션 적용안됨
-        yield return new WaitForSeconds(2.0f);
         Game_Manager.Instance.GameEnd(false);
+        yield return new WaitForSeconds(2.0f);
         Debug.Log("플레이어 공격 성공");
     }
 

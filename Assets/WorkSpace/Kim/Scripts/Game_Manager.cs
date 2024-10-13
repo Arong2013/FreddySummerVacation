@@ -25,21 +25,13 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] bool villainTest_E = false;
     Coroutine time_Coroutine;
     bool isGameStop = false;
-    bool IsGameStop => isGameStop;
+    public bool IsGameStop => isGameStop;
     public Player GetPlayer => player;
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        input.SwitchCurrentActionMap("Control");
-        input.actions["Interact"].started += player.interact;
-        input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
-        input.actions["ESC"].started += door.MoveBackInside;
-        input.actions["ESC"].started += note.Turn_Off_Note;
-        //input.actions["Move"].performed += player.Move;//플레이어 움직임
-        //input.actions["Move"].canceled += player.Move;
 
-        Villain_Manager.Instance.Initialize_All_Villains();
         if(villainTest_A)
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.A);//빌런 테스트용
         if(villainTest_B)
@@ -52,42 +44,21 @@ public class Game_Manager : Singleton<Game_Manager>
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E);
         GameStart();
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(!CCTV_Manger.Instance.IsOn_CCTV)
-            {
-                var exitUI = UiUtils.GetUI<ExitUI>();
-                if (exitUI.gameObject.activeSelf)
-                {
-                    // ExitUI가 켜져 있으면 비활성화
-                    exitUI.gameObject.SetActive(false);
-                    isGameStop = false;
-                }
-                else
-                {
-                    // ExitUI가 꺼져 있으면 활성화
-                    exitUI.gameObject.SetActive(true);
-                    isGameStop = true;
-                }
-            }
-        }
-    }
     public void SetInputAction(bool status)
     {
+        input.SwitchCurrentActionMap("Control");//다음에는 인풋액션 이름, 함수 딕셔너리로 묶어서 쓰기
         if(status)
         {
-            input.SwitchCurrentActionMap("Control");
             input.actions["Interact"].started += player.interact;
+            input.actions["ESC"].started += GameStop;
             input.actions["ESC"].started += CCTV_Manger.Instance.Turn_Off_CCTV;
             input.actions["ESC"].started += door.MoveBackInside;
             input.actions["ESC"].started += note.Turn_Off_Note;
         }
         else
         {
-            input.SwitchCurrentActionMap("Control");
             input.actions["Interact"].started -= player.interact;
+            input.actions["ESC"].started += GameStop;
             input.actions["ESC"].started -= CCTV_Manger.Instance.Turn_Off_CCTV;
             input.actions["ESC"].started -= door.MoveBackInside;
             input.actions["ESC"].started -= note.Turn_Off_Note;
@@ -116,6 +87,29 @@ public class Game_Manager : Singleton<Game_Manager>
             StartCoroutine(sceneChanger.ChangeScene("DayScene"));
         else
             StartCoroutine(sceneChanger.ChangeScene("TitleScene"));
+    }
+    public void GameStop(InputAction.CallbackContext callbackContext)
+    {
+        if(!CCTV_Manger.Instance.IsOn_CCTV)
+        {
+            var exitUI = UiUtils.GetUI<ExitUI>();
+            if (exitUI.gameObject.activeSelf)
+            {
+                // ExitUI가 켜져 있으면 비활성화
+                exitUI.gameObject.SetActive(false);
+                isGameStop = false;
+                Villain_Manager.Instance.GameStop_All_Villains(false);
+                door.IsGameStop = false;
+            }
+            else
+            {
+                // ExitUI가 꺼져 있으면 활성화
+                exitUI.gameObject.SetActive(true);
+                isGameStop = true;
+                Villain_Manager.Instance.GameStop_All_Villains(true);
+                door.IsGameStop = true;
+            }
+        }
     }
     IEnumerator UpdateTime()
     {

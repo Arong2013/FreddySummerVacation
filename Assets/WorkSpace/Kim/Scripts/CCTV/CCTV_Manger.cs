@@ -76,11 +76,12 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
         cur_cam = list_cctv[(int)room_name];//볼 CCTV바꾸고 켜기
         cur_cam.gameObject.SetActive(true);
 
+        if(isBroken) SetGlitch(true);
         Is_CCTV_Down();
         
         cctv_view.gameObject.SetActive(true);
         Sound_Manager.Instance.PlayBGM(cctv_bgm);
-        DecreaseBattery();
+        DecreaseBattery(0);
         cur_cctv_battery_decrease_delay = cctv_battery_watching_decrease_delay;
     }
     public void Is_CCTV_Down()
@@ -122,6 +123,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     {
         while(is_cctv_battery_down)
         {
+            if(Game_Manager.Instance.IsGameStop) continue;
             yield return new WaitForSeconds(cctv_battery_decrease_delay);
             DecreaseBattery();
             if(cur_cctv_battery <= 0)

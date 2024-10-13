@@ -17979,8 +17979,8 @@ MonoBehaviour:
   volume: {fileID: 2118385395}
   cur_cam: {fileID: 1121046894}
   max_cctv_battery: 100
-  cctv_battery_watching_decrease_delay: 0.1
-  cctv_battery_decrease_delay: 3
+  cctv_battery_watching_decrease_delay: 4
+  cctv_battery_decrease_delay: 5
   is_cctv_battery_down: 1
   cctv_warning_message: {fileID: 1141137836}
 --- !u!1 &414858775

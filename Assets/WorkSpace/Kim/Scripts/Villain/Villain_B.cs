@@ -51,7 +51,7 @@ public class Villain_B : Villain
     {
         while(!isAttack)
         {
-            if((cur_return_index == 0 && pos_index > 2) || (cur_return_index != 0 && pos_index >= cur_move_pos_list.Length - 1)) 
+            if((cur_return_index == 0 && pos_index > 2) || (cur_return_index != 0 && pos_index >= cur_move_pos_list.Length))
                 pos_index = cur_return_index;
             transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
@@ -64,7 +64,7 @@ public class Villain_B : Villain
             {
                 if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//근처로 올때 발소리
                 {
-                Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+                    Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
                 }
 
                 yield return new WaitForSeconds(move_delaying);

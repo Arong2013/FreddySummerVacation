@@ -21,6 +21,9 @@ public class DialogueManager : MonoBehaviour
     public DayDoor dayDoor;
 
     [SerializeField] AudioClip audioClip;
+    [SerializeField] private float spaceCooldown = 1f; // 스페이스 입력 제한 시간 (1초)
+    private float lastSpaceTime = 0f; // 마지막 스페이스 입력 시간
+
     private void OnDisable()
     {
         Time.timeScale = 1f;
@@ -29,6 +32,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+        // 리스폰이 있는 경우에는 입력을 막음
         if (Input.GetKeyDown(KeyCode.Space) && canProceed)
         {
             if (isTyping)
@@ -42,21 +46,19 @@ public class DialogueManager : MonoBehaviour
             else if (isTextDisplayed)
             {
                 if (currentDialogueIndex + 1 < dialogues.Count)
-                {
+                {               
                     if (currentDialogue.responses != null && currentDialogue.responses.Length > 0)
                     {
-                        ToggleResponseButtons(true); // 리스폰이 존재하면 버튼 활성화
-                        canProceed = false; // 리스폰이 존재하면 K 키 입력을 막음
+                        ToggleResponseButtons(true); // 응답 버튼 활성화
+                        canProceed = false; // 응답 버튼이 있는 경우 스페이스 입력을 막음
                         return;
                     }
                     else
                     {
-                        ToggleResponseButtons(false); // 리스폰이 없으면 버튼 비활성화
+                        ToggleResponseButtons(false); // 응답 버튼이 없는 경우 비활성화
                     }
 
-                    var nextDialogue = dialogues[currentDialogueIndex + 1];
-
-                    // 시퀀스가 다르면 게임 오브젝트를 비활성화하고 위치를 (0, 0, 0)으로 변경
+                    var nextDialogue = dialogues[currentDialogueIndex + 1];               // 대화 시퀀스가 다를 경우 대화를 종료
                     if (currentDialogue.sequence != nextDialogue.sequence)
                     {
                         EndDialogue();  // 대화 종료 처리
@@ -68,12 +70,14 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    ToggleResponseButtons(false); // 대화 종료 시 버튼 비활성화
+                    // 더 이상 대화가 없을 경우 대화 종료
+                    ToggleResponseButtons(false); // 버튼 비활성화
                     EndDialogue();  // 대화 종료 처리
                 }
             }
         }
     }
+
 
     public IEnumerator LoadDialoguesFromGoogleSheet()
     {
@@ -109,7 +113,7 @@ public class DialogueManager : MonoBehaviour
             {
                 dialogueText.alignment = TextAlignmentOptions.Left;
             }
-            else if (currentDialogue.characterId == "VA")
+            else if (currentDialogue.characterId == "N")
             {
                 dialogueText.alignment = TextAlignmentOptions.Center;
             }

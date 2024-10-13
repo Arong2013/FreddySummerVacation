@@ -4,7 +4,6 @@ using System;
 using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 using System.Runtime.Serialization;  // Odin Inspector 네임스페이스 추가
-
 public class Actor : SerializedMonoBehaviour
 {
     Rigidbody2D RB;
@@ -14,14 +13,16 @@ public class Actor : SerializedMonoBehaviour
 
     private Vector2 lastMovement = Vector2.down; // 기본 방향을 아래로 설정
     private bool isMoving = false;
-    private string lastAnimation ="Walk_Down" ; // 마지막으로 재생된 애니메이션 이름 저장
+    private string lastAnimation = "Walk_Down"; // 마지막으로 재생된 애니메이션 이름 저장
 
-    // 인스펙터에서 설정할 방향과 스프라이트 딕셔너리
     [SerializeField, OdinSerialize]
-     Dictionary<string, Sprite> directionSprites = new Dictionary<string, Sprite>();
+    Dictionary<string, Sprite> directionSprites = new Dictionary<string, Sprite>();
 
     [SerializeField] AudioClip audioClip, walk;
     [SerializeField] private float movementSpeed = 4f; // 이동 속도 인스펙터에서 설정 가능
+
+    private float walkSoundCooldown = 0.5f; // 걷는 소리가 재생되는 간격 (0.5초)
+    private float lastWalkSoundTime = 0f;   // 마지막 걷는 소리가 재생된 시간
 
     private void Start()
     {
@@ -58,12 +59,12 @@ public class Actor : SerializedMonoBehaviour
         {
             isMoving = false;
         }
+
         UpdateAnimationAndDirection();
     }
 
     private void UpdateAnimationAndDirection()
     {
-
         // 스프라이트 방향 설정 (좌우 반전)
         if (lastMovement.x != 0)
         {
@@ -89,9 +90,12 @@ public class Actor : SerializedMonoBehaviour
                 lastAnimation = "Walk_Side";  // 좌우 걷기 애니메이션 (하나의 애니메이션만 사용)
                 AN.Play(lastAnimation);
             }
-            if (!Sound_Manager.Instance.IsPlayingAudioSource(walk)) // 중복 재생 방지
+
+            // 0.5초 간격으로 걷는 소리 재생
+            if (Time.time - lastWalkSoundTime >= walkSoundCooldown && !Sound_Manager.Instance.IsPlayingAudioSource(walk))
             {
-                Sound_Manager.Instance.PlaySFX(walk); // NORMAL_SFX 소스에서 재생
+                Sound_Manager.Instance.PlaySFX(walk); // 걷는 소리 재생
+                lastWalkSoundTime = Time.time; // 마지막 걷는 소리 재생 시간 업데이트
             }
         }
         else

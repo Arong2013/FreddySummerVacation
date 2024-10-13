@@ -8,7 +8,6 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.Analytics;
 using UnityEngine.Audio;
 using TMPro;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine.Rendering;
 using VolFx;
 

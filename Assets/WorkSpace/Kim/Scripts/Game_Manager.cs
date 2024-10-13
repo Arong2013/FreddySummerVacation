@@ -74,7 +74,7 @@ public class Game_Manager : Singleton<Game_Manager>
         SetInputAction(true);
         player.Initialize();
         CCTV_Manger.Instance.Initialize();
-        //Villain_Manager.Instance.villain_Cycle(day);
+        Villain_Manager.Instance.villain_Cycle(day);
         sceneChanger.GameStart();
         time_Coroutine = StartCoroutine(UpdateTime());
     }

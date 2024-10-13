@@ -29,21 +29,22 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-        // ESC 키를 눌렀을 때 ExitUI의 활성화 상태를 확인
-
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (SceneManager.GetActiveScene().name == "DayScene")
         {
-            var exitUI = UiUtils.GetUI<ExitUI>();
-            if (exitUI.gameObject.activeSelf)
+            // ESC 키를 눌렀을 때 ExitUI의 활성화 상태를 확인
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // ExitUI가 켜져 있으면 비활성화
-                exitUI.gameObject.SetActive(false);
-            }
-            else
-            {
-                // ExitUI가 꺼져 있으면 활성화
-                exitUI.gameObject.SetActive(true);
+                var exitUI = UiUtils.GetUI<ExitUI>();
+                if (exitUI.gameObject.activeSelf)
+                {
+                    // ExitUI가 켜져 있으면 비활성화
+                    exitUI.gameObject.SetActive(false);
+                }
+                else
+                {
+                    // ExitUI가 꺼져 있으면 활성화
+                    exitUI.gameObject.SetActive(true);
+                }
             }
         }
     }

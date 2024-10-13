@@ -57,11 +57,14 @@ public class Actor : SerializedMonoBehaviour
         }
         else
         {
+            // 대화가 시작되면 lastAnimation을 "Walk_Up"으로 강제 설정
+            lastAnimation = "Walk_Up";
             isMoving = false;
         }
 
         UpdateAnimationAndDirection();
     }
+
 
     private void UpdateAnimationAndDirection()
     {

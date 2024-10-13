@@ -17,8 +17,8 @@ public class GameManager : Singleton<GameManager>
     {
         StartCoroutine(UiUtils.GetUI<DialogueManager>().LoadDialoguesFromGoogleSheet());
 
-   //     GraphicsSettings.renderPipelineAsset = DayURP;
-   //     QualitySettings.renderPipeline = DayURP;
+        //     GraphicsSettings.renderPipelineAsset = DayURP;
+        //     QualitySettings.renderPipeline = DayURP;
 
         // 예시로 캐릭터의 호감도를 딕셔너리에 추가 (이 부분은 실제 대화 로드 후 업데이트될 수 있음)
         characterAffinities.Add("Va", 0); // 빌런 캐릭터 ID Va, 호감도 0
@@ -27,11 +27,30 @@ public class GameManager : Singleton<GameManager>
         characterAffinities.Add("Vd", 0); // 빌런 캐릭터 ID Va, 호감도 0
         characterAffinities.Add("Ve", 0); // 빌런 캐릭터 ID Va, 호감도 0
     }
+    private void Update()
+    {
+        // ESC 키를 눌렀을 때 ExitUI의 활성화 상태를 확인
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            var exitUI = UiUtils.GetUI<ExitUI>();
+            if (exitUI.gameObject.activeSelf)
+            {
+                // ExitUI가 켜져 있으면 비활성화
+                exitUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                // ExitUI가 꺼져 있으면 활성화
+                exitUI.gameObject.SetActive(true);
+            }
+        }
+    }
     private void OnDestroy()
     {
-     //   GraphicsSettings.renderPipelineAsset = NightURP;
-    //    QualitySettings.renderPipeline = NightURP;
+        //   GraphicsSettings.renderPipelineAsset = NightURP;
+        //    QualitySettings.renderPipeline = NightURP;
     }
 
     // 특정 캐릭터 ID에 대한 호감도 조회

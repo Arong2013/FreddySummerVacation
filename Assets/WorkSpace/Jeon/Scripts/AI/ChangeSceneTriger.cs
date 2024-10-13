@@ -9,13 +9,14 @@ using System;
 
 public class ChangeSceneTrigger : MonoBehaviour
 {
-    [SerializeField] AudioClip audioClip,audioClip2;
+    [SerializeField] AudioClip audioClip, audioClip2;
     private CinemachineVirtualCamera virtualCamera;
     private Volume volume;
 
     public TextMeshProUGUI fadeText; // 날짜를 표시할 텍스트
-
     private DateTime startDate = new DateTime(2024, 8, 7); // 시작 날짜 설정
+
+    private bool canTrigger = true; // 스페이스 키 입력을 막기 위한 플래그 변수
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +46,10 @@ public class ChangeSceneTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 테스트를 위해 스페이스 키를 눌러서 트리거 실행
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 스페이스 키를 한 번만 누를 수 있도록 canTrigger 체크
+        if (Input.GetKeyDown(KeyCode.Space) && canTrigger)
         {
+            canTrigger = false; // 스페이스 키를 다시 못 누르게 설정
             StartCoroutine(FadeAndChangeScene("NightScene"));
         }
     }
@@ -92,7 +94,7 @@ public class ChangeSceneTrigger : MonoBehaviour
 
     private IEnumerator DisplayDateText(float displayDuration)
     {
-                Sound_Manager.Instance.PlaySFX(audioClip2);
+        Sound_Manager.Instance.PlaySFX(audioClip2);
         DateTime originalDate = startDate;
         DateTime nextDate = startDate.AddDays(1);
         string originalDateText = originalDate.ToString("M월 d일");

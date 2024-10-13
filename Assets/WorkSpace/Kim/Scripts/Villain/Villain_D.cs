@@ -14,29 +14,36 @@ public class Villain_D : Villain
             transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
 
-            if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//근처로 올때 발소리
+            if(IsGameStop)
             {
-               Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
-            }
-            else if(cur_move_pos_list[pos_index].gameObject.name == "None")
+                yield return null;
+            }    
+            else
             {
-               //사라져서 층간소음내기 시작하고 다음위치로 갔을때 소음멈추기
-               isNoising = true;
-               StartCoroutine(Play_Neighbor_Noise());
+                if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//근처로 올때 발소리
+                {
+                Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
+                }
+                else if(cur_move_pos_list[pos_index].gameObject.name == "None")
+                {
+                //사라져서 층간소음내기 시작하고 다음위치로 갔을때 소음멈추기
+                isNoising = true;
+                StartCoroutine(Play_Neighbor_Noise());
+                }
+                yield return new WaitForSeconds(move_delaying);
+                //문을 닫았었는지 확인
+                Debug.Log(cur_move_pos_list[pos_index].gameObject.name);
+                if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
+                {
+                    Debug.Log("플레이어 공격");
+                    StartCoroutine(AttackPlayer());
+                }
+                if(pos_index + 1 >= cur_move_pos_list.Length) pos_index = cur_return_index;
+                else pos_index++;
+                isClosing = false;
+                isWaring = false;
+                isNoising = false;
             }
-            yield return new WaitForSeconds(move_delaying);
-            //문을 닫았었는지 확인
-            Debug.Log(cur_move_pos_list[pos_index].gameObject.name);
-            if(!isClosing && cur_move_pos_list[pos_index].gameObject.name == "Lobby")//로비에서 다음위치로 이동할때까지 문을 닫지않으면 플레이어 공격
-            {
-                Debug.Log("플레이어 공격");
-                StartCoroutine(AttackPlayer());
-            }
-            if(pos_index + 1 >= cur_move_pos_list.Length) pos_index = cur_return_index;
-            else pos_index++;
-            isClosing = false;
-            isWaring = false;
-            isNoising = false;
         }
     }
     IEnumerator Play_Neighbor_Noise()

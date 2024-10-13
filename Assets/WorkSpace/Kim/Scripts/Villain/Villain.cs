@@ -33,6 +33,8 @@ public class Villain : MonoBehaviour
     public bool IsWaring {  set {isWaring = value;} get {return isWaring;}    }
     public bool IsClosing {  set {isClosing = value;} get {return isClosing;}    }
     public float GetMoveDelay => move_delaying;
+    bool isGameStop = false;
+    public bool IsGameStop{ set { isGameStop = value; } get {return isGameStop;}}
     //문을 닫았는지 확인할거 필요함
     public virtual void Initialize(VILLAIN_DIFFICULTY difficulty = VILLAIN_DIFFICULTY.NORMAL)
     {

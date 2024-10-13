@@ -65,7 +65,6 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
         StopCoroutine(cctv_battery_down_Coroutine);
         Turn_Off_CCTV();
     }
-
     public void Set_CCTV_Screen(CCTV_POS room_name)//어떤 cctv를 볼건지 선택후 실행
     {
         isOn_CCTV = true;

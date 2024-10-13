@@ -24,6 +24,8 @@ public class Game_Manager : Singleton<Game_Manager>
     [SerializeField] bool villainTest_D = false;
     [SerializeField] bool villainTest_E = false;
     Coroutine time_Coroutine;
+    bool isGameStop = false;
+    bool IsGameStop => isGameStop;
     public Player GetPlayer => player;
     void Start()
     {
@@ -50,6 +52,28 @@ public class Game_Manager : Singleton<Game_Manager>
             Villain_Manager.Instance.StartMove(VILLAIN_INDEX.E);
         GameStart();
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!CCTV_Manger.Instance.IsOn_CCTV)
+            {
+                var exitUI = UiUtils.GetUI<ExitUI>();
+                if (exitUI.gameObject.activeSelf)
+                {
+                    // ExitUI가 켜져 있으면 비활성화
+                    exitUI.gameObject.SetActive(false);
+                    isGameStop = false;
+                }
+                else
+                {
+                    // ExitUI가 꺼져 있으면 활성화
+                    exitUI.gameObject.SetActive(true);
+                    isGameStop = true;
+                }
+            }
+        }
+    }
     public void SetInputAction(bool status)
     {
         if(status)
@@ -73,6 +97,7 @@ public class Game_Manager : Singleton<Game_Manager>
     {
         SetInputAction(true);
         player.Initialize();
+        isGameStop = false;
         CCTV_Manger.Instance.Initialize();
         Villain_Manager.Instance.villain_Cycle(day);
         sceneChanger.GameStart();
@@ -96,6 +121,7 @@ public class Game_Manager : Singleton<Game_Manager>
     {
         while(true)
         {
+            if(isGameStop) continue;
             time_text.text = $"{cur_time} : 00";//Interpolated Strings
             yield return new WaitForSeconds(time_delay);
             cur_time++;

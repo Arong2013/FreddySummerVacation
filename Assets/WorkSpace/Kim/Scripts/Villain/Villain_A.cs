@@ -12,13 +12,20 @@ public class Villain_A : Villain         //플레이어 공격없음
             transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
 
-            yield return new WaitForSeconds(move_delaying);
+            if(IsGameStop)
+            {
+                yield return null;
+            }    
+            else
+            {
+                yield return new WaitForSeconds(move_delaying);
 
-            if(!isWaring && cur_move_pos_list[pos_index].gameObject.name == "Storage Room")//창고에서 다음위치로 이동할때까지 경보음을 안울렸으면 cctv를 끊음
-                StartCoroutine(break_CCTV());
-            pos_index++;
-            isClosing = false;
-            isWaring = false;
+                if(!isWaring && cur_move_pos_list[pos_index].gameObject.name == "Storage Room")//창고에서 다음위치로 이동할때까지 경보음을 안울렸으면 cctv를 끊음
+                    StartCoroutine(break_CCTV());
+                pos_index++;
+                isClosing = false;
+                isWaring = false;
+            }
         }
     }
     IEnumerator break_CCTV()

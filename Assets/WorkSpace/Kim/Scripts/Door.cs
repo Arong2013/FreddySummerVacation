@@ -33,27 +33,32 @@ public class Door : MonoBehaviour
     bool isLookOut = false; //밖을 보고있을때
     bool forced_Open_door = false;
     bool isDoorFullyClosed = false;
+    bool isGameStop = false;
+    public bool IsGameStop{ set { isGameStop = value; } get {return isGameStop;}}
     void Update()
     {
-        if(forced_Open_door)//강제로 문이 열리면 다른 행동 불가
+        if(!isGameStop)//게임정지가 아닐때만
         {
-            doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(forced_openRotation), Time.deltaTime * rotationSpeed);
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.F) && isLookOut) //밖을 보고있을때 문을 닫을수있음
+            if(forced_Open_door)//강제로 문이 열리면 다른 행동 불가
             {
-                CloseDoor();
+                doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(forced_openRotation), Time.deltaTime * rotationSpeed);
             }
-            else if (Input.GetKeyUp(KeyCode.F) && isClosing)
+            else
             {
-                OpenDoor();
-            }
+                if (Input.GetKeyDown(KeyCode.F) && isLookOut) //밖을 보고있을때 문을 닫을수있음
+                {
+                    CloseDoor();
+                }
+                else if (Input.GetKeyUp(KeyCode.F) && isClosing)
+                {
+                    OpenDoor();
+                }
 
-            // 문 회전
-            if (!isClosing)//문 열림
-            {
-                doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(openRotation), Time.deltaTime * rotationSpeed);
+                // 문 회전
+                if (!isClosing)//문 열림
+                {
+                    doorPivotTransform.localRotation = Quaternion.Slerp(doorPivotTransform.localRotation, Quaternion.Euler(openRotation), Time.deltaTime * rotationSpeed);
+                }
             }
         }
     }

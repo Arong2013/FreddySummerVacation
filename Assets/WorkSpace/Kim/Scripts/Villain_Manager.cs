@@ -59,7 +59,11 @@ public class Villain_Manager : Singleton<Villain_Manager>
         foreach (var v in villains)
             v.Stop();
     }
-
+    public void GameStop_All_Villains(bool isStop)
+    {
+        foreach (var v in villains)
+            v.IsGameStop = isStop;
+    }
     public void Door_Closing()
     {
         foreach (var v in villains)

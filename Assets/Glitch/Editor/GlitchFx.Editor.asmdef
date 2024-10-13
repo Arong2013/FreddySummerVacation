@@ -1,0 +1,24 @@
+{
+    "name": "GlitchFx.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fd221792651f9d248bfc4e8047f57177"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "www.nulltale.volfx",
+            "expression": "1",
+            "define": "VOL_FX"
+        }
+    ],
+    "noEngineReferences": false
+}

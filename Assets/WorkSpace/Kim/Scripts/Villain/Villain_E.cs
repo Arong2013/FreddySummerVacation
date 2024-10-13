@@ -60,15 +60,19 @@ public class Villain_E : Villain
         while(!isAttack)
         {
             if(pos_index >= cur_move_pos_list.Length) pos_index = cur_return_index;
+            transform.rotation = cur_move_pos_list[pos_index].rotation;
             transform.position = cur_move_pos_list[pos_index].position;
             if(cur_move_pos_list[pos_index].gameObject.name == "Lobby")//문을 닫는지는 위의 CheckTime함수로 체크
+            {
+                Sound_Manager.Instance.PlaySFX(walking_SFX, (int)SFX_SOURCE_INDEX.DOOR_SFX);
                 attackable = true;
+            }
             yield return new WaitForSeconds(move_delaying);
             attackable = false;
             pos_index++;
             isClosing = false;
             isWaring = false;
         }
-        //반복문 빠져나오면 플레이어 공격
+        StartCoroutine(AttackPlayer());
     }
 }

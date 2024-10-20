@@ -51,7 +51,7 @@ public class CCTV_Manger : Singleton<CCTV_Manger>
     float cur_cctv_battery;
     float cur_cctv_battery_decrease_delay;
     Coroutine cctv_battery_down_Coroutine;
-    public bool IsBroken { set{ isBroken = value; noise_image.gameObject.SetActive(value); SetGlitch(value); } get { return isBroken; } }
+    public bool IsBroken { set{ isBroken = value; noise_image.gameObject.SetActive(value); if(isOn_CCTV) SetGlitch(true); } get { return isBroken; } }
     public void Initialize()
     {
         isBroken = false;
